@@ -5,7 +5,10 @@ public class Professor {
 	private int idRegional;
 	private int idUsuario;
 	private String nome;
-	
+
+	public Professor (){
+
+	}
 	public Professor(int idProfessor, int idRegional, int idUsuario, String nome) {
 		this.idProfessor = idProfessor;
 		this.idRegional = idRegional;
@@ -36,7 +39,4 @@ public class Professor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	
-
 }

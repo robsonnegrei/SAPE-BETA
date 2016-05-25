@@ -5,7 +5,9 @@ public class Imagem {
 	private int idPost;
 	private String linkImagem;
 	
-	
+
+	public Imagem() {
+	}
 	public Imagem(int idImagem, int idPost, String linkImagem) {
 		this.idImagem = idImagem;
 		this.idPost = idPost;
