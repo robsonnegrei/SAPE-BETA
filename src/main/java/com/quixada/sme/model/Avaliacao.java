@@ -9,7 +9,9 @@ public class Avaliacao {
 	private int periodo;
 	private int idAluno;
 	
-	
+	public Avaliacao(){
+		
+	}
 	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno) {
 		this.idAvaliacao = idAvaliacao;
 		this.ano = ano;

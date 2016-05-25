@@ -8,7 +8,7 @@ public class Post {
 	private String mensagem;
 	private Date data;
 	
-	
+	public Post(){}
 	public Post(int idPost, int idProfessor, String mensagem, Date data) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;

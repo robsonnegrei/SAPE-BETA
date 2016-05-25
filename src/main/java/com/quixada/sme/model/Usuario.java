@@ -7,7 +7,9 @@ public class Usuario {
 	private int isProfCoordenadorLei;
 	private int isAdmin;
 	
-	
+	public Usuario(){
+		
+	}
 	public Usuario(int idUsuario, String email, String senha, int isProfCoordenadorLei, int isAdmin) {
 		// TODO Auto-generated constructor stub
 		this.idUsuario = idUsuario;

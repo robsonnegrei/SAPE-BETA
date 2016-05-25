@@ -4,7 +4,7 @@ public class Regional {
 	private int idRegional;
 	private String nome;
 	
-	
+	public Regional(){}
 	public Regional(int idRegional, String nome) {
 		this.idRegional = idRegional;
 		this.nome = nome;
