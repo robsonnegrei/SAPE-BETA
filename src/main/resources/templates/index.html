@@ -14,5 +14,10 @@
 
 	<script type="text/javascript" src="angular/angular.js"></script>
 	<script type="text/js" src="bootstrap/js/bootstrap.js"></script>
+	
+	<h1 th:inline="text">Ola!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout"/>
+    </form>
 </body>
 </html>

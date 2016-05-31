@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Login do SAPE</title>
+</head>
+<body>
+	<div th:if="${param.error}">
+           Senha ou usuario inválidos.
+        </div>
+        <div th:if="${param.logout}">
+            Você saiu do sistema.
+        </div>
+        <form action="/autenticacao" method="post">
+            <div><label> Email: <input type="text" name="username"/> </label></div>
+            <div><label> Senha: <input type="password" name="password"/> </label></div>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
+</body>
+</html>
