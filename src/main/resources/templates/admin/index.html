@@ -6,14 +6,15 @@
 </head>
 <body>
 
-<span th:if="${session.get(usuario)!=null}">
-	<p>Bem vindo! <span th:text="${session.get(usuario).email}"></span> </p>
+<span th:if="${session.usuario !=null}">
+	<p>Bem vindo! <span th:text="${session.usuario}"></span> </p>
+	<p>Seu atributo é :  <span th:text="${session.props}"></span> </p>
 	<form th:action="@{logout}" method="post">
             <input type="submit" value="Logout"/>
     </form>
 </span>
 
-<span th:if="${session.get(usuario)==null}">
+<span th:if="${session.usuario==null}">
 	<div>Error: User not set</div>
 </span>
 

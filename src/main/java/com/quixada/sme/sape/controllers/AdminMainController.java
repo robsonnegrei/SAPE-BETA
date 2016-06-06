@@ -6,14 +6,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 public class AdminMainController {
 
 	@RequestMapping("admin/index")
-	public String adminIndex(HttpServletRequest request, HttpSession session){
-		if (session.getAttribute("usuario") == null) {
-			return "redirect:../login";
-		}
+	public String adminIndex(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		session.setAttribute("usuario", "Jovem");
+		session.setAttribute("props", "Propiedade");
+//		if (session.getAttribute("usuario") == null) {
+//			return "redirect:../login";
+//		}
 		return "admin/index";
 	}
 	@RequestMapping("admin/logout")
