@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+
+<span th:if="${session.get(usuario)!=null}">
+	<p>Bem vindo! <span th:text="${session.get(usuario).email}"></span> </p>
+	<form th:action="@{logout}" method="post">
+            <input type="submit" value="Logout"/>
+    </form>
+</span>
+
+<span th:if="${session.get(usuario)==null}">
+	<div>Error: User not set</div>
+</span>
+
+</body>
+</html>
