@@ -4,21 +4,23 @@
 	<meta charset="UTF-8"></meta>
 	<title>Home Admin</title>
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/sapecss.css"/>
+	
 </head>
 <body>
-    <nav id="header" class="navbar navbar-default header">
+    <nav id="header-index-admin" class="SAPE_nav1">
         <div id="navbar" class="collapse navbar-collapse">
-             <a class="navbar-brand" href="#">SAPE - ADMIN</a>
+             <a class="navbar-brand" href="#"><p class="SAPE_p1">SAPE - ADMIN</p></a>
              <ul class="nav navbar-nav">
-                 <li class="active"><a href="/admin/index">Home</a></li>
+                 <li class="SAPE_li1"><a href="/admin/index"><p class="SAPE_p1">Home</p></a></li>
              </ul>
-             <ul class="nav navbar-nav navbar-right">
+             <ul class="nav navbar-nav navbar-right SAPE_ul1">
                 <li><a href=""><span th:text="${ session.usuario.email }" class="glyphicon glyphicon-user"></span></a></li>
-                <li><a href="\logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+                <li><a href="\logout"><span class="glyphicon glyphicon-log-in"></span></a></li>
              </ul>
        </div><!-- /.nav-collapse -->
     </nav><!-- /.navbar -->
-    <div class="col-xs-3 col-sm-3 sidebar-offcanvas" id="sidebar">
+    <div class="col-xs-3 col-sm-3 sidebar-offcanvas SAPE_divLateral" id="sidebar">
          <div class="list-group panel-tabs">
              <a class="list-group-item disabled"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>Regionais</a>
              <a id="rg2" href="#" class="list-group-item">Califórnia<span class="badge">4</span></a>
@@ -39,7 +41,7 @@
              <a id="rg9" href="#" class="list-group-item">Várzea da Onça<span class="badge"></span></a>
           </div>
      </div>  
-     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tab-pane" id="divRg1 active" >
+     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tab-pane SAPE_div1" id="divRg1 active" >
          <div class="jumbotron table-responsive divEscolas">
               <h3>Escolas</h3>
               <table class="table table-bordered ">

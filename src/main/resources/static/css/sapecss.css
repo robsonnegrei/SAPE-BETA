@@ -1,0 +1,26 @@
+.SAPE_nav1{
+	background-color:#B0BEC5;
+	color: white;
+	text-align: center;
+	font-family: Tahoma;
+}
+.SAPE_p1{
+	color: white;
+	text-align: center;
+	font-family: Tahoma;
+}
+.SAPE_ul1{
+	background-color: #B0BEC5;
+	padding-color: #white;
+}
+.SAPE_divLateral{
+	padding: 16px;
+	border-style: inherit;
+	
+}
+.SAPE_div1{
+	padding: 16px;
+	font-family: Tahoma;
+	text-align: left;
+	color: black;
+}
