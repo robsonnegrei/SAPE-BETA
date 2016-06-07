@@ -48,6 +48,5 @@ public class Usuario {
 	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	
-	
+
 }
