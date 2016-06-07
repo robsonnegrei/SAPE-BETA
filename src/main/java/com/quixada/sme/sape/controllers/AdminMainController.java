@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.quixada.sme.model.Usuario;
+
 
 @Controller
 public class AdminMainController {
@@ -18,6 +20,11 @@ public class AdminMainController {
 		if (session.getAttribute("usuario") == null) {
 			return "redirect:../login";
 		}
+		Usuario usr = (Usuario)session.getAttribute("usuario");
+		if (usr.getIsAdmin()==0) {
+			return "redirect:../login";
+		}
+		
 		return "admin/index";
 	}
 	@RequestMapping("admin/logout")
