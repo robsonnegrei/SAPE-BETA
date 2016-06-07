@@ -5,7 +5,7 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private int isProfCoordenadorLei;
-	private int isAdmin;
+	private int isAdmin; // 0 - false, 1 true
 	
 	public Usuario(){
 		
