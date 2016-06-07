@@ -16,6 +16,7 @@ public class AdminMainController {
 	@RequestMapping("admin/index")
 	public String adminIndex(HttpServletRequest request){
 		HttpSession session = request.getSession();
+	
 		//Sem sessão, manda pro login
 		if (session.getAttribute("usuario") == null) {
 			return "redirect:../login";
