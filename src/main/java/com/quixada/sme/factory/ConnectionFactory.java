@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-	private static final String BANCO_DE_DADOS_SENHA = "12345";
+	private static final String BANCO_DE_DADOS_SENHA = "";
 	private static final String BANCO_DE_DADOS_USUARIO = "root";
 	private static final String BANCO_DE_DADOS_URL = "jdbc:mysql://localhost/sape";
 	private static Connection mySqlConnection;

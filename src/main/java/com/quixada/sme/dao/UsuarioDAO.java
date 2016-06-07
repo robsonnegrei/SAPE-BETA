@@ -27,9 +27,12 @@ public class UsuarioDAO {
 	
 	public Usuario buscar(String email) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "SELECT * FROM usuario WHERE email="+ email;
+		String sql = "SELECT * FROM usuario WHERE email='"+email+"'";
+		System.out.println("SQL Busca Usuario :" + sql);
+		
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
+		//stmt.setString(1, email);
 		ResultSet rs = stmt.executeQuery();
 		Usuario usr = null;
 		if (rs.next()) {
