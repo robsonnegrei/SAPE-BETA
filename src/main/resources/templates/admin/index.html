@@ -7,8 +7,7 @@
 <body>
 
 <span th:if="${session.usuario !=null}">
-	<p>Bem vindo! <span th:text="${session.usuario}"></span> </p>
-	<p>Seu atributo é :  <span th:text="${session.props}"></span> </p>
+	<p>Bem vindo! <span th:text="${session.usuario.email}"></span> </p>
 	<form th:action="@{logout}" method="post">
             <input type="submit" value="Logout"/>
     </form>
