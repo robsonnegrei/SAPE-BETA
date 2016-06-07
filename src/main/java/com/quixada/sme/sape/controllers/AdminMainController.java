@@ -28,9 +28,4 @@ public class AdminMainController {
 		
 		return "admin/index";
 	}
-	@RequestMapping("admin/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-		session.invalidate(); 
-		return "redirect:../login?logout";
-	}
 }

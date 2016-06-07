@@ -3,6 +3,7 @@ package com.quixada.sme.sape.controllers;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -31,15 +32,20 @@ public class AutenticacaoController {
 				else if(usr.getIsProfCoordenadorLei()==1)
 						return "redirect:/PCLei/index";
 				
-				return "redirect:/index";
+				return "index";
 			}
 			else{
-				return "redirect:/login";
+				return "redirect:/login?error";
 			}
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			return "redirect:/login";
+			return "redirect:/login?error";
 		}
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		session.invalidate(); 
+		return "redirect:/login?logout";
 	}
 }

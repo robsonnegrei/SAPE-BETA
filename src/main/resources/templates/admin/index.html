@@ -1,21 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"></meta>
-<title>Insert title here</title>
+	<meta charset="UTF-8"></meta>
+	<title>Home Admin</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
 </head>
 <body>
+    <nav id="header" class="navbar navbar-default header">
+        <div id="navbar" class="collapse navbar-collapse">
+             <a class="navbar-brand" href="#">SAPE - ADMIN</a>
+             <ul class="nav navbar-nav">
+                 <li class="active"><a href="/admin/index">Home</a></li>
+             </ul>
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href=""><span th:text="${ session.usuario.email }" class="glyphicon glyphicon-user"></span></a></li>
+                <li><a href="\logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+             </ul>
+       </div><!-- /.nav-collapse -->
+    </nav><!-- /.navbar -->
+    <div class="col-xs-3 col-sm-3 sidebar-offcanvas" id="sidebar">
+         <div class="list-group panel-tabs">
+             <a class="list-group-item disabled"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>Regionais</a>
+             <a id="rg2" href="#" class="list-group-item">Califórnia<span class="badge">4</span></a>
+             <a id="rg3" href="#" class="list-group-item">Campo Novo<span class="badge">4</span></a>
+             <a id="rg4" href="#" class="list-group-item">Campo Velho<span class="badge">4</span></a>
+             <a id="rg5" href="#" class="list-group-item">Centro<span class="badge">4</span></a>
+             <a id="rg6" href="#" class="list-group-item">Cipó dos Anjos<span class="badge">4</span></a>
+             <a id="rg7" href="#" class="list-group-item">Custódio<span class="badge">4</span></a>
+             <a id="rg8" href="#" class="list-group-item">Dom Maurício<span class="badge">4</span></a>
+             <a id="rg9" href="#" class="list-group-item">José Jucá<span class="badge"></span></a>
+             <a id="rg9" href="#" class="list-group-item">Juá<span class="badge"></span></a>
+             <a id="rg9" href="#" class="list-group-item">Juatama<span class="badge"></span></a>
+             <a id="rg9" href="#" class="list-group-item">Nemésio Bezerra<span class="badge"></span></a> 
+             <a id="rg9" href="#" class="list-group-item">Riacho Verde<span class="badge"></span></a>
+             <a id="rg9" href="#" class="list-group-item">São João<span class="badge"></span></a> 
+             <a id="rg9" href="#" class="list-group-item">São João dos Queiroz<span class="badge"></span></a>
+             <a id="rg9" href="#" class="list-group-item">Tapuiará<span class="badge"></span></a> 
+             <a id="rg9" href="#" class="list-group-item">Várzea da Onça<span class="badge"></span></a>
+          </div>
+     </div>  
+     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tab-pane" id="divRg1 active" >
+         <div class="jumbotron table-responsive divEscolas">
+              <h3>Escolas</h3>
+              <table class="table table-bordered ">
+                     <tr>
+                        <th>Nome</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+              </table>
+        </div>
+     </div>
 
-<span th:if="${session.usuario !=null}">
-	<p>Bem vindo! <span th:text="${session.usuario.email}"></span> </p>
-	<form th:action="@{logout}" method="post">
-            <input type="submit" value="Logout"/>
-    </form>
-</span>
-
-<span th:if="${session.usuario==null}">
-	<div>Error: User not set</div>
-</span>
+<!-- Script -->
+	<script type="text/js" src="../bootstrap/js/bootstrap.js"></script>
 
 </body>
 </html>
