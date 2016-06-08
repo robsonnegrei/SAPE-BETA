@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
-<title>Login do SAPE</title>
+	<meta charset="UTF-8"/>
+	<title>Login do SAPE</title>
+   	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 </head>
 <body>
 	<div th:if="${param.error}">
@@ -14,7 +16,12 @@
         <form action="/autenticar" method="post">
             <div><label> Email: <input type="text" name="username"/> </label></div>
             <div><label> Senha: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+            <div><input onclick="onclickLogin()" type="submit" value="Sign In"/></div>
+            
         </form>
+        <div id="divSlider">
+        </div>
+        
+ <script type="text/javascript" src="/js/sapejs.js"></script>
 </body>
 </html>
