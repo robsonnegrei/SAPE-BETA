@@ -5,23 +5,81 @@
 	<title>Login do SAPE</title>
    	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/sapecss.css" />
 </head>
 <body>
-	<div th:if="${param.error}">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+	    <div class="mdl-layout__header-row">
+	      <!-- Title -->
+	      <span class="mdl-layout-title"><img th:src="@{/img/Logo4.png}" class="SAPE_imgLogo"></img></span>
+	      <!-- Add spacer, to align navigation to the right -->
+	      <div class="mdl-layout-spacer"></div>
+	      <!-- Navigation. We hide it in small screens. -->
+	      <nav class="mdl-navigation mdl-layout--large-screen-only">
+	        <a class="mdl-navigation__link" href="">Visitante</a>
+	        <a class="mdl-navigation__link" href="">About</a>
+	      </nav>
+	    </div>
+	  </header>
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    
+	    <!-- Your content goes here -->
+	    
+	    
+	     <div th:if="${param.error}">
            Senha ou usuario inválidos.
         </div>
         <div th:if="${param.logout}">
             Você saiu do sistema.
         </div>
-        <form action="/autenticar" method="post">
-            <div><label> Email: <input type="text" name="username"/> </label></div>
-            <div><label> Senha: <input type="password" name="password"/> </label></div>
-            <div><input onclick="onclickLogin()" type="submit" value="Sign In"/></div>
-            
-        </form>
-        <div id="divSlider">
-        </div>
+        <div class="col-md-4"></div>
         
- <script type="text/javascript" src="/js/sapejs.js"></script>
+        <!-- Login SAPE-->
+        <section class="container login-form col-md-4 SAPE_divLogin">
+		<section>
+			<form method="post" action="\autenticar">
+				<div class="form-group">
+					<div class="input-group">
+  						<span class="input-group-addon" id="sizing-addon1">@</span>
+  						<input type="text" name="username" class="form-control" placeholder="Enter username" aria-describedby="sizing-addon1"></input>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon" id="sizing-addon2">*</span>
+						<input type="password" name="password" class="form-control" placeholder="Enter password" aria-describedby="sizing-addon2"/>
+					</div>
+				</div>
+				<button  onclick="onclickLogin()" type="submit" class="btn btn-primary btn-block">Login</button>
+			
+			</form>
+
+			<form method="get" action="\home">
+				<button onclick="onclickLogin()" type="submit" name="visitante" class="btn btn-success btn-block">Entrar como visitante</button>
+			</form>
+
+		</section>
+	</section>
+	<!-- Progress -->        
+    <div id="p2" class=""></div>
+	    
+	    
+	    
+	    </div>
+	  </main>
+	</div>
+
+
+
+       
+ 		
+ <!-- Scripts -->		
+ 	<script type="text/javascript" src="/js/sapejs.js"></script>
+ 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ 	<script src="/bootstrap/js/bootstrap.min.js"></script>
+ 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
 </html>
