@@ -3,59 +3,67 @@
 <head>
 	<meta charset="UTF-8"></meta>
 	<title>Home Admin</title>
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/sapecss.css"/>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 	
 </head>
 <body>
-    <nav id="header-index-admin" class="SAPE_nav1">
-        <div id="navbar" class="collapse navbar-collapse">
-             <a class="navbar-brand" href="#"><p class="SAPE_p1">SAPE - ADMIN</p></a>
-             <ul class="nav navbar-nav">
-                 <li class="SAPE_li1"><a href="/admin/index"><p class="SAPE_p1">Home</p></a></li>
-             </ul>
-             <ul class="nav navbar-nav navbar-right SAPE_ul1">
-                <li><a href=""><span th:text="${ session.usuario.email }" class="glyphicon glyphicon-user"></span></a></li>
-                <li><a href="\logout"><span class="glyphicon glyphicon-log-in"></span></a></li>
-             </ul>
-       </div><!-- /.nav-collapse -->
-    </nav><!-- /.navbar -->
-    <div class="col-xs-3 col-sm-3 sidebar-offcanvas SAPE_divLateral" id="sidebar">
-         <div class="list-group panel-tabs">
-             <a class="list-group-item disabled"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>Regionais</a>
-             <a id="rg2" href="#" class="list-group-item">Califórnia<span class="badge">4</span></a>
-             <a id="rg3" href="#" class="list-group-item">Campo Novo<span class="badge">4</span></a>
-             <a id="rg4" href="#" class="list-group-item">Campo Velho<span class="badge">4</span></a>
-             <a id="rg5" href="#" class="list-group-item">Centro<span class="badge">4</span></a>
-             <a id="rg6" href="#" class="list-group-item">Cipó dos Anjos<span class="badge">4</span></a>
-             <a id="rg7" href="#" class="list-group-item">Custódio<span class="badge">4</span></a>
-             <a id="rg8" href="#" class="list-group-item">Dom Maurício<span class="badge">4</span></a>
-             <a id="rg9" href="#" class="list-group-item">José Jucá<span class="badge"></span></a>
-             <a id="rg9" href="#" class="list-group-item">Juá<span class="badge"></span></a>
-             <a id="rg9" href="#" class="list-group-item">Juatama<span class="badge"></span></a>
-             <a id="rg9" href="#" class="list-group-item">Nemésio Bezerra<span class="badge"></span></a> 
-             <a id="rg9" href="#" class="list-group-item">Riacho Verde<span class="badge"></span></a>
-             <a id="rg9" href="#" class="list-group-item">São João<span class="badge"></span></a> 
-             <a id="rg9" href="#" class="list-group-item">São João dos Queiroz<span class="badge"></span></a>
-             <a id="rg9" href="#" class="list-group-item">Tapuiará<span class="badge"></span></a> 
-             <a id="rg9" href="#" class="list-group-item">Várzea da Onça<span class="badge"></span></a>
-          </div>
-     </div>  
-     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 tab-pane SAPE_div1" id="divRg1 active" >
-         <div class="jumbotron table-responsive divEscolas">
-              <h3>Escolas</h3>
-              <table class="table table-bordered ">
-                     <tr>
-                        <th>Nome</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-              </table>
-        </div>
-     </div>
 
-<!-- Script -->
-	<script type="text/js" src="../bootstrap/js/bootstrap.js"></script>
 
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+	    <div class="mdl-layout__header-row">
+	      <!-- Title -->
+	      <span class="mdl-layout-title">SAPE</span>
+	      <!-- Add spacer, to align navigation to the right -->
+	      <div class="mdl-layout-spacer"></div>
+	      <!-- Navigation. We hide it in small screens. -->
+	      <nav class="mdl-navigation mdl-layout--large-screen-only">
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="?action=logout">Logout</a>
+	     
+	      </nav>
+	      <form th:action="@{/logout}" method="post" class="mdl-navigation__link">
+            	<input type="submit" value="Logout"/>
+    	  </form>
+	    </div>
+	  </header>
+	  <div class="mdl-layout__drawer">
+	    <span class="mdl-layout-title">Title</span>
+	    <nav class="mdl-navigation">
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	    </nav>
+	  </div>
+	  <main class="mdl-layout__content">
+	    <div class="page-content"><!-- Your content goes here -->
+
+	    			 <a id="rg2" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Califórnia<span class="badge">4</span></a>
+		             <a id="rg3" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Campo Novo<span class="badge">4</span></a>
+		             <a id="rg4" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Campo Velho<span class="badge">4</span></a>
+		             <a id="rg5" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Centro<span class="badge">4</span></a>
+		             <a id="rg6" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Cipó dos Anjos<span class="badge">4</span></a>
+		             <a id="rg7" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Custódio<span class="badge">4</span></a>
+		             <a id="rg8" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Dom Maurício<span class="badge">4</span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">José Jucá<span class="badge"></span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Juá<span class="badge"></span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Juatama<span class="badge"></span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Nemésio Bezerra<span class="badge"></span></a> 
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Riacho Verde<span class="badge"></span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">São João<span class="badge"></span></a> 
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">São João dos Queiroz<span class="badge"></span></a>
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Tapuiará<span class="badge"></span></a> 
+		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Várzea da Onça<span class="badge"></span></a>
+        	
+	    </div>
+	  </main>
+	</div>
+
+     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
+
 </html>
