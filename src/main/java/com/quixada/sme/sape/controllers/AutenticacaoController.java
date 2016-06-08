@@ -24,7 +24,9 @@ public class AutenticacaoController {
 			session = request.getSession();
 		}
 		try {
+			
 			Usuario usr = dao.buscar(request.getParameter("username"));
+			
 			if (usr == null || usr.getSenha().equals(request.getParameter("password"))) {
 				session.setAttribute("usuario", usr);
 				if(usr.getIsAdmin()== 1)	
@@ -32,9 +34,8 @@ public class AutenticacaoController {
 				else if(usr.getIsProfCoordenadorLei()==1)
 						return "redirect:/PCLei/index";
 				
-				return "index";
-			}
-			else{
+				return "redirect:/home";
+			}else{
 				return "redirect:/login?error";
 			}
 		} catch (SQLException e) {
