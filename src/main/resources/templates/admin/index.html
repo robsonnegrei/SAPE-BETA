@@ -5,7 +5,7 @@
 	<title>Home Admin</title>
 	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-	
+	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
 </head>
 <body>
 
@@ -19,10 +19,11 @@
 	      <div class="mdl-layout-spacer"></div>
 	      <!-- Navigation. We hide it in small screens. -->
 	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="?action=logout">Logout</a>
+	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
+	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
+	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
+	        <!-- Teste -->
+	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="?action=logout">Logout</a>
 	     
 	      </nav>
 	      <form th:action="@{/logout}" method="post" class="mdl-navigation__link">
@@ -31,39 +32,96 @@
 	    </div>
 	  </header>
 	  <div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Title</span>
+	    <span class="mdl-layout-title">Regionais</span>
 	    <nav class="mdl-navigation">
 	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Califórnia</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Novo</a>
+      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
+    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
 	    </nav>
 	  </div>
 	  <main class="mdl-layout__content">
 	    <div class="page-content"><!-- Your content goes here -->
-
-	    			 <a id="rg2" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Califórnia<span class="badge">4</span></a>
-		             <a id="rg3" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Campo Novo<span class="badge">4</span></a>
-		             <a id="rg4" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Campo Velho<span class="badge">4</span></a>
-		             <a id="rg5" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Centro<span class="badge">4</span></a>
-		             <a id="rg6" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Cipó dos Anjos<span class="badge">4</span></a>
-		             <a id="rg7" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Custódio<span class="badge">4</span></a>
-		             <a id="rg8" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Dom Maurício<span class="badge">4</span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">José Jucá<span class="badge"></span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Juá<span class="badge"></span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Juatama<span class="badge"></span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Nemésio Bezerra<span class="badge"></span></a> 
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Riacho Verde<span class="badge"></span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">São João<span class="badge"></span></a> 
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">São João dos Queiroz<span class="badge"></span></a>
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Tapuiará<span class="badge"></span></a> 
-		             <a id="rg9" href="#" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Várzea da Onça<span class="badge"></span></a>
+	 	Bem vindo <span th:text="${session.usuario.email}"></span>
+	 	<br></br>
+	 	Usuários do Sistema:
+	 	
+	 	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_usrList">
+		  <thead>
+		    <tr>
+		      <th id="tt1">Ação:</th>
+				<div class="mdl-tooltip mdl-tooltip--large" for="tt1">
+					Alterar ou Excluir Usuarios
+				</div>
+		      <th>Id Unico</th>
+		      <th>Email</th>
+		      <th id="tt2">Coodenador do LEI?</th>
+		      <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
+					Indica se é Professor-Coodenador do LEI.
+				</div>
+		      <th id="tt3">Administrador?</th>
+		      	<div class="mdl-tooltip mdl-tooltip--large" for="tt3">
+					Inidica se possui privilégios de administração.
+				</div>
+		      <th id="tt4">é Professor?</th>
+		      <div class="mdl-tooltip mdl-tooltip--large" for="tt4">
+					Se for professor, passar o mouse em cima irá mostrar o nome e a escola.
+			  </div>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="usuario : ${session.listaUsuarios}">
+		      <td>
+		      
+		      	<button id="btnEditarUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" >
+					<i class="material-icons md-18 azul">edit</i>
+				</button>
+				<div class="mdl-tooltip" for="btnEditarUsr">
+					Alterar o usuário.
+			  	</div> - 
+		      	<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+  					<i class="material-icons md-18 laranjabizarro">remove</i>
+				</button>
+				<div class="mdl-tooltip" for="btnExcluirUsr">
+					Excluir usuário.
+			  	</div>
+			  	
+			  </td>
+		      <td th:text="${usuario.idUsuario}">1</td>
+		      <td th:text="${usuario.email}">exemplo@email.com</td>
+		      <td th:text="${usuario.isProfCoordenadorLei}"></td>
+		      <td th:text="${usuario.isAdmin}"></td>
+		      <td th:text="${usuario.isProfessor}"></td>
+		    </tr>
+		  </tbody>
+		   
+		</table>
+		<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+  			<i class="material-icons md-18 verde">add</i>
+		</button>
+		<div class="mdl-tooltip" for="btnAddUsuario">
+				Novo Usuário.
+		</div>
         	
 	    </div>
 	  </main>
 	</div>
-
-     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<!-- Scripts -->
+	<script type="text/javascript" src="/js/sapeAdmin.js"></script>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
 
 </html>

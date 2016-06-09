@@ -6,7 +6,14 @@ public class Usuario {
 	private String senha;
 	private int isProfCoordenadorLei;
 	private int isAdmin; // 0 - false, 1 true
+	private int isProfessor; // 0 - false, 1 true
 	
+	public int getIsProfessor() {
+		return isProfessor;
+	}
+	public void setIsProfessor(int isProfessor) {
+		this.isProfessor = isProfessor;
+	}
 	public Usuario(){
 		
 	}
@@ -17,6 +24,7 @@ public class Usuario {
 		this.senha = senha;
 		this.isProfCoordenadorLei = isProfCoordenadorLei;
 		this.isAdmin = isAdmin;
+		
 	}
 	public int getIdUsuario() {
 		return idUsuario;

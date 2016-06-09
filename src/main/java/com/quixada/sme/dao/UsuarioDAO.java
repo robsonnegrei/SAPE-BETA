@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Usuario;
@@ -28,8 +30,6 @@ public class UsuarioDAO {
 	public Usuario buscar(String email) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "SELECT * FROM usuario WHERE email='"+email+"'";
-		System.out.println("SQL Busca Usuario :" + sql);
-		
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		//stmt.setString(1, email);
@@ -84,6 +84,25 @@ public class UsuarioDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+	}
+	
+	public List<Usuario> listarTodos() throws SQLException {
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "SELECT * FROM usuario";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		List<Usuario> usrList = new ArrayList<>();
+		while (rs.next()) {
+			Usuario usr = new Usuario();
+			usr.setIdUsuario(rs.getInt(1));
+			usr.setEmail(rs.getString(2));
+			usr.setSenha(rs.getString(3));
+			usr.setIsProfCoordenadorLei(rs.getInt(4));
+			usr.setIsAdmin(rs.getInt(5));
+			usrList.add(usr);
+		}
+		return usrList;
 	}
 }
 
