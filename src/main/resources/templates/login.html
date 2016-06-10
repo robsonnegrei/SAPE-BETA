@@ -30,10 +30,19 @@
 	    
 	    
 	     <div th:if="${param.error}">
-           Senha ou usuario inválidos.
+           <div class="alert alert-danger" role="alert">
+  				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 				<span class="sr-only">Error:</span>
+ 					 Entre com email ou senha válido
+			</div>
         </div>
         <div th:if="${param.logout}">
-            Você saiu do sistema.
+        	 <div class="alert Alert-info" role="alert">
+  				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 				<span class="sr-only">Info:</span>
+ 					 Você saiu do sistema
+			</div>
+            
         </div>
         <div class="col-md-4"></div>
         
