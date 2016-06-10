@@ -5,7 +5,9 @@
 	<title>Home Admin</title>
 	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
 </head>
 <body>
 
@@ -57,59 +59,61 @@
 	    <div class="page-content"><!-- Your content goes here -->
 	 	Bem vindo <span th:text="${session.usuario.email}"></span>
 	 	<br></br>
-	 	Usuários do Sistema:
-	 	
-	 	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_usrList">
-		  <thead>
-		    <tr>
-		      <th id="tt1">Ação:</th>
-				<div class="mdl-tooltip mdl-tooltip--large" for="tt1">
-					Alterar ou Excluir Usuarios
-				</div>
-		      <th>Id Unico</th>
-		      <th>Email</th>
-		      <th id="tt2">Coodenador do LEI?</th>
-		      <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
-					Indica se é Professor-Coodenador do LEI.
-				</div>
-		      <th id="tt3">Administrador?</th>
-		      	<div class="mdl-tooltip mdl-tooltip--large" for="tt3">
-					Inidica se possui privilégios de administração.
-				</div>
-		      <th id="tt4">é Professor?</th>
-		      <div class="mdl-tooltip mdl-tooltip--large" for="tt4">
-					Se for professor, passar o mouse em cima irá mostrar o nome e a escola.
-			  </div>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr th:each="usuario : ${session.listaUsuarios}">
-		      <td>
-		      
-		      	<button id="btnEditarUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" >
-					<i class="material-icons md-18 azul">edit</i>
-				</button>
-				<div class="mdl-tooltip" for="btnEditarUsr">
-					Alterar o usuário.
-			  	</div> - 
-		      	<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-  					<i class="material-icons md-18 laranjabizarro">remove</i>
-				</button>
-				<div class="mdl-tooltip" for="btnExcluirUsr">
-					Excluir usuário.
-			  	</div>
-			  	
-			  </td>
-		      <td th:text="${usuario.idUsuario}">1</td>
-		      <td th:text="${usuario.email}">exemplo@email.com</td>
-		      <td th:text="${usuario.isProfCoordenadorLei}"></td>
-		      <td th:text="${usuario.isAdmin}"></td>
-		      <td th:text="${usuario.isProfessor}"></td>
-		    </tr>
-		  </tbody>
-		   
-		</table>
-		<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+	 	<div>Usuários do Sistema:</div>
+	 	<div class="col-md-2"></div>
+	 	<div class="col-md-6">
+		 	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_amdUsrList">
+			  <thead>
+			    <tr>
+			      <th id="tt1">Ação:</th>
+					<div class="mdl-tooltip mdl-tooltip--large" for="tt1">
+						Alterar ou Excluir Usuarios
+					</div>
+			      <th>Id Unico</th>
+			      <th>Email</th>
+			      <th id="tt2">Coodenador do LEI?</th>
+			      <div class="mdl-tooltip mdl-tooltip--large" for="tt2">
+						Indica se é Professor-Coodenador do LEI.
+					</div>
+			      <th id="tt3">Administrador?</th>
+			      	<div class="mdl-tooltip mdl-tooltip--large" for="tt3">
+						Inidica se possui privilégios de administração.
+					</div>
+			      <th id="tt4">é Professor?</th>
+			      <div class="mdl-tooltip mdl-tooltip--large" for="tt4">
+						Se for professor, passar o mouse em cima irá mostrar o nome e a escola.
+				  </div>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="usuario : ${session.listaUsuarios}">
+			      <td>
+			      
+			      	<button id="btnEditarUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" >
+						<i class="material-icons md-18 azul">edit</i>
+					</button>
+					<div class="mdl-tooltip" for="btnEditarUsr">
+						Alterar o usuário.
+				  	</div> - 
+			      	<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+	  					<i class="material-icons md-18 laranjabizarro">remove</i>
+					</button>
+					<div class="mdl-tooltip" for="btnExcluirUsr">
+						Excluir usuário.
+				  	</div>
+				  	
+				  </td>
+			      <td th:text="${usuario.idUsuario}">1</td>
+			      <td th:text="${usuario.email}">exemplo@email.com</td>
+			      <td th:text="${usuario.isProfCoordenadorLei}"></td>
+			      <td th:text="${usuario.isAdmin}"></td>
+			      <td th:text="${usuario.isProfessor}"></td>
+			    </tr>
+			  </tbody>
+			   
+			</table>
+		</div>
+		<button id="btnExcluirUsr" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
   			<i class="material-icons md-18 verde">add</i>
 		</button>
 		<div class="mdl-tooltip" for="btnAddUsuario">
@@ -121,6 +125,7 @@
 	</div>
 	<!-- Scripts -->
 	<script type="text/javascript" src="/js/sapeAdmin.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
 
