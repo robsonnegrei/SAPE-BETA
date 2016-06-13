@@ -7,6 +7,7 @@
 
 Antes de utilizar:
 
-1. O banco de dados deve ser configurado no arquivo: src/main/java/com/quixada/sme/factory/ConnectionFactory.java.template
+1. **Copiar** o arquivo src/main/java/com/quixada/sme/factory/ConnectionFactory.java.template para ConnectionFactory.java
 
-2. Renomear o arquivo para ConnectionFactory.java
+
+2. Configurar o banco de dados em ConnectionFactory.java
