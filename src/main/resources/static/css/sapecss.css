@@ -33,7 +33,12 @@
 	margin: 16px;
 	border: 1px;
 }
-
+.SAPE_divRegionalNome{
+	padding: 16px;
+	margin: 2px;
+	font-family: Tahoma;
+	
+}
 .material-icons.laranjabizarro { color: #FF6D00; }
 .material-icons.azul { color: #0066ff; }
 .material-icons.verde { color: green; }
