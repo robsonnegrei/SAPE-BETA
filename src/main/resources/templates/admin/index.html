@@ -84,7 +84,7 @@
 			    <tr th:each="usuario : ${session.listaUsuarios}">
 			      <td>
 			      
-			      	<button th:id="'btnEditarUsr' + ${usuario.idUsuario}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" >
+			      	<button th:id="'btnEditarUsr' + ${usuario.idUsuario}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
 						<i class="material-icons md-18 azul">edit</i>
 					</button>
 					<div class="mdl-tooltip" th:for="'btnEditarUsr' + ${usuario.idUsuario}">

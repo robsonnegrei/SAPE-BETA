@@ -59,32 +59,34 @@
 	    <div class="page-content"><!-- Your content goes here -->
 	 	<div class="col-md-2"></div>
 	 	<div class="col-md-4 SAPE_divFormLayout">
-		 	<form action="admin/addUser" method="post" >
+		 	<form action="#" th:action="@{/admin/addUser}" th:object="${usuario}" method="post" >
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="text" id="email"> </input>
+    			<input class="mdl-textfield__input" type="text" id="email" th:field="*{email}"> </input>
     			<label class="mdl-textfield__label" for="email">Email:</label>
 			  </div>
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="password" id="senha"> </input>
+    			<input class="mdl-textfield__input" type="password" id="senha" th:field="*{senha}"> </input>
     			<label class="mdl-textfield__label" for="senha">Senha:</label>
     		  </div>
     			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="profCoordLEI">
-  					<input type="checkbox" id="profCoordLEI" class="mdl-checkbox__input" ></input>
+  					<input type="checkbox" id="profCoordLEI" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="1" ></input>
+  					<input type="hidden" id="profCoordLEI_" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="0" ></input>    					 
   					<span class="mdl-checkbox__label">Professor-Coordenador LEI</span>
 				</label>
 				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isAdmin">
-  					<input type="checkbox" id="isAdmin" class="mdl-checkbox__input" ></input>
+  					<input type="checkbox" id="isAdmin" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="1"></input>
+  					<input type="hidden" id="isAdmin_" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="0"></input>
   					<span class="mdl-checkbox__label">Administrador</span>
 				</label>
 				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isProfessor">
-  					<input type="checkbox" id="isProfessor" class="mdl-checkbox__input" ></input>
+  					<input type="checkbox" id="isProfessor" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="1"></input>
+  					<input type="hidden" id="isProfessor_" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="0"></input>
   					<span class="mdl-checkbox__label">É Professor?</span>
 				</label>
-  			  
+  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>
+  			    	
 			</form>
-		 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored SAPE_admButton">
-  				Adicionar
-			</button>
+		 	
 		</div>
 		
         	

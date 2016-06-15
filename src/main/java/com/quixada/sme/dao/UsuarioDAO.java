@@ -17,13 +17,14 @@ public class UsuarioDAO {
 	public void adiciona(Usuario usuario) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO usuario "
-				+ "( email, senha, isProfCoordenadorLei, isAdmin) "
-				+ "VALUES (?, ?, ?, ?)";
+				+ "( email, senha, isProfCoordenadorLei, isAdmin, isProfessor) "
+				+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, usuario.getEmail());
 		stmt.setString(2, usuario.getSenha());
 		stmt.setInt(3, usuario.getIsProfCoordenadorLei());
 		stmt.setInt(4, usuario.getIsAdmin());
+		stmt.setInt(5, usuario.getIsProfessor());
 		stmt.execute();
 	}
 	

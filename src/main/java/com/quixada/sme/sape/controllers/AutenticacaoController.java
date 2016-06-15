@@ -30,7 +30,7 @@ public class AutenticacaoController {
 		
 		if(request.getParameter("username").equals(EMAIL_VISITANTE)){
 			// criando usuario visitante
-			Usuario visitante = new Usuario(ID_VISITANTE, EMAIL_VISITANTE, SENHA_VISITANTE, 0, 0);
+			Usuario visitante = new Usuario(ID_VISITANTE, EMAIL_VISITANTE, SENHA_VISITANTE, 0, 0,0);
 			session.setAttribute("usuario", visitante);
 			return "redirect:/home";
 		}else{
