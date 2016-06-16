@@ -52,6 +52,14 @@
 	  </div>
 	  <main class="mdl-layout__content">
 	    <div class="page-content"><!-- Your content goes here -->
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${session.erroRmUser}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Usuário não foi removido
+				</div>
+        </div>
 	 	Bem vindo <span th:text="${session.usuario.email}"></span>
 	 	<br></br>
 	 	<div>Usuários do Sistema:</div>
@@ -90,7 +98,7 @@
 					<div class="mdl-tooltip" th:for="'btnEditarUsr' + ${usuario.idUsuario}">
 						Alterar o usuário.
 				  	</div> - 
-			      	<button th:id="'btnExcluirUsr' + ${usuario.idUsuario}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
+			      	<button th:id="'btnExcluirUsr' + ${usuario.idUsuario}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirUsuario(\'' + ${usuario.idUsuario} + '\');'" >
 	  					<i class="material-icons md-18 laranjabizarro">remove</i>
 					</button>
 					<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${usuario.idUsuario}">

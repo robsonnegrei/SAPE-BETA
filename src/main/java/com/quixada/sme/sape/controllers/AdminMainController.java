@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mockito.exceptions.PrintableInvocation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,6 +81,25 @@ public class AdminMainController {
 			e.printStackTrace();			
 			return "redirect:/admin/index";
 		}
+		return "redirect:/admin/index";
+	}
+	@RequestMapping("admin/rmUser")
+	public String removerUser(HttpServletRequest request){
+		if(request.getParameter("user")!= null){
+			int id = Integer.parseInt( request.getParameter("user"));
+			//System.err.println(id);
+			UsuarioDAO dao = new UsuarioDAO();
+			try {
+				dao.excluir(id);
+				request.getSession().setAttribute("erroRmUser", "false");
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				request.getSession().setAttribute("erroRmUser", "true");
+			}
+		}
+		
 		return "redirect:/admin/index";
 	}
 }
