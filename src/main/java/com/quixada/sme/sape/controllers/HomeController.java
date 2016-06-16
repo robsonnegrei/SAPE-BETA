@@ -13,6 +13,7 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		//Sem sessão, manda pro login
 		if (session.getAttribute("usuario") == null) {
+			return "redirect:/login";
 		}
 		return "index";
 	}
