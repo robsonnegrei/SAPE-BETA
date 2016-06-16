@@ -19,7 +19,7 @@ import com.quixada.sme.model.Usuario;
 
 
 @Controller
-public class AdminMainController {
+public class AdminController {
 
 	@RequestMapping(value = {"admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request){
