@@ -1,0 +1,19 @@
+.SAPE_admAddButton{
+	float: right;
+}
+
+.SAPE_amdUsrTable{
+	margin: 10px;
+	float: right;
+}
+
+.SAPE_admButton{
+	margin: 10px;
+	
+}
+.SAPE_divFormLayout{
+	border-style: solid;
+	border-radius: 10px;
+	margin-top: 16px;
+	padding-top: 16px;
+}

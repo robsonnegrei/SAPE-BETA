@@ -5,9 +5,10 @@
 	<meta name="description" content="Sistema de Acompanhamento de Projetos Educacionais"/>
 	<meta name="keywords" content="HTML,CSS,XML,JavaScript"/>
 	<meta name="Robson Cavalcante" content="SMEQX"/>
-	<title>SAPE-ADMIN</title>
+	<title>SAPE-HOME</title>
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
     
 </head>
@@ -21,29 +22,70 @@
 	      <div class="mdl-layout-spacer"></div>
 	      <!-- Navigation. We hide it in small screens. -->
 	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
-	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="/logout">Logout</a>
 	      </nav>
 	    </div>
 	  </header>
 	  <div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Title</span>
+	    <span class="mdl-layout-title">Regionais</span>
 	    <nav class="mdl-navigation">
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="/escolas?idRegional=1&amp;nome=Califórnia">Califórnia</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="/escolas?idRegional=2&amp;nome=CampoNovo">Campo Novo</a>
+      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
+    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
 	    </nav>
 	  </div>
 	  <main class="mdl-layout__content">
-	    <div class="page-content"><!-- Your content goes here -->
-	    	<div class="jumbotron"></div>
-				<h1 th:inline="text">Ola!</h1>
-        	<form th:action="@{/logout}" method="post">
-            	<input type="submit" value="Logout"/>
-    		</form>
+	    <div class="page-content">
+	    <!-- Your content goes here -->
+	    	<!-- Regional Selecionada -->
+	    	<div class="SAPE_divRegionalNome" th:if="${session.regional} != null">
+        		 <div class="alert Alert-info" role="alert">
+ 						 <h3 th:text="${session.regional.nome}" ></h3>
+				</div>
+        	</div>
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${session.erroGetEscolas}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Nenhuma Escola Encontrada
+				</div>
+        	</div>
+       
+	    	<div th:if="${session.Regional}==true" class="jumbotron"></div>
+    			
+    			<!-- Table Escolas -->
+    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_amdUsrList">
+			  <thead>
+			    <tr>
+			      <th id="tt1">Escolas</th>
+			      <th>Id Unico</th>
+			      <th id="tt2">Nome</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="escola : ${session.ArrayEscolas}">
+				  	<td></td>
+			      	<td th:text="${escola.idEscola}"></td>
+			      	<td th:text="${escola.nome}"></td>
+			    </tr>
+			  </tbody>
+			</table>
+			<!-- End table escolas -->
+    			
 	    </div>
 	  </main>
 	</div>

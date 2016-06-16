@@ -6,17 +6,23 @@ public class Usuario {
 	private String senha;
 	private int isProfCoordenadorLei;
 	private int isAdmin; // 0 - false, 1 true
-	
+	private int isProfessor; // 0 - false, 1 true
+
 	public Usuario(){
-		
+		this.email = "";
+		this.senha = "";
+		this.isProfCoordenadorLei = 0;
+		this.isAdmin = 0;
+		this.isProfessor = 0;
 	}
-	public Usuario(int idUsuario, String email, String senha, int isProfCoordenadorLei, int isAdmin) {
+	public Usuario(int idUsuario, String email, String senha, int isProfCoordenadorLei, int isAdmin, int isProfessor) {
 		// TODO Auto-generated constructor stub
 		this.idUsuario = idUsuario;
 		this.email = email;
 		this.senha = senha;
 		this.isProfCoordenadorLei = isProfCoordenadorLei;
 		this.isAdmin = isAdmin;
+		this.isProfessor = isProfessor;
 	}
 	public int getIdUsuario() {
 		return idUsuario;
@@ -48,5 +54,10 @@ public class Usuario {
 	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-
+	public int getIsProfessor() {
+		return isProfessor;
+	}
+	public void setIsProfessor(int isProfessor) {
+		this.isProfessor = isProfessor;
+	}
 }
