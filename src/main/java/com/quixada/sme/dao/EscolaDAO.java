@@ -27,7 +27,7 @@ public class EscolaDAO {
 	public void addEscola( Escola escola) throws SQLException{
 		this.conexao = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO escola"
-				+ "(idEscola, idReginal, nome) values (?, ?, ?) " ;
+				+ "(idEscola, idRegional, nome) values (?, ?, ?) " ;
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, escola.getIdEscola());
 		stm.setInt(2, escola.getIdRegional());

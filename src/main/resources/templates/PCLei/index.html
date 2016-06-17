@@ -26,30 +26,35 @@
 	      </nav>
 	    </div>
 	  </header>
-	  <div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Regionais</span>
-	    <nav class="mdl-navigation">
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="/escolas?idRegional=1&amp;nome=Califórnia">Califórnia</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="/escolas?idRegional=2&amp;nome=CampoNovo">Campo Novo</a>
-      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
-    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
-	    </nav>
-	  </div>
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
-	    <!-- Your content goes here -->
+	    	<!-- Your content goes here -->
+	    	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroRmSchool}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Escola não foi removida
+				</div>
+        	</div>
+        	<!-- fim da mensagem de erro -->
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroAddSchool}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Escola não foi adicionada
+				</div>
+        	</div>
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroProfessorInvalido}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Professor sem autorização
+				</div>
+        	</div>
+        
 	    	<!-- Regional Selecionada -->
 	    	<div class="SAPE_divRegionalNome" th:if="${session.regional} != null">
         		 <div class="alert Alert-info" role="alert">
@@ -66,8 +71,8 @@
         	</div>
    
 	    	<div th:if="${session.Regional}==true" class="jumbotron"></div>
-    			
-    			<!-- Table Escolas -->
+    		
+    		<!-- Table Escolas -->
     		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_amdUsrList">
 			  <thead>
 			    <tr>
@@ -90,12 +95,10 @@
 			      	<button th:id="'btnExcluirUsr' + ${escola.idEscola}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirSchool(\'' + ${escola.idEscola} + '\');'" >
 	  					<i class="material-icons md-18 laranjabizarro">remove</i>
 					</button>
-					<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${usuario.idUsuario}">
+					<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${escola.idEscola}">
 						Excluir escola
-				  	</div>
-				  	
-				  </td>
-			    <tr th:each="escola : ${session.ArrayEscolas}">
+					</div>
+				  	</td>
 				  	<td></td>
 			      	<td th:text="${escola.idEscola}"></td>
 			      	<td th:text="${escola.nome}"></td>
@@ -103,12 +106,21 @@
 			  </tbody>
 			</table>
 			<!-- End table escolas -->
+			<!-- button add escola -->
+			<div class="col-md-1">
+				<a href="/PCLei/newSchoolForm">
+					<button id="btnAddSchool" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
+		  				<i class="material-icons md-18 verde">add</i>
+					</button>
+					<div class="mdl-tooltip" for="btnAddSchool">Nova Escola</div>
+	        	</a>
+        	</div>
     			
 	    </div>
 	  </main>
 	</div>
 	
-    
+    <script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>
      <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
 </html>

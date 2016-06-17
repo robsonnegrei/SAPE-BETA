@@ -33,63 +33,24 @@
     	  </form>
 	    </div>
 	  </header>
-	  <div class="mdl-layout__drawer">
-	    <span class="mdl-layout-title">Regionais</span>
-	    <nav class="mdl-navigation">
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Califórnia</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Novo</a>
-      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
-    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
-	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
-	    </nav>
-	  </div>
 	  <main class="mdl-layout__content">
-	    <div class="page-content"><!-- Your content goes here -->
+	    <div class="page-content">
+	    <!-- Your content goes here -->
 	 	<div class="col-md-2"></div>
 	 	<div class="col-md-4 SAPE_divFormLayout">
-		 	<form action="#" th:action="@{/admin/addUser}" th:object="${usuario}" method="post" >
+		 	<form th:action="@{/PCLei/addSchool}" th:object="${escola}" method="post" >
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="text" id="email" th:field="*{email}"> </input>
-    			<label class="mdl-textfield__label" for="email">Email:</label>
+    			<input class="mdl-textfield__input" type="text" id="idRegional" th:value="${session.regional.idRegional}" th:field="*{nome}" disabled="disabled"> </input>
+    			<label class="mdl-textfield__label" for="idRegional">Regional</label>
 			  </div>
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="password" id="senha" th:field="*{senha}"> </input>
-    			<label class="mdl-textfield__label" for="senha">Senha:</label>
+    			<input class="mdl-textfield__input" type="text" id="nome" th:field="*{nome}"> </input>
+    			<label class="mdl-textfield__label" for="nome">Nome:</label>
     		  </div>
-    			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="profCoordLEI">
-  					<input type="checkbox" id="profCoordLEI" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="1" ></input>
-  					<input type="hidden" id="profCoordLEI_" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="0" ></input>    					 
-  					<span class="mdl-checkbox__label">Professor-Coordenador LEI</span>
-				</label>
-				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isAdmin">
-  					<input type="checkbox" id="isAdmin" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="1"></input>
-  					<input type="hidden" id="isAdmin_" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="0"></input>
-  					<span class="mdl-checkbox__label">Administrador</span>
-				</label>
-				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isProfessor">
-  					<input type="checkbox" id="isProfessor" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="1"></input>
-  					<input type="hidden" id="isProfessor_" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="0"></input>
-  					<span class="mdl-checkbox__label">É Professor?</span>
-				</label>
-  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>
-  			    	
-			</form>
-		 	
+  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>			    	
+			</form> 	
 		</div>
-		
-        	
+
 	    </div>
 	  </main>
 	</div>
