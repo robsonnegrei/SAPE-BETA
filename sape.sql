@@ -158,3 +158,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- em 08/06/2016
 ALTER TABLE `sape`.`usuario` 
 ADD COLUMN `isProfessor` TINYINT(1) NULL AFTER `isAdmin`;
+
+-- em 16/06/2016, tabela professor agora é pclei
+ALTER TABLE `sape`.`professor` 
+RENAME TO  `sape`.`pclei` ;
