@@ -5,7 +5,7 @@ public class Escola {
 	private int idRegional;
 	private String nome;
 	
-	
+	public Escola(){}
 	public Escola(int idEscola, int idRegional, String nome) {
 		this.idEscola = idEscola;
 		this.idRegional = idRegional;
