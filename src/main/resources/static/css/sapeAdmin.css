@@ -5,6 +5,10 @@
 .SAPE_amdUsrTable{
 	margin: 10px;
 	float: right;
+	min-height: 500px;
+	width: 700px;
+	border: 1px;
+	padding: 16px;
 }
 
 .SAPE_admButton{

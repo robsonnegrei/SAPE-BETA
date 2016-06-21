@@ -27,7 +27,7 @@ public class ProfessorDAO {
 	public Professor busca(int id) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
-		String SELECT_QUERY = "SELECT * FROM professor WHERE idProfessor=" + id;
+		String SELECT_QUERY = "SELECT * FROM professor WHERE idUsuario=" + id;
 
 		PreparedStatement statement = conexao.prepareStatement(SELECT_QUERY);
 

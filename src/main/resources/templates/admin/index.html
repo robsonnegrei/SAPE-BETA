@@ -13,22 +13,7 @@
 
 
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header">
-	    <div class="mdl-layout__header-row">
-	      <!-- Title -->
-	      <span class="mdl-layout-title">SAPE</span>
-	      <!-- Add spacer, to align navigation to the right -->
-	      <div class="mdl-layout-spacer"></div>
-	      <!-- Navigation. We hide it in small screens. -->
-	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <!-- Teste -->
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="/logout">Logout</a>
-	      </nav>
-	    </div>
-	  </header>
+	  <div th:replace="/header :: header"></div>
 	  <div class="mdl-layout__drawer">
 	    <span class="mdl-layout-title">Regionais</span>
 	    <nav class="mdl-navigation">
@@ -59,8 +44,8 @@
  					<span class="sr-only">Error:</span>
  					 Usuário não foi removido
 				</div>
-        </div>
-	 	Bem vindo <span th:text="${session.usuario.email}"></span>
+        	</div>
+	 	Bem vindo <span th:utext="${session.usuario.email}"></span>
 	 	<br></br>
 	 	<div>Usuários do Sistema:</div>
 	 	<div class="col-md-2"></div>
@@ -91,7 +76,6 @@
 			  <tbody>
 			    <tr th:each="usuario : ${session.listaUsuarios}">
 			      <td>
-			      
 			      	<button th:id="'btnEditarUsr' + ${usuario.idUsuario}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
 						<i class="material-icons md-18 azul">edit</i>
 					</button>
@@ -104,7 +88,6 @@
 					<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${usuario.idUsuario}">
 						Excluir o usuário.
 				  	</div>
-				  	
 				  </td>
 			      <td th:text="${usuario.idUsuario}">1</td>
 			      <td th:text="${usuario.email}">exemplo@email.com</td>
@@ -112,19 +95,17 @@
 			      <td th:text="${usuario.isAdmin}"></td>
 			      <td th:text="${usuario.isProfessor}"></td>
 			    </tr>
-			  </tbody>
-			   
+			  </tbody> 
 			</table>
 		</div>
-		<div class="col-md-1">
+		<div class="col-md-2">
 			<a href="/admin/newUserForm">
 				<button id="btnAddUsuario" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
 	  				<i class="material-icons md-18 verde">add</i>
 				</button>
-				<div class="mdl-tooltip" for="btnAddUsuario">Novo Usuário</div>
+				<div class="mdl-tooltip" for="btnAddUsuario">Novo Usuário</div>   
         	</a>
         </div>
-
 	    </div>
 	  </main>
 	</div>
@@ -132,5 +113,4 @@
 	<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
-
 </html>
