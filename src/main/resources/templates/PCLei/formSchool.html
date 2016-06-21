@@ -13,26 +13,7 @@
 
 
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header">
-	    <div class="mdl-layout__header-row">
-	      <!-- Title -->
-	      <span class="mdl-layout-title">SAPE</span>
-	      <!-- Add spacer, to align navigation to the right -->
-	      <div class="mdl-layout-spacer"></div>
-	      <!-- Navigation. We hide it in small screens. -->
-	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Link</a>
-	        <!-- Teste -->
-	        <a class="mdl-navigation__link mdl-js-ripple-effect" href="?action=logout">Logout</a>
-	     
-	      </nav>
-	      <form th:action="@{/logout}" method="post" class="mdl-navigation__link">
-            	<input type="submit" value="Logout"/>
-    	  </form>
-	    </div>
-	  </header>
+	  <div th:replace="/header :: header"></div>
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
 	    <!-- Your content goes here -->
@@ -40,7 +21,7 @@
 	 	<div class="col-md-4 SAPE_divFormLayout">
 		 	<form th:action="@{/PCLei/addSchool}" th:object="${escola}" method="post" >
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="text" id="idRegional" th:value="${session.regional.idRegional}" th:field="*{nome}" disabled="disabled"> </input>
+    			<input class="mdl-textfield__input" type="text" id="idRegional"  th:value="${session.regional.idRegional}"  disabled="disabled"> </input>
     			<label class="mdl-textfield__label" for="idRegional">Regional</label>
 			  </div>
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

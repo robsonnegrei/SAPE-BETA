@@ -106,9 +106,13 @@ public class PCLeiController {
 		}
 		EscolaDAO eDAO = new EscolaDAO();
 		try {
+			HttpSession session = request.getSession();
+			Regional Regional = (com.quixada.sme.model.Regional) session.getAttribute(REGIONAL);
+			escola.setIdRegional(Regional.getIdRegional());
 			System.err.println("idRegiona de Escola = "+ escola.getIdRegional());
+			System.err.println("nome de Escola = "+ escola.getIdRegional());
 			eDAO.addEscola(escola);
-			request.getSession().setAttribute("erroAddSchool", "false");
+			session.setAttribute("erroAddSchool", "false");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.getSession().setAttribute("erroAddSchool", "true");
