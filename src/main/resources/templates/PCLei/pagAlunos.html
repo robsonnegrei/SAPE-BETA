@@ -19,20 +19,20 @@
 	    <div class="page-content">
 	    	<!-- Your content goes here -->
 	    	<!-- mensagem de erro -->
-	    	<div th:if="${session.erroRmSchool}">
+	    	<div th:if="${session.erroRmAluno}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
- 					 Escola não foi removida
+ 					 Aluno não foi removido
 				</div>
         	</div>
         	<!-- fim da mensagem de erro -->
         	<!-- mensagem de erro -->
-	    	<div th:if="${session.erroAddSchool}">
+	    	<div th:if="${session.erroAddAluno}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
- 					 Escola não foi adicionada
+ 					 Aluno não foi adicionado
 				</div>
         	</div>
         	<!-- mensagem de erro -->
@@ -51,11 +51,11 @@
 				</div>
         	</div>
 	    	<!-- Nenhuma escola encontrada mostra mensagem -->
-	    	<div th:if="${session.erroGetEscolas}">
+	    	<div th:if="${session.erroGetAlunos}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
- 					 Nenhuma Escola Encontrada
+ 					 Nenhum Aluno encontrado nesta escola
 				</div>
         	</div>
    			<div class="col-md-2"></div>
@@ -65,43 +65,40 @@
 				  <thead>
 				    <tr>
 				    	<th id="tt1"></th>
-				      <th id="tt1">Escolas</th>
-				      <th>Id Unico</th>
-				      <th id="tt2">Nome</th>
+				      <th id="tt1">id Único</th>
+				      <th id="tt2">Nome Aluno</th>
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	 <tr th:each="escola : ${session.ArrayEscolas}">
-				  		 			      
-					  		 <td>
-						  		 <button th:id="'btnEditarUsr' + ${escola.idEscola}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
-									<i class="material-icons md-18 azul">edit</i>
-								</button>
-								<div class="mdl-tooltip" th:for="'btnEditarUsr' + ${escola.idEscola}">
-									Alterar escola
-							  	</div> - 
-						      	<button th:id="'btnExcluirUsr' + ${escola.idEscola}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirSchool(\'' + ${escola.idEscola} + '\');'" >
-				  					<i class="material-icons md-18 laranjabizarro">remove</i>
-								</button>
-								<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${escola.idEscola}">
-									Excluir escola
-								</div>
-						  	</td>
-						  	<td><a href="/PCLei/getAlunos" th:href="@{/PCLei/getAlunos(idEscola=${escola.idEscola})}">view</a></td>
-					      	<td th:text="${escola.idEscola}"></td>
-					      	<td th:text="${escola.nome}"></td>
+				  	 <tr th:each="aluno : ${session.ArrayAlunos}">
+				      <td>
+				      	<button th:id="'btnEditarAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
+							<i class="material-icons md-18 azul">edit</i>
+						</button>
+						<div class="mdl-tooltip" th:for="'btnEditarAluno' + ${aluno.idAluno}">
+							Alterar Aluno
+					  	</div> - 
+				      	<button th:id="'btnExcluirAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirAluno(\'' + ${aluno.idAluno} + '\');'" >
+		  					<i class="material-icons md-18 laranjabizarro">remove</i>
+						</button>
+						<div class="mdl-tooltip" th:for="'btnExcluirAluno' + ${aluno.idAluno}">
+							Excluir Aluno
+						</div>
+					  	</td>
+					  	<td th:text="${aluno.idAluno}"></td>
+				      	<td th:text="${aluno.nome}"></td>
 				    </tr>
 				  </tbody>
 				</table>
-				<!-- End table escolas -->
+				<!-- End table Aluno -->
 			</div>
-			<!-- button add escola -->
+			<!-- button add Aluno -->
 			<div class="col-md-2">
 				<a href="/PCLei/newSchoolForm">
-					<button id="btnAddSchool" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
+					<button id="btnAddAluno" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
 		  				<i class="material-icons md-18 verde">add</i>
 					</button>
-					<div class="mdl-tooltip" for="btnAddSchool">Nova Escola</div>
+					<div class="mdl-tooltip" for="btnAddSchool">Novo Aluno</div>
 	        	</a>
         	</div>
     			
