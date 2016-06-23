@@ -20,7 +20,6 @@ public class AutenticacaoController {
 	private static String SENHA_VISITANTE = "";
 	private static int ID_VISITANTE = -1;
 	
-
 //	@RequestMapping(value = "/autenticar", method = RequestMethod.POST)
 //	public String autenticar(HttpServletRequest request){
 //		UsuarioDAO dao = new UsuarioDAO();
@@ -58,4 +57,5 @@ public class AutenticacaoController {
 //		session.invalidate(); 
 //		return "redirect:/login?logout";
 //	}
+
 }

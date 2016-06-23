@@ -13,7 +13,7 @@ public class ProfessorDAO {
 	public void adiciona(Professor professor) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
-		String INSERT_QUERY = "INSERT INTO professor "
+		String INSERT_QUERY = "INSERT INTO pcLei "
 				+ " (idRegional, idUsuario, nome) "
 				+ "values (?, ?, ?)";
 
@@ -27,7 +27,7 @@ public class ProfessorDAO {
 	public Professor busca(int id) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
-		String SELECT_QUERY = "SELECT * FROM professor WHERE idUsuario=" + id;
+		String SELECT_QUERY = "SELECT * FROM pcLei WHERE idUsuario=" + id;
 
 		PreparedStatement statement = conexao.prepareStatement(SELECT_QUERY);
 
@@ -47,7 +47,7 @@ public class ProfessorDAO {
 
 	public void editar (Professor professor) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
-		String UPDATE_QUERY = "UPDATE professor"
+		String UPDATE_QUERY = "UPDATE pcLei"
 				+ "SET idRegional=?, idUsuario=?, nome=?" 
 				+ "WHERE idProfessor=" + professor.getIdProfessor();
 
@@ -61,7 +61,7 @@ public class ProfessorDAO {
 	public void excluir (int id) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
-		String DELETE_QUERY = "DELETE FROM professor WHERE idProfessor=" + id;
+		String DELETE_QUERY = "DELETE FROM pcLei WHERE idProfessor=" + id;
 		PreparedStatement statement = conexao.prepareStatement(DELETE_QUERY);
 		statement.execute();
 	}

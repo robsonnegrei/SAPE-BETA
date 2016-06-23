@@ -19,3 +19,11 @@ function excluirSchool(id) {
 			alert("Você removeu a escola");
 	}
 }
+function excluirAluno(id) {
+	decisao = confirm("Deseja realmente excluir esse Aluno?");
+	if (decisao){
+		if(id != null)
+			window.location.href="rmAluno?aluno="+id;
+			alert("Você removeu o Aluno");
+	}
+}

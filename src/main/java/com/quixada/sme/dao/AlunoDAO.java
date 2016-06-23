@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Aluno;
@@ -55,5 +56,19 @@ public class AlunoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
-
+	public ArrayList<Aluno> buscarAlunosPorEscola(int idEscola) throws SQLException{
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "SELECT * FROM aluno WHERE idEscola="+ idEscola;
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		ArrayList<Aluno> alunos = new ArrayList<>();
+		while(rs.next()){
+			Aluno a = new Aluno(rs.getInt("idAluno"),rs.getInt("idEscola") ,rs.getString("nome"));
+			alunos.add(a);
+		}
+	
+		return alunos;
+		
+	}
 }

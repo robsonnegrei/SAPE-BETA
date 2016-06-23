@@ -16,8 +16,13 @@
 	
 }
 .SAPE_divFormLayout{
-	border-style: solid;
+	border-style: ridge;
 	border-radius: 10px;
 	margin-top: 16px;
 	padding-top: 16px;
+	padding: 16px;
+	margin: 4px;
+	background-color: #999999;
+	
+	
 }
