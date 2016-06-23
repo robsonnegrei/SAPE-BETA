@@ -36,7 +36,7 @@ public class AutenticacaoController {
 		}else{
 			try {
 				Usuario usr = dao.buscar(request.getParameter("username"));
-				if (usr == null || usr.getSenha().equals(request.getParameter("password"))) {
+				if (usr != null || usr.getSenha().equals(request.getParameter("password"))) {
 					session.setAttribute("usuario", usr);
 					if(usr.getIsAdmin()== 1)	
 							return "redirect:/admin/index";
