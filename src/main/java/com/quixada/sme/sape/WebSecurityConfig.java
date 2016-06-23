@@ -1,4 +1,4 @@
-package com.quixada.sme;
+package com.quixada.sme.sape;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,6 @@ import com.quixada.sme.dao.UsuarioDAO;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	//injeção do datasource que foi feito na classe MvcConfig
-	@Autowired
-	private UsuarioDAO uDAO; 
 	
 	//configuração de login 
 	//verifica os dados contidos no banco
@@ -38,12 +35,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	//caso seu usuário e senha estejam errados, ele seta um erro 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-	        .anyRequest().authenticated() 
-	        .and()
-	    .formLogin()
-	    	.loginPage("/login");
+	
+	 http.csrf().disable();
+	 http
+		 .authorizeRequests()
+         .antMatchers("/", "/css/**", "/js/**","/img/**","/bootstrap/**").permitAll()
+         .anyRequest().authenticated()
+         .and()
+     .formLogin()
+         .loginPage("/login")
+         .permitAll()
+         .and()
+     .logout()
+         .permitAll();
 		
 	}
 	
