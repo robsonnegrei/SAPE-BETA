@@ -93,13 +93,19 @@
 				<!-- End table Aluno -->
 			</div>
 			<!-- button add Aluno -->
-			<div class="col-md-2">
-				<a href="/PCLei/newSchoolForm">
-					<button id="btnAddAluno" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
-		  				<i class="material-icons md-18 verde">add</i>
-					</button>
-					<div class="mdl-tooltip" for="btnAddSchool">Novo Aluno</div>
-	        	</a>
+			<div class="col-md-4">
+			 	<div class="col-2-md-4 jumbotron SAPE_divFormLayout">
+			 	<h3>Novo Aluno</h3>
+				 	<form th:action="@{/PCLei/addAluno}" method="post" >
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
+		    			<label class="mdl-textfield__label" for="nome">Nome:</label>
+		    		  </div>
+		    		   <input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+		  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>			    	
+					</form> 	
+				</div>
+		    		 
         	</div>
     			
 	    </div>
