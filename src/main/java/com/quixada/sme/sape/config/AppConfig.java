@@ -1,13 +1,13 @@
-package com.quixada.sme.sape;
+package com.quixada.sme.sape.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.access.SecurityConfig;
+
 
 @Configuration
-@Import({ WebSecurityConfig.class })
 public class AppConfig {
 	
 	@Bean(name = "dataSource")
