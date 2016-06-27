@@ -27,3 +27,7 @@ function excluirAluno(id) {
 			alert("Você removeu o Aluno");
 	}
 }
+function load() {
+	var spinner = document.getElementById("SpinnerNovoAluno");
+	spinner.className += "is-active";
+}
