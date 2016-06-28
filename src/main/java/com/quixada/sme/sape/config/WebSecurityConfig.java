@@ -10,18 +10,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
-@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	DataSource dataSource;
+	//@Autowired
+	//DataSource dataSource;
 	//configuração de login 
 	//verifica os dados contidos no banco
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("usuario").password("senha").roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("jooj").password("12345").roles("PCLEI");
+		auth.inMemoryAuthentication().withUser("user").password("password").roles("ADMIN");
 //	  auth.jdbcAuthentication().dataSource(dataSource)
 //		.usersByUsernameQuery(
 //			"select username,senha, enabled from users where username=?")
@@ -36,12 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 http.csrf().disable();
 	 http
 		 .authorizeRequests()
-		 .antMatchers("/", "/css/**", "/js/**","/img/**","/bootstrap/**").permitAll()
 		 .antMatchers("/admin/**").access("hasRole('ADMIN')")
+		 .antMatchers("/**", "/css/**", "/js/**","/img/**","/bootstrap/**").permitAll()
          .anyRequest().authenticated()
          .and()
      .formLogin()
-         .loginPage("/login").failureUrl("/login?error")
+         .loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
          .usernameParameter("username").passwordParameter("password")
          .permitAll()
          .and()

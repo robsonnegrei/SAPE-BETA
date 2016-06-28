@@ -25,14 +25,14 @@ public class AdminController {
 	public String adminIndex(HttpServletRequest request){
 		HttpSession session = request.getSession();
 	
-		//Sem sessão, manda pro login
-		if (session.getAttribute("usuario") == null) {
-			return "redirect:../login";
-		}
-		Usuario usr = (Usuario)session.getAttribute("usuario");
-		if (usr.getIsAdmin()==0) {
-			return "redirect:../login";
-		}
+//		//Sem sessão, manda pro login
+//		if (session.getAttribute("usuario") == null) {
+//			return "redirect:../login";
+//		}
+//		Usuario usr = (Usuario)session.getAttribute("usuario");
+//		if (usr.getIsAdmin()==0) {
+//			return "redirect:../login";
+//		}
 		//Retorna lista de usuarios, pode ser subtituido por AJAX posteriormente
 		UsuarioDAO dao = new UsuarioDAO();
 		try {
