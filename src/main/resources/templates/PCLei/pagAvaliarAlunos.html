@@ -45,9 +45,11 @@
         	</div>
         
 	    	<!-- Regional Selecionada -->
-        	<div th:if="${session.regional} != null" class="alert Alert-info SAPE_divRegionalNome" role="alert">
- 				<h3 th:text="${session.regional.nome}" ></h3>
-			</div>
+	    	<div th:if="${session.regional} != null">
+        		 <div class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 						 <h3 th:text="${session.regional.nome}" ></h3>
+				</div>
+        	</div>
 	    	<!-- Nenhuma escola encontrada mostra mensagem -->
 	    	<div th:if="${session.erroGetAlunos}">
            		<div class="alert alert-danger" role="alert">
@@ -89,31 +91,21 @@
 				  </tbody>
 				</table>
 				<!-- End table Aluno -->
-				<!-- Avaliar Alunos Button -->
-				<!-- Accent-colored flat button -->
-				<button class="mdl-button mdl-js-button mdl-button--accent">
-  					Avaliar Alunos
-				</button>
-				<!-- end Avaliar Alunos Button -->
-				
 			</div>
 			<!-- button add Aluno -->
 			<div class="col-md-4">
-			 	<div class="panel panel-primary">
-			 		 <div class="panel-heading">
-    					<h3 class="panel-title">Adicionar Aluno</h3>
-    				</div>
-    				<div class="panel-body">
-					 	<form th:action="@{/PCLei/addAluno}" method="post" >
-						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
-			    			<label class="mdl-textfield__label" for="nome">Nome:</label>
-			    		  </div>
-			    		   <input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
-			  			    <input id="bttAddAluno" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>	    	
-						</form>
-					</div> 	
-				</div>		    		 
+			 	<div class="col-2-md-4 jumbotron SAPE_divFormLayout">
+			 	<h3>Novo Aluno</h3>
+				 	<form th:action="@{/PCLei/addAluno}" method="post" >
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
+		    			<label class="mdl-textfield__label" for="nome">Nome:</label>
+		    		  </div>
+		    		   <input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+		  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>			    	
+					</form> 	
+				</div>
+		    		 
         	</div>
     			
 	    </div>
