@@ -3,13 +3,17 @@
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
-
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	
 	@RequestMapping(value ={ "/","/home"})
 	public String index(HttpServletRequest request){
 		HttpSession session = request.getSession();
@@ -21,6 +25,10 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/login",  method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(HttpServletRequest request){
+		if(request.getMethod().toLowerCase().equals("post")){
+			LOGGER.debug("Request com Post recebida!");
+			
+		}
 //		HttpSession session = request.getSession();
 //		//Sem sessão, manda pro login
 //		if (session.getAttribute("usuario") == null) {

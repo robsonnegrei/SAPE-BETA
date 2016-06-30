@@ -2,8 +2,8 @@ package com.quixada.sme.sape.config;
 
 
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,21 +12,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	//@Autowired
-	//DataSource dataSource;
+	
+	
+	@Autowired
+	DataSource dataSource;
 	//configuração de login 
 	//verifica os dados contidos no banco
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("usuario").password("senha").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("jooj").password("12345").roles("PCLEI");
-		auth.inMemoryAuthentication().withUser("user").password("password").roles("ADMIN");
-//	  auth.jdbcAuthentication().dataSource(dataSource)
-//		.usersByUsernameQuery(
-//			"select username,senha, enabled from users where username=?")
-//		.authoritiesByUsernameQuery(
-//			"select username, role from user_roles where username=?");
+//		auth.inMemoryAuthentication().withUser("usuario").password("senha").roles("ADMIN");
+//		auth.inMemoryAuthentication().withUser("jooj").password("12345").roles("PCLEI");
+//		auth.inMemoryAuthentication().withUser("user").password("password").roles("ADMIN");
+		
+	  auth.jdbcAuthentication().dataSource(dataSource)
+		.usersByUsernameQuery(
+			"select email,senha,1 from usuario where email=?")
+		.authoritiesByUsernameQuery(
+			"select usuario.email, usuario_funcao.funcao from usuario join usuario_funcao on usuario.idUsuario = usuario_funcao.idUsuario where usuario.email=?");
+	  	//Query de funcao testada no SQL server 5.6
 	}	
 	//aqui ele seta as views de acordo com usuario e senha, mostra página de erro
 	//seta a página de login que contém o form de acesso e passa os parâmetros
@@ -36,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 http.csrf().disable();
 	 http
 		 .authorizeRequests()
-		 .antMatchers("/admin/**").access("hasRole('ADMIN')")
+		 .antMatchers("/admin/**").authenticated()
 		 .antMatchers("/**", "/css/**", "/js/**","/img/**","/bootstrap/**").permitAll()
          .anyRequest().authenticated()
          .and()

@@ -21,7 +21,7 @@ import com.quixada.sme.model.Usuario;
 @Controller
 public class AdminController {
 
-	@RequestMapping(value = {"admin/index","/admin"})
+	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request){
 		HttpSession session = request.getSession();
 	
