@@ -100,4 +100,9 @@ public class AlunoController {
 		int idEscola = (int) request.getSession().getAttribute("idEscola");
 		return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
 	}
+@RequestMapping(value={"PCLei/avaliar","avaliar"})
+	public String avaliarAlunos(HttpServletRequest request){
+		return "/PCLei/pagAvaliarAlunos";
+
+	}
 }
