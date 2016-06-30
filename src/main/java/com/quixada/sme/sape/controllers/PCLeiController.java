@@ -109,8 +109,6 @@ public class PCLeiController {
 			HttpSession session = request.getSession();
 			Regional Regional = (com.quixada.sme.model.Regional) session.getAttribute(REGIONAL);
 			escola.setIdRegional(Regional.getIdRegional());
-			System.err.println("idRegiona de Escola = "+ escola.getIdRegional());
-			System.err.println("nome de Escola = "+ escola.getIdRegional());
 			eDAO.addEscola(escola);
 			session.setAttribute("erroAddSchool", "false");
 		} catch (SQLException e) {
@@ -139,4 +137,5 @@ public class PCLeiController {
 		
 		return "redirect:/PCLei/index";
 	}
+
 }

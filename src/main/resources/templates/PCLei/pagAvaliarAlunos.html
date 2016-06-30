@@ -64,51 +64,49 @@
 	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
 				  <thead>
 				    <tr>
-				    	<th id="tt1"></th>
+				    
 				      <th id="tt1">id Único</th>
 				      <th id="tt2">Nome Aluno</th>
+				      <th>Pré Silábico</th>
+				      <th>Silábico</th>
+				      <th>Silábico Alfabético</th>
+				      <th>Ortográfico</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				  	 <tr th:each="aluno : ${session.ArrayAlunos}">
-				      <td>
-				      	<button th:id="'btnEditarAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
-							<i class="material-icons md-18 azul">edit</i>
-						</button>
-						<div class="mdl-tooltip" th:for="'btnEditarAluno' + ${aluno.idAluno}">
-							Alterar Aluno
-					  	</div> - 
-				      	<button th:id="'btnExcluirAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirAluno(\'' + ${aluno.idAluno} + '\');'" >
-		  					<i class="material-icons md-18 laranjabizarro">remove</i>
-						</button>
-						<div class="mdl-tooltip" th:for="'btnExcluirAluno' + ${aluno.idAluno}">
-							Excluir Aluno
-						</div>
-					  	</td>
 					  	<td th:text="${aluno.idAluno}"></td>
 				      	<td th:text="${aluno.nome}"></td>
+				      	<td>
+				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+	  							<input type="checkbox" id="preSilabico" name="Pré Silábico" class="mdl-checkbox__input"  ></input>
+	  							<input type="hidden" id="preSilabico" name="Pré Silábico" class="mdl-checkbox__input"  ></input>    					 
+							</label>
+				      	</td>
+				      		<td>
+				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+	  							<input type="checkbox" id="silabico" name="Silábico" class="mdl-checkbox__input"  ></input>
+	  							<input type="hidden" id="silabico" name="Silábico" class="mdl-checkbox__input" ></input>    					 
+							</label>
+				      	</td>
+				      		<td>
+				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+	  							<input type="checkbox" id="silabicoAlfa" name="Silábico Alfabetico" class="mdl-checkbox__input"  ></input>
+	  							<input type="hidden" id="silabicoAlfa" name="Silábico Alfabetico" class="mdl-checkbox__input"  ></input>    					 
+							</label>
+				      	</td>
+				      		<td>
+				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
+	  							<input type="checkbox" id="ortografico" name="Ortografico" class="mdl-checkbox__input"  ></input>
+	  							<input type="hidden" id="ortografico" name="Ortografico" class="mdl-checkbox__input"  ></input>    					 
+							</label>
+				      	</td>
 				    </tr>
 				  </tbody>
 				</table>
 				<!-- End table Aluno -->
 			</div>
-			<!-- button add Aluno -->
-			<div class="col-md-4">
-			 	<div class="col-2-md-4 jumbotron SAPE_divFormLayout">
-			 	<h3>Novo Aluno</h3>
-				 	<form th:action="@{/PCLei/addAluno}" method="post" >
-					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-		    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
-		    			<label class="mdl-textfield__label" for="nome">Nome:</label>
-		    		  </div>
-		    		   <input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
-		  			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>			    	
-					</form> 	
-				</div>
-		    		 
-        	</div>
-    			
-	    </div>
+        </div>		
 	  </main>
 	</div>
 	

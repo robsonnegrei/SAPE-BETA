@@ -91,9 +91,12 @@
 				<!-- End table Aluno -->
 				<!-- Avaliar Alunos Button -->
 				<!-- Accent-colored flat button -->
-				<button class="mdl-button mdl-js-button mdl-button--accent">
-  					Avaliar Alunos
-				</button>
+  					<form  th:action="@{/PCLei/avaliar}" method="post" >
+  						<!-- 
+  						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+  						 -->
+  						<input id="bttAddAluno" type="submit" class="mdl-button mdl-js-button mdl-button--accent" title="Avaliar"></input>	    	
+  					</form>
 				<!-- end Avaliar Alunos Button -->
 				
 			</div>
