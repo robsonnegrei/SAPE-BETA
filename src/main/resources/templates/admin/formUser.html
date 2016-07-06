@@ -50,20 +50,24 @@
     			<label class="mdl-textfield__label" for="senha">Senha:</label>
     		  </div>
     			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="profCoordLEI">
-  					<input type="checkbox" id="profCoordLEI" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="1" ></input>
+  					<input type="checkbox" id="profCoordLEI" name="profCoordLEI" class="mdl-checkbox__input"  th:value="1" ></input>
   					<input type="hidden" id="profCoordLEI_" name="profCoordLEI" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="0" ></input>    					 
   					<span class="mdl-checkbox__label">Professor-Coordenador LEI</span>
 				</label>
-				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isAdmin">
-  					<input type="checkbox" id="isAdmin" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="1"></input>
-  					<input type="hidden" id="isAdmin_" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="0"></input>
-  					<span class="mdl-checkbox__label">Administrador</span>
+				
+				<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+  					<input type="radio" id="option-1" class="mdl-radio__button" name="funcao" th:value="1" th:field="*{isProfCoordenadorLei}"></input>
+  					<span class="mdl-radio__label">É Professor-Coordenador LEI?</span>
 				</label>
-				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isProfessor">
-  					<input type="checkbox" id="isProfessor" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="1"></input>
-  					<input type="hidden" id="isProfessor_" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="0"></input>
-  					<span class="mdl-checkbox__label">É Professor?</span>
+				<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+  					<input type="radio" id="option-2" class="mdl-radio__button" name="funcao" th:value="1" th:field="*{isAdmin}"></input>
+  					<span class="mdl-radio__label">É Administrador?</span>
 				</label>
+				<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+  					<input type="radio" id="option-3" class="mdl-radio__button" name="funcao" th:value="1" th:field="*{isProfessor}"></input>
+  					<span class="mdl-radio__label">É Professor?</span>
+				</label>
+				
   			    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>
   			    	
 			</form>

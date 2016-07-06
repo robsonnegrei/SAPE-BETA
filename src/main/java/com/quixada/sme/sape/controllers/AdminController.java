@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mockito.exceptions.PrintableInvocation;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,10 +23,10 @@ import com.quixada.sme.model.Usuario;
 public class AdminController {
 
 	@RequestMapping(value = {"/admin/index","/admin"})
-	public String adminIndex(HttpServletRequest request){
+	public String adminIndex(HttpServletRequest request, Model model){
 		HttpSession session = request.getSession();
-		
 		//Security ja cria a sessão basta pegar e setar o usuario após o login
+		//Deve ser feito nas outras ROLES tambem
 		//Retorna lista de usuarios, pode ser subtituido por AJAX posteriormente
 		UsuarioDAO dao = new UsuarioDAO();
 		try {
@@ -48,16 +47,8 @@ public class AdminController {
 	@RequestMapping(value = {"admin/newUserForm"})
 	public String newUserForm(Model model, HttpServletRequest request)
 	{
-		HttpSession session = request.getSession();
-		
-		//Sem sessão, manda pro login
-		if (session.getAttribute("usuario") == null) {
-			return "redirect:../login";
-		}
-		Usuario usr = (Usuario)session.getAttribute("usuario");
-		if (usr.getIsAdmin()==0) {
-			return "redirect:../login";
-		}
+		//HttpSession session = request.getSession();
+		//Security redireciona pro login se não estiver autenticado
 		Usuario usuario = new Usuario();
 		model.addAttribute("usuario", usuario);
 		return "admin/formUser";
@@ -69,7 +60,7 @@ public class AdminController {
 		HttpServletRequest request){
 		//verificar se o usuario esta vindo
 		if (bindingResult.hasErrors()) {
-			System.out.println("ERROS\n" + bindingResult);
+			System.err.println("ERROS\n" + bindingResult);
 		}
 		if (usuario ==null) {
 			return "redirect:/admin/index";
