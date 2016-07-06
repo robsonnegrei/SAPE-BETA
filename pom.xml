@@ -55,6 +55,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-integration</artifactId>
 		</dependency>
+		
+		<!-- tag::security[] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- fim::security[] -->
+
+        <dependency>
+        	<groupId>bsf</groupId>
+        	<artifactId>bsf</artifactId>
+        	<version>2.4.0</version>
+        </dependency>
+        <!-- JDBC pro Security - 26/06/2016 -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

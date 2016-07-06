@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mockito.exceptions.PrintableInvocation;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,21 +23,19 @@ import com.quixada.sme.model.Usuario;
 @Controller
 public class AdminController {
 
-	@RequestMapping(value = {"admin/index","/admin"})
+	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request){
 		HttpSession session = request.getSession();
-	
-		//Sem sessão, manda pro login
-		if (session.getAttribute("usuario") == null) {
-			return "redirect:../login";
-		}
-		Usuario usr = (Usuario)session.getAttribute("usuario");
-		if (usr.getIsAdmin()==0) {
-			return "redirect:../login";
-		}
+		
+		//Security ja cria a sessão basta pegar e setar o usuario após o login
 		//Retorna lista de usuarios, pode ser subtituido por AJAX posteriormente
 		UsuarioDAO dao = new UsuarioDAO();
 		try {
+			SecurityContext context = SecurityContextHolder.getContext();
+			String email = context.getAuthentication().getName(); 
+			
+			Usuario user = dao.buscar(email);
+			session.setAttribute("usuario", user);
 			List<Usuario> usrList = dao.listarTodos();
 			session.setAttribute("listaUsuarios", usrList);
 		} catch (SQLException e) {
