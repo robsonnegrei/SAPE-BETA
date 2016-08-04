@@ -42,11 +42,11 @@
 	 	<div class="col-md-4 SAPE_divFormLayout">
 		 	<form action="#" th:action="@{/admin/addUser}" th:object="${usuario}" method="post" id="UserForm">
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="text" id="email" th:field="*{email}"> </input>
-    			<label class="mdl-textfield__label" for="email">Email:</label>
+    			<input class="mdl-textfield__input" type="text" id="email" th:field="*{email}" required="required"> </input>
+    			<label class="mdl-textfield__label" for="email" >Email:</label>
 			  </div>
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="password" id="senha" th:field="*{senha}"> </input>
+    			<input class="mdl-textfield__input" type="password" id="senha" th:field="*{senha}" required="required"> </input>
     			<label class="mdl-textfield__label" for="senha">Senha:</label>
     		  </div>
     		  

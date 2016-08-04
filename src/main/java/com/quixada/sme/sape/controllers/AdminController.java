@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,12 +57,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = {"admin/addUser"}, method = RequestMethod.POST)
-	public String addUser(@ModelAttribute(value="usuario") Usuario usuario, 
+	public String addUser( @Validated @ModelAttribute(value="usuario") Usuario usuario, 
 		BindingResult bindingResult, 
 		HttpServletRequest request,
 		RedirectAttributes redirect){
 		//validações antes de salvar
-		
 		if (bindingResult.hasErrors()) {
 			redirect.addFlashAttribute("erroAdd",bindingResult.getAllErrors().get(0).toString());
 			//System.err.println("ERROS\n" + bindingResult);
@@ -83,7 +83,11 @@ public class AdminController {
 			redirect.addFlashAttribute("erroAdd",e1.getMessage());
 			return "redirect:/admin/index";
 		}
-		
+		if (usuario.getIsAdmin()!= 1 && usuario.getIsProfCoordenadorLei() !=1 && usuario.getIsProfessor()!=1) {
+			redirect.addFlashAttribute("erroAdd","Selecione um papel de usuario!");
+			return "redirect:/admin/index";
+		}
+		//
 		try {
 			uDAO.adiciona(usuario);
 		} catch (SQLException e) {
