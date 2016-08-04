@@ -60,4 +60,5 @@ public class Usuario {
 	public void setIsProfessor(int isProfessor) {
 		this.isProfessor = isProfessor;
 	}
+	
 }
