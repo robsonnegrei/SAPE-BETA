@@ -19,3 +19,18 @@ function excluirUsuario(id) {
 			alert("Você removeu o usuário");
 	}
 }
+
+
+//Document Ready
+$(document).ready(function(){
+	//Selecionar somente uma funcao de usuario
+	//Codigo especificao para MDL
+	$("input:checkbox").on('click', function(element) {
+			$.each($('.mdl-js-checkbox'), function (index, element) {
+			    element.MaterialCheckbox.uncheck();
+			});
+			var $box = $(this);
+			$box.prop("checked", true);
+	});
+});
+
