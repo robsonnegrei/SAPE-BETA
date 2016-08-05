@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Portfolio</title>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
+</head>
+<body>
+
+
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <div th:replace="/header :: header"></div>
+	  <div class="mdl-layout__drawer">
+	    <span class="mdl-layout-title">Regionais</span>
+	    <nav class="mdl-navigation">
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Califórnia</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Novo</a>
+      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
+    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
+	    </nav>
+	  </div>
+	  <main class="mdl-layout__content">
+	    <div class="page-content"><!-- Your content goes here -->
+	    
+        <div th:if="${erro}">
+       		<div class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only" th:text="${erro}">Error:</span>
+				<div th:text="${erro}"></div>
+			</div>
+        </div>
+        
+        
+        
+	 	</div>
+	  </main>
+	</div>
+	<!-- Scripts -->
+	<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+</body>
+</html>
