@@ -24,6 +24,6 @@ public class ThymeleafExtension {
 		resolver.setOrder(templateEngine.getTemplateResolvers().size());
 		resolver.setCacheable(false);
 		templateEngine.addTemplateResolver(resolver);
-		templateEngine.addDialect(new SpringSecurityDialect());
+		//templateEngine.addDialect(new SpringSecurityDialect());
 	}
 }

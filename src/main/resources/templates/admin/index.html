@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<meta charset="UTF-8"></meta>
 	<title>Home Admin</title>
@@ -53,6 +54,10 @@
 			</div>
         </div>
 	 	Bem vindo <span th:utext="${session.usuario.email}"></span>
+	 	<br></br>
+	 	Logged user: <span th:text="${#authentication.name}"></span> 
+	 	<br></br>
+		Roles: <span sec:authentication="principal.authorities"></span>
 	 	<br></br>
 	 	<div>Usuários do Sistema:</div>
 	 	<div class="col-md-2"></div>
