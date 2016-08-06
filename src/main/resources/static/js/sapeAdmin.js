@@ -14,8 +14,8 @@ function addUsuario(){
 function excluirUsuario(id) {
 	decisao = confirm("Deseja realmente excluir o Usuario?");
 	if (decisao){
-		if(id != null)
-			window.location.href="rmUser?user="+id;
+		if(id != null  && id >= 0)
+			window.location.href="rmUser="+id;
 			alert("Você removeu o usuário");
 	}
 }

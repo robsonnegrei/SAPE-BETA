@@ -10,7 +10,6 @@ public class Avaliacao {
 	private int idAluno;
 	private String nomeAluno;
 	private String nivel;
-	
 	public Avaliacao(){}
 	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno ,String nomeAluno, String nivel) {
 		this.idAvaliacao = idAvaliacao;
@@ -21,12 +20,11 @@ public class Avaliacao {
 		this.nomeAluno = nomeAluno;
 		this.nivel = nivel;
 	}
-	
-	public String getAvaliacaoCol() {
+	public String getNivel() {
 		return nivel;
 	}
-	public void setAvaliacaoCol(String avaliacaoCol) {
-		this.nivel = avaliacaoCol;
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 	public String getNomeAluno() {
 		return nomeAluno;
@@ -64,6 +62,4 @@ public class Avaliacao {
 	public void setIdAluno(int idAluno) {
 		this.idAluno = idAluno;
 	}
-
-	
 }

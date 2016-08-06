@@ -117,6 +117,10 @@ public class AlunoController {
 		if(Alunos.isEmpty()){
 			return "/PCLei/pagAlunos";
 		}else{
+			
+			 SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+			 Calendar cal = Calendar.getInstance();
+			    
 			ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
 			
 			for (Aluno aluno : Alunos){                     
@@ -132,7 +136,23 @@ public class AlunoController {
 			sdf.format(data);
 			Date date = (Date) data;
 			 */
+			
 		}
 		return "/PCLei/pagAvaliarAlunos";
 	}
+@RequestMapping(value="/PCLei/processarAvaliacao",method = RequestMethod.POST)
+public String processoAvaliacaoAlunos(HttpServletRequest request){
+
+	ArrayList<Avaliacao> avaliacoes = (ArrayList<Avaliacao>) request.getSession().getAttribute("ArrayAvaliacao");
+	if(avaliacoes.isEmpty()){
+		return "/PCLei/pagAlunos";
+	}else{
+		
+		for (Avaliacao aluno : avaliacoes){                     
+			System.out.println("Nome = " + aluno.getNomeAluno() + "nivel= " + aluno.getNivel());
+		}
+	}
+	return "/PCLei/pagAlunos";
+}
+
 }
