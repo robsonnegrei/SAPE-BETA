@@ -27,22 +27,16 @@ public class AdminController {
 	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request, Model model){
 		HttpSession session = request.getSession();
-		//Security ja cria a sessão basta pegar e setar o usuario após o login
-		//Deve ser feito nas outras ROLES tambem
-		//Retorna lista de usuarios, pode ser subtituido por AJAX posteriormente
-		UsuarioDAO dao = new UsuarioDAO();
-		try {
-			SecurityContext context = SecurityContextHolder.getContext();
-			String email = context.getAuthentication().getName(); 
-			
-			Usuario user = dao.buscar(email);
-			session.setAttribute("usuario", user);
-			List<Usuario> usrList = dao.listarTodos();
-			session.setAttribute("listaUsuarios", usrList);
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
+		//** Codigo que seta usuario MOVIDO PARA com.quixada.sme.sape.config.CustomAuthenticationSuccessHandler
+		
+			UsuarioDAO dao = new UsuarioDAO();
+			try {
+				List<Usuario> usrList = dao.listarTodos();
+				session.setAttribute("listaUsuarios", usrList);
+			} catch (SQLException e) {
+		
+				e.printStackTrace();
+			}
 		return "admin/index";
 	}
 
