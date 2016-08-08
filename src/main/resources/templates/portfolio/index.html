@@ -54,6 +54,16 @@
             </form>
         </div>
         
+        <div th:if="${postagens == null}">
+            <span>Não existem postagens até o momento! Que tal ser o primeiro?</span>
+        </div>
+        <div th:if="${postagens != null}">
+	        <div th:each="post : ${postagens}">
+	            <span th:text="${post.mensagem}"></span>
+	        </div>
+		</div>
+		
+			        
 	 	</div>
 	  </main>
 	</div>

@@ -1,14 +1,15 @@
 package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,13 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.quixada.sme.dao.PostDAO;
 import com.quixada.sme.model.Post;
+import com.quixada.sme.model.Usuario;
 
 @Controller
 @ComponentScan(value={"com.quixada.sme.dao"})
 public class PortfolioController {
 	
-	public static final String REDIRECT_PORTFOLIO_INDEX = "redirect:portfolio/index";
-	public static final String PORTFOLIO_INDEX = "portfolio/index";
+	public static final String REDIRECT_PORTFOLIO_INDEX = "redirect:/portfolio/index";
+	public static final String PORTFOLIO_INDEX = "/portfolio/index";
 	
 	@Autowired
 	private PostDAO pDAO;
@@ -35,6 +37,13 @@ public class PortfolioController {
 	{
 		Post p = new Post();
 		model.addAttribute("postagem", p);
+		
+		try {
+			model.addAttribute("postagens",pDAO.listar());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return PORTFOLIO_INDEX;
 	}
 	
@@ -50,10 +59,12 @@ public class PortfolioController {
 			redirect.addFlashAttribute("error",bindingResult.getAllErrors().get(0).getDefaultMessage());
 			return REDIRECT_PORTFOLIO_INDEX;
 		}
-		//Add postagem
-		SecurityContext context = SecurityContextHolder.getContext();
 		
-		p.setIdProfessor(0);
+		Usuario usr = (Usuario) session.getAttribute("usuario");
+		p.setIdProfessor(usr.getIdUsuario());
+		LocalDateTime agora = LocalDateTime.now();
+		java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
+		p.setData(sqlDate);
 		try {
 			pDAO.adiciona(p);
 		} catch (SQLException e) {

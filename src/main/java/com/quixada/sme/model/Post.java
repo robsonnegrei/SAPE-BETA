@@ -1,6 +1,6 @@
 package com.quixada.sme.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
 
@@ -9,10 +9,10 @@ public class Post {
 	private int idProfessor;
 	@NotNull
 	private String mensagem;
-	private Date data;
+	private Timestamp data;
 	
 	public Post(){}
-	public Post(int idPost, int idProfessor, String mensagem, Date data) {
+	public Post(int idPost, int idProfessor, String mensagem, Timestamp data) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;
 		this.mensagem = mensagem;
@@ -36,10 +36,10 @@ public class Post {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
 
