@@ -56,7 +56,7 @@ public class PortfolioController {
 	HttpSession session)
 	{
 		if (bindingResult.hasErrors()) {
-			redirect.addFlashAttribute("error",bindingResult.getAllErrors().get(0).getDefaultMessage());
+			redirect.addFlashAttribute("erro",bindingResult.getAllErrors().get(0).getDefaultMessage());
 			return REDIRECT_PORTFOLIO_INDEX;
 		}
 		
@@ -68,7 +68,7 @@ public class PortfolioController {
 		try {
 			pDAO.adiciona(p);
 		} catch (SQLException e) {
-			redirect.addFlashAttribute("error", e.getMessage());
+			redirect.addFlashAttribute("erro", e.getMessage());
 			e.printStackTrace();
 			return REDIRECT_PORTFOLIO_INDEX;
 		}
