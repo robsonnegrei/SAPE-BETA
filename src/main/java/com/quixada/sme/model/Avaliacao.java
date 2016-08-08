@@ -8,16 +8,31 @@ public class Avaliacao {
 	private Date data;
 	private int periodo;
 	private int idAluno;
+	private String nomeAluno;
+	private String nivel;
 	
-	public Avaliacao(){
-		
-	}
-	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno) {
+	public Avaliacao(){}
+	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno ,String nomeAluno, String nivel) {
 		this.idAvaliacao = idAvaliacao;
 		this.ano = ano;
 		this.data = data;
 		this.periodo = periodo;
 		this.idAluno = idAluno;
+		this.nomeAluno = nomeAluno;
+		this.nivel = nivel;
+	}
+	
+	public String getAvaliacaoCol() {
+		return nivel;
+	}
+	public void setAvaliacaoCol(String avaliacaoCol) {
+		this.nivel = avaliacaoCol;
+	}
+	public String getNomeAluno() {
+		return nomeAluno;
+	}
+	public void setNomeAluno(String nome) {
+		this.nomeAluno = nome;
 	}
 	public int getIdAvaliacao() {
 		return idAvaliacao;

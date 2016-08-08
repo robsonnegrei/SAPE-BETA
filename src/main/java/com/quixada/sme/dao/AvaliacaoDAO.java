@@ -13,13 +13,14 @@ public class AvaliacaoDAO {
 	public void adiciona(Avaliacao aval) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO avaliacao "
-				+ "( ano, data, periodo, idAluno) "
+				+ "( ano, data, periodo, idAluno, nome_aluno) "
 				+ "VALUES (?, ?, ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setDate(1, aval.getAno());
 		stmt.setDate(2, aval.getData());
 		stmt.setInt(3, aval.getPeriodo());
 		stmt.setInt(4, aval.getIdAluno());
+		stmt.setString(5, aval.getNomeAluno());
 		stmt.execute();
 	}
 	
@@ -37,6 +38,7 @@ public class AvaliacaoDAO {
 			aval.setData(rs.getDate(3));
 			aval.setPeriodo(rs.getInt(4));
 			aval.setIdAluno(rs.getInt(5));
+			aval.setNomeAluno(rs.getString(6));
 		}
 		return aval;
 	}
@@ -52,6 +54,7 @@ public class AvaliacaoDAO {
 		stmt.setDate(2, aval.getData());
 		stmt.setInt(3, aval.getPeriodo());
 		stmt.setInt(4, aval.getIdAluno());
+		stmt.setString(5, aval.getNomeAluno());
 		stmt.execute();
 	}
 	

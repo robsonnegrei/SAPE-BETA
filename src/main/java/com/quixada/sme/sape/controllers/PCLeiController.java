@@ -36,7 +36,7 @@ public class PCLeiController {
 
 	
 	@RequestMapping(value = {"PCLei/index","/PCLei"})
-	public String adminIndex(HttpServletRequest request){
+	public String pcleiIndex(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		EscolaDAO dao = new EscolaDAO();
 		ProfessorDAO PDao = new ProfessorDAO();

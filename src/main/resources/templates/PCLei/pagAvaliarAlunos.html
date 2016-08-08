@@ -61,7 +61,7 @@
    			<div class="col-md-2"></div>
 	    	<div class="col-md-6 SAPE_amdUsrTable">
 	    		<!-- Table Escolas -->
-	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
+	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 				  <thead>
 				    <tr>
 				    
@@ -74,33 +74,22 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	 <tr th:each="aluno : ${session.ArrayAlunos}">
-					  	<td th:text="${aluno.idAluno}"></td>
-				      	<td th:text="${aluno.nome}"></td>
-				      	<td>
-				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-	  							<input type="checkbox" id="preSilabico" name="Pré Silábico" class="mdl-checkbox__input"  ></input>
-	  							<input type="hidden" id="preSilabico" name="Pré Silábico" class="mdl-checkbox__input"  ></input>    					 
-							</label>
-				      	</td>
-				      		<td>
-				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-	  							<input type="checkbox" id="silabico" name="Silábico" class="mdl-checkbox__input"  ></input>
-	  							<input type="hidden" id="silabico" name="Silábico" class="mdl-checkbox__input" ></input>    					 
-							</label>
-				      	</td>
-				      		<td>
-				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-	  							<input type="checkbox" id="silabicoAlfa" name="Silábico Alfabetico" class="mdl-checkbox__input"  ></input>
-	  							<input type="hidden" id="silabicoAlfa" name="Silábico Alfabetico" class="mdl-checkbox__input"  ></input>    					 
-							</label>
-				      	</td>
-				      		<td>
-				      		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" >
-	  							<input type="checkbox" id="ortografico" name="Ortografico" class="mdl-checkbox__input"  ></input>
-	  							<input type="hidden" id="ortografico" name="Ortografico" class="mdl-checkbox__input"  ></input>    					 
-							</label>
-				      	</td>
+				  	 <tr  th:each="av : ${session.ArrayAvaliacao}">
+					  	<td th:text="${av.idAluno}"></td>
+				      	<td th:text="${av.nomeAluno}"></td>
+				      
+					      	<td >
+					      		
+					      	</td>
+					      	<td >
+					      		
+					      	</td>
+					      	<td >
+					      		
+					      	</td>
+					      	<td>
+					      		
+					      	</td>
 				    </tr>
 				  </tbody>
 				</table>

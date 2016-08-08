@@ -11,9 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.quixada.sme.dao.UsuarioDAO;
 import com.quixada.sme.model.Usuario;
@@ -55,21 +57,42 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = {"admin/addUser"}, method = RequestMethod.POST)
-	public String addUser(@ModelAttribute(value="usuario") Usuario usuario, 
+	public String addUser( @Validated @ModelAttribute(value="usuario") Usuario usuario, 
 		BindingResult bindingResult, 
-		HttpServletRequest request){
-		//verificar se o usuario esta vindo
+		HttpServletRequest request,
+		RedirectAttributes redirect){
+		//validações antes de salvar
 		if (bindingResult.hasErrors()) {
-			System.err.println("ERROS\n" + bindingResult);
+			redirect.addFlashAttribute("erroAdd",bindingResult.getAllErrors().get(0).toString());
+			//System.err.println("ERROS\n" + bindingResult);
+			return "redirect:/admin/index";
 		}
-		if (usuario ==null) {
+		if (usuario == null) {
+			redirect.addFlashAttribute("erroAdd","Usuario invalido!");
 			return "redirect:/admin/index";
 		}
 		UsuarioDAO uDAO = new UsuarioDAO();
+		String email = usuario.getEmail();
+		try {
+			if (uDAO.buscar(email) != null) {
+				redirect.addFlashAttribute("erroAdd","Esse email ja esta em uso! Tente novamente com outro email.");
+				return "redirect:/admin/index";
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			redirect.addFlashAttribute("erroAdd",e1.getMessage());
+			return "redirect:/admin/index";
+		}
+		if (usuario.getIsAdmin()!= 1 && usuario.getIsProfCoordenadorLei() !=1 && usuario.getIsProfessor()!=1) {
+			redirect.addFlashAttribute("erroAdd","Selecione um papel de usuario!");
+			return "redirect:/admin/index";
+		}
+		//
 		try {
 			uDAO.adiciona(usuario);
 		} catch (SQLException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
+			redirect.addFlashAttribute("erroAdd",e.getMessage());
 			return "redirect:/admin/index";
 		}
 		return "redirect:/admin/index";

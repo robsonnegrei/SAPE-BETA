@@ -42,13 +42,21 @@
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
- 					 Usuário não foi removido
+ 					 Usuário não foi removido.
 				</div>
         	</div>
+        <div th:if="${erroAdd}">
+       		<div class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only" th:text="${erroAdd}">Error:</span>
+				<div th:text="${erroAdd}"></div>
+			</div>
+        </div>
 	 	Bem vindo <span th:utext="${session.usuario.email}"></span>
 	 	<br></br>
 	 	<div>Usuários do Sistema:</div>
 	 	<div class="col-md-2"></div>
+
 	 	<div class="col-md-6">
 		 	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp SAPE_amdUsrTable">
 			  <thead>
