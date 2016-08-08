@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Post;
 
-
+@Component
 public class PostDAO {
 	public void adiciona(Post post) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
