@@ -39,13 +39,11 @@
 	  <main class="mdl-layout__content">
 	    <div class="page-content"><!-- Your content goes here -->
 	    
-        <div th:if="${erro}">
-       		<div class="alert alert-danger" role="alert">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only" th:text="${erro}">Error:</span>
-				<div th:text="${erro}"></div>
-			</div>
-        </div>
+     
+    	<div th:if="${erro}" class="alert alert-warning" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" ></span>
+			<text th:text="${erro}"></text>
+		</div>
         
         <div id="postForm" class="mdl-cell mdl-cell--5-col">
             <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">

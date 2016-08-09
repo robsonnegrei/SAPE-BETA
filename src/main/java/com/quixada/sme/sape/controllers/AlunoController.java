@@ -1,28 +1,17 @@
 package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.sql.Date;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.quixada.sme.dao.AlunoDAO;
-import com.quixada.sme.dao.EscolaDAO;
 import com.quixada.sme.model.Aluno;
 import com.quixada.sme.model.Avaliacao;
 import com.quixada.sme.model.Usuario;

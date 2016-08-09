@@ -4,10 +4,13 @@ import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Post {
 	private int idPost;
 	private int idProfessor;
 	@NotNull
+	@NotEmpty
 	private String mensagem;
 	private Timestamp data;
 	

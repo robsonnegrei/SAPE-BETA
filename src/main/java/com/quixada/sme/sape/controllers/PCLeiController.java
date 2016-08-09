@@ -2,7 +2,6 @@ package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.quixada.sme.dao.EscolaDAO;
 import com.quixada.sme.dao.ProfessorDAO;
 import com.quixada.sme.dao.RegionalDAO;
-import com.quixada.sme.dao.UsuarioDAO;
 import com.quixada.sme.model.Escola;
 import com.quixada.sme.model.Professor;
 import com.quixada.sme.model.Regional;

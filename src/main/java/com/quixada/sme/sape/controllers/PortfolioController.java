@@ -3,7 +3,6 @@ package com.quixada.sme.sape.controllers;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
