@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description" content="Sistema de Acompanhamento de Projetos Educacionais"/>
+	<meta name="keywords" content="HTML,CSS,XML,JavaScript"/>
+	<meta name="Robson Cavalcante" content="SMEQX"/>
+	<title>SAPE-HOME</title>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
+    
+</head>
+<body>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <div th:replace="/header :: header"></div>
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    	<!-- Your content goes here -->
+	    	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroRmAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi removido
+				</div>
+        	</div>
+        	<!-- fim da mensagem de erro -->
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroAddAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi adicionado
+				</div>
+        	</div>
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroProfessorInvalido}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Professor sem autorização
+				</div>
+        	</div>
+        
+	    	<!-- Regional Selecionada -->
+        	<div th:if="${session.regional} != null" class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 				<h3 th:text="${session.regional.nome}" ></h3>
+			</div>
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${session.erroGetAlunos}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Nenhum Aluno encontrado nesta escola
+				</div>
+        	</div>
+   			<div class="col-md-2"></div>
+	    	<div class="col-md-6 SAPE_amdUsrTable">
+	    
+				
+				
+				
+			</div>
+			
+    			
+	    </div>
+	  </main>
+	</div>
+	
+    <script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>
+     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+</body>
+</html>
