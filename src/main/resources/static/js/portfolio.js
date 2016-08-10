@@ -25,6 +25,11 @@ $(function () {
 
 //Document Ready
 $(document).ready(function(){
-	var horapostagem = moment('.horapostagem');
-	alert(horapostagem);
+	$('.horapostagem').each(function(index){
+		 console.log( index + ": " + $( this ).text() );
+		 var horaPostagem = moment($( this ).text()).format("DD/MM/YYYY - hh:mm");
+		 console.log( index + ": " + horaPostagem );
+		 $( this ).text(horaPostagem);
+	});
+	
 });
