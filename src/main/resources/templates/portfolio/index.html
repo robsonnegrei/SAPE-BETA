@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/portfolio.css"/>
+	
 </head>
 <body>
 
@@ -45,28 +47,64 @@
 			<text th:text="${erro}"></text>
 		</div>
         
-        <div id="postForm" class="mdl-cell mdl-cell--5-col">
-            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
-                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="sample5" placeholder="O que está acontecendo?"></textarea>
-                <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" />
-            </form>
+        <div class="row">
+	        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
+	            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
+	                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="sample5" placeholder="O que está acontecendo?"></textarea>
+	                <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" />
+	            </form>
+	        </div>
         </div>
         
-        <div th:if="${postagens == null}">
+        <div th:if="${#lists.isEmpty(postagens)}" class="alert alert-info">
             <span>Não existem postagens até o momento! Que tal ser o primeiro?</span>
         </div>
-        <div th:if="${postagens != null}">
-	        <div th:each="post : ${postagens}">
-	            <span th:text="${post.mensagem}"></span>
-	        </div>
-		</div>
+        	<div th:if="${postagens != null}">
+		        
 		
+				<div class="row" th:each="post : ${postagens}">
+			        <div class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
+			            <div class="[ panel panel-default ] panel-google-plus">
+			                <div class="dropdown">
+			                    <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+			                        <span class="[ glyphicon glyphicon-chevron-down ]"></span>
+			                    </span>
+			                    <ul class="dropdown-menu" role="menu">
+			                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Editar</a></li>
+			                        <li role="presentation" class="divider"></li>
+			                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Apagar</a></li>
+			                    </ul>
+			                </div>
+			                
+			                <div class="panel-heading">
+			                    <img class="[ img-circle pull-left ]" src="http://lls.studentlifenetwork.com/bundles/slnsocialcontest/images/default-avatar.png" alt="Mouse0270" />
+			                    <h3>Robert McIntosh</h3>
+			                    <h5><time th:text="${post.data}" class="horapostagem"></time> </h5>
+			                </div>
+			                <div class="panel-body">
+			                    <p th:text="${post.mensagem}">negativa bambam.</p>
+			                </div>
+			                <!-- Quando tiver foto, vai aqui -->
+			                <div class="panel-footer" th:if="*{false}">
+			                   Anexo:
+			                </div>
+			                
+			            </div>
+			        </div>
+			    </div>
+			
+			</div>
 			        
 	 	</div>
 	  </main>
 	</div>
 	<!-- Scripts -->
 	<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
-    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script type="text/javascript" th:src="@{https://code.getmdl.io/1.1.3/material.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/portfolio.js}"></script>
+	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	
 </body>
 </html>
