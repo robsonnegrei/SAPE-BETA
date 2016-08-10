@@ -61,6 +61,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+		
+		<!-- Complemento do security para thymeleaf 05/08/2016 -->
+        <dependency>
+        	<groupId>org.thymeleaf.extras</groupId>
+        	<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
         <!-- fim::security[] -->
 
         <dependency>
@@ -73,7 +79,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 	
 	<build>

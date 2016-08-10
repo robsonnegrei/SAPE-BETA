@@ -16,6 +16,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	DataSource dataSource;
+	@Autowired
+	CustomAuthenticationSuccessHandler handler;
+	
 	//configuração de login 
 	//verifica os dados contidos no banco
 	@Autowired
@@ -39,13 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 http.csrf().disable();
 	 http
 		 .authorizeRequests()
-		 .antMatchers("/admin/**").authenticated()
+		 .antMatchers("/admin/**").hasAuthority("ADMIN")
 		 .antMatchers("/PCLei/**").permitAll()
-		 .antMatchers("/**", "/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
+		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI")
+		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
          .anyRequest().authenticated()
          .and()
      .formLogin()
-         .loginPage("/login").failureUrl("/login?error").defaultSuccessUrl("/admin")
+         .loginPage("/login").failureUrl("/login?error").successHandler(handler)
          .usernameParameter("username").passwordParameter("password")
          .permitAll()
          .and()

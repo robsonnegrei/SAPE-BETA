@@ -162,8 +162,6 @@ ADD COLUMN `isProfessor` TINYINT(1) NULL AFTER `isAdmin`;
 -- em 16/06/2016, tabela professor agora é pclei
 ALTER TABLE `sape`.`professor` 
 RENAME TO  `sape`.`pclei` ;
-<<<<<<< HEAD
-=======
 
 -- em 23/06/2016, criacao da tabela de funcao de usuario / user roles
 CREATE TABLE IF NOT EXISTS `sape`.`usuario_funcao` (
@@ -175,4 +173,3 @@ CREATE TABLE IF NOT EXISTS `sape`.`usuario_funcao` (
     REFERENCES `sape`.`usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
->>>>>>> origin/master
