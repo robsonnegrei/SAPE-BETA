@@ -58,18 +58,43 @@
         	</div>
    			<div class="col-md-2"></div>
 	    	<div class="col-md-6 SAPE_amdUsrTable">
-	    
-				
-				
+				<!-- Graficos Avaliacao -->
+				 <div id="graficobarra" style="width: 900px; height: 500px;"></div>
 				
 			</div>
-			
-    			
 	    </div>
 	  </main>
 	</div>
 	
     <script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>
-     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+    
+    /*<![CDATA[*/
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Bimestre', 'Pré-Silabico', 'Silabico', 'Silábico-Alfabético','Alfabetico','Ortografico'],
+          ['1', [[${session.vetPeriodo1[1]}]],[[${session.vetPeriodo1[2]}]], [[${session.vetPeriodo1[3]}]], [[${session.vetPeriodo1[4]}]], [[${session.vetPeriodo1[5]}]]],
+          ['2', [[${session.vetPeriodo2[1]}]], [[${session.vetPeriodo2[2]}]], [[${session.vetPeriodo2[3]}]], [[${session.vetPeriodo2[4]}]], [[${session.vetPeriodo2[5]}]]],
+          ['3', [[${session.vetPeriodo3[1]}]], [[${session.vetPeriodo3[2]}]], [[${session.vetPeriodo3[3]}]], [[${session.vetPeriodo3[4]}]], [[${session.vetPeriodo3[5]}]]],
+          ['4', [[${session.vetPeriodo4[1]}]], [[${session.vetPeriodo4[2]}]], [[${session.vetPeriodo4[3]}]], [[${session.vetPeriodo4[4]}]], [[${session.vetPeriodo4[5]}]]]]);
+
+        vetPeriodo3[1]
+        var options = {
+          chart: {
+            title: 'Relatório Bimestral',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('graficobarra'));
+
+        chart.draw(data, options);
+      }
+      /*]]>*/
+    </script>
 </body>
 </html>

@@ -13,14 +13,15 @@ public class AvaliacaoDAO {
 	public void adiciona(Avaliacao aval) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO avaliacao "
-				+ "( ano, data, periodo, idAluno, nome_aluno) "
-				+ "VALUES (?, ?, ?, ?)";
+				+ "( ano, data, periodo, idAluno, nivel, nomeAluno) "
+				+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setDate(1, aval.getAno());
 		stmt.setDate(2, aval.getData());
 		stmt.setInt(3, aval.getPeriodo());
 		stmt.setInt(4, aval.getIdAluno());
-		stmt.setString(5, aval.getNomeAluno());
+		stmt.setInt(5, aval.getNivel());
+		stmt.setString(6, aval.getNomeAluno());
 		stmt.execute();
 	}
 	
@@ -65,5 +66,19 @@ public class AvaliacaoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
+	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "select COUNT(*) from aluno join avaliacao"
+				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola ="+ idEscola +"and avaliacao.nivel ="+ nivel + "and avaliacao.	periodo = "+ periodo;
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		int resultado = rs.getInt (1);
+		
+		return resultado;
+	}
+	
+	//select * from aluno join avaliacao where idEscola = 1 and nivel = 1;
 
 }

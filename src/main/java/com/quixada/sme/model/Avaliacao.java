@@ -9,9 +9,9 @@ public class Avaliacao {
 	private int periodo;
 	private int idAluno;
 	private String nomeAluno;
-	private String nivel;
+	private int nivel;
 	public Avaliacao(){}
-	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno ,String nomeAluno, String nivel) {
+	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno ,String nomeAluno, int nivel) {
 		this.idAvaliacao = idAvaliacao;
 		this.ano = ano;
 		this.data = data;
@@ -20,10 +20,10 @@ public class Avaliacao {
 		this.nomeAluno = nomeAluno;
 		this.nivel = nivel;
 	}
-	public String getNivel() {
+	public int getNivel() {
 		return nivel;
 	}
-	public void setNivel(String nivel) {
+	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
 	public String getNomeAluno() {
