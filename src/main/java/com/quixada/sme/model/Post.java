@@ -2,9 +2,12 @@ package com.quixada.sme.model;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class Post {
 	private int idPost;
 	private int idProfessor;
+	@NotNull
 	private String mensagem;
 	private Date data;
 	
