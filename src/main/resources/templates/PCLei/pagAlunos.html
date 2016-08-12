@@ -89,16 +89,23 @@
 				  </tbody>
 				</table>
 				<!-- End table Aluno -->
+				<div>
 				<!-- Avaliar Alunos Button -->
-				<!-- Accent-colored flat button -->
   					<form  th:action="@{/PCLei/avaliar}" method="post" >
   						<!-- 
   						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
   						 -->
-  						<input id="bttAddAluno" name="Avaliar" type="submit" class="mdl-button mdl-js-button mdl-button--accent" title="Avaliar"></input>	    	
+  						<input id="bttAddAluno" name="AVALIAR" type="submit" class="btn btn-primary" velue="AVALIAR"></input>	    	
   					</form>
 				<!-- end Avaliar Alunos Button -->
 				
+				<form  th:action="@{/PCLei/gerarRelatorio}" method="post" >
+  						<!-- 
+  						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+  						 -->
+  						<input id="bttAddAluno" name="RELATORIO" type="submit" class="btn btn-primary" value="RELATORIO"></input>	    	
+  					</form>
+				</div>
 			</div>
 			<!-- button add Aluno -->
 			<div class="col-md-4">

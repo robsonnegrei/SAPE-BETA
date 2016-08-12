@@ -69,16 +69,18 @@ public class AvaliacaoDAO {
 	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "select COUNT(*) from aluno join avaliacao"
-				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola ="+ idEscola +"and avaliacao.nivel ="+ nivel + "and avaliacao.	periodo = "+ periodo;
+				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, idEscola);
+		stmt.setInt(2, nivel);
+		stmt.setInt(3, periodo);
+	
 		ResultSet rs = stmt.executeQuery();
-		
-		int resultado = rs.getInt (1);
+		int resultado = 0;
+		if(rs.next())
+			 resultado = rs.getInt(1);
 		
 		return resultado;
 	}
-	
-	//select * from aluno join avaliacao where idEscola = 1 and nivel = 1;
-
 }

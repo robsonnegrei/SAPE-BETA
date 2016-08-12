@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Escola;
+import com.quixada.sme.model.Usuario;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +25,20 @@ public class EscolaDAO {
 			escolas.add(e);
 		}
 		return escolas;
+	}
+	public Escola getEscolasPorID(int idEscola) throws SQLException{
+		String sql = "SELECT * FROM escola where idEscola ="+idEscola;
+		this.conexao = ConnectionFactory.getMySqlConnection();
+		PreparedStatement stm = conexao.prepareStatement(sql);
+		ResultSet rs = stm.executeQuery(sql);
+		Escola escola = null;
+		if (rs.next()) {
+			escola = new Escola();
+			escola.setIdEscola(rs.getInt(1));
+			escola.setIdRegional(rs.getInt(2));
+			escola.setNome(rs.getString(3));
+		}
+		return escola;
 	}
 	public void addEscola( Escola escola) throws SQLException{
 		this.conexao = ConnectionFactory.getMySqlConnection();

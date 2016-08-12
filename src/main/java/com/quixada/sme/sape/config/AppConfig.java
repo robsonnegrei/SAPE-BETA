@@ -16,9 +16,9 @@ public class AppConfig {
 	public DriverManagerDataSource dataSource() {
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3307/sape");
+	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/sape");
 	    driverManagerDataSource.setUsername("root");
-	    driverManagerDataSource.setPassword(" ");
+	    driverManagerDataSource.setPassword("");
 	    return driverManagerDataSource;
 	}
 	

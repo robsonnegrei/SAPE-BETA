@@ -7,28 +7,37 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.quixada.sme.dao.AvaliacaoDAO;
 import com.quixada.sme.dao.EscolaDAO;
+import com.quixada.sme.model.Escola;
 
 @Controller
 public class RelatorioController {
-	private static int periodo1 = 1;
-	private static int periodo2 = 2;
-	private static int periodo3 = 3;
-	private static int periodo4 = 4;
+	private static final int periodo1 = 1;
+	private static final int periodo2 = 2;
+	private static final int periodo3 = 3;
+	private static final int periodo4 = 4;
+	public static final String PAG_RELATORIO = "PCLei/pagRelatorio";
 
-	@RequestMapping(value={"/PCLei/getRelatorio","/getRelatorio"})
-	public String getRelatorioAlunos(HttpServletRequest request){
+	@RequestMapping(value = "/PCLei/gerarRelatorio", method = RequestMethod.POST )
+	public String getRelatorio(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
 		AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
 		EscolaDAO escolaDao = new EscolaDAO();
 		
-		int idRegional = (int) session.getAttribute("regional.id");
+		//int idRegional = (int)session.getAttribute("regional.id");
 		int idEscola = (int)session.getAttribute("idEscola");	
-		
-		
+		Escola escola;
+		try {
+			escola = escolaDao.getEscolasPorID(idEscola);
+			session.setAttribute("nomeEscola", escola.getNome());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		int resPeriodoPreSilabico1 = 0;
 		int resPeriodoSilabico1 = 0;
@@ -85,49 +94,40 @@ public class RelatorioController {
 			e.printStackTrace();
 		}
 		
-		
-		int[] vetPeriodo1 = new int[5];
+		int[] vetPeriodo1 = new int[6];
 		  vetPeriodo1[1] =   resPeriodoPreSilabico1;
 		  vetPeriodo1[2] =   resPeriodoSilabico1;
 		  vetPeriodo1[3] =   resPeriodoSilabicoAlfa1;
 		  vetPeriodo1[4] =   resPeriodoAlfabetico1;
 		  vetPeriodo1[5] =   resPeriodoOrtografico1;
 		  
-		int[] vetPeriodo2 = new int[5];
+		int[] vetPeriodo2 = new int[6];
 			  vetPeriodo2[1] =   resPeriodoPreSilabico2;
 			  vetPeriodo2[2] =   resPeriodoSilabico2;
 			  vetPeriodo2[3] =   resPeriodoSilabicoAlfa2;
 			  vetPeriodo2[4] =   resPeriodoAlfabetico2;
 			  vetPeriodo2[5] =   resPeriodoOrtografico2;
 			  
-		int[] vetPeriodo3 = new int[5];
+		int[] vetPeriodo3 = new int[6];
 				  vetPeriodo3[1] =   resPeriodoPreSilabico3;
 				  vetPeriodo3[2] =   resPeriodoSilabico3;
 				  vetPeriodo3[3] =   resPeriodoSilabicoAlfa3;
 				  vetPeriodo3[4] =   resPeriodoAlfabetico3;
 				  vetPeriodo3[5] =   resPeriodoOrtografico3;
 				  
-		int[] vetPeriodo4 = new int[5];
+		int[] vetPeriodo4 = new int[6];
 				  vetPeriodo4[1] =   resPeriodoPreSilabico4;
 				  vetPeriodo4[2] =   resPeriodoSilabico4;
 				  vetPeriodo4[3] =   resPeriodoSilabicoAlfa4;
 				  vetPeriodo4[4] =   resPeriodoAlfabetico4;
 				  vetPeriodo4[5] =   resPeriodoOrtografico4;
 		
-		
-	
 		session.setAttribute("vetPeriodo1", vetPeriodo1);
 		session.setAttribute("vetPeriodo2", vetPeriodo2);
 		session.setAttribute("vetPeriodo3", vetPeriodo3);
 		session.setAttribute("vetPeriodo4", vetPeriodo4);
 		
 
-		return "/PCLei/pagResultadoAvaliacao";	
+		return PAG_RELATORIO;	
 	}
-	@RequestMapping(value={"/PCLei/aval","/aval"})
-	public String getRelatorioAlunos2(HttpServletRequest request){
-		
-		return "/PCLei/pagResultadoAvaliacao";	
-	}
-
 }
