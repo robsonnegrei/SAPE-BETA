@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.quixada.sme.dao.PostDAO;
@@ -27,15 +28,25 @@ public class PortfolioController {
 	
 	public static final String REDIRECT_PORTFOLIO_INDEX = "redirect:/portfolio/index";
 	public static final String PORTFOLIO_INDEX = "/portfolio/index";
+	public static final String PORTFOLIO_NOVO = "/portfolio/newpost";
 	
 	@Autowired
 	private PostDAO pDAO;
 	
-	@RequestMapping(value = {"portfolio","portfolio/","portfolio/index"})
-	public String index(Model model, HttpServletRequest request)
+	@RequestMapping(value = {"portfolio/new"},method = RequestMethod.GET )
+	public String novo(Model model, HttpServletRequest request)
 	{
 		Post p = new Post();
 		model.addAttribute("postagem", p);
+		
+		return PORTFOLIO_NOVO;
+	}
+	
+	@RequestMapping(value = {"portfolio","portfolio/","portfolio/index"})
+	public String index(Model model, HttpServletRequest request)
+	{
+		//Post p = new Post();
+		//model.addAttribute("postagem", p);
 		
 		try {
 			model.addAttribute("postagens",pDAO.listar());

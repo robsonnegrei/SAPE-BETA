@@ -1,6 +1,7 @@
 package com.quixada.sme.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,13 +14,15 @@ public class Post {
 	@NotEmpty
 	private String mensagem;
 	private Timestamp data;
+	private List<String> linkImages;
 	
 	public Post(){}
-	public Post(int idPost, int idProfessor, String mensagem, Timestamp data) {
+	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<String> linkImages) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;
 		this.mensagem = mensagem;
 		this.data = data;
+		this.linkImages = linkImages;
 	}
 	public int getIdPost() {
 		return idPost;
@@ -45,6 +48,12 @@ public class Post {
 	public void setData(Timestamp data) {
 		this.data = data;
 	}
-
+	public List<String> getLinkImages() {
+		return linkImages;
+	}
+	public void setLinkImages(List<String> linkImages) {
+		this.linkImages = linkImages;
+	}
+	
 	
 }

@@ -47,21 +47,23 @@
 			<text th:text="${erro}"></text>
 		</div>
         
+        <!-- Flat button with ripple -->
         <div class="row">
-	        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
-	            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
-	                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="sample5" placeholder="O que está acontecendo?"></textarea>
-	                <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" />
-	            </form>
-	        </div>
-        </div>
+		<div class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
+	        <a href="/portfolio/new">
+				<button id="newpost" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" >
+				  Nova postagem
+				</button>
+				<div class="mdl-tooltip" for="newpost">Adicionar uma foto ou história ao portfólio digital</div>   
+	        </a>
+	    </div>
+	    </div>
         
         <div th:if="${#lists.isEmpty(postagens)}" class="alert alert-info">
-            <span>Não existem postagens até o momento! Que tal ser o primeiro?</span>
+            <span>Não existem postagens até o momento! <a href="/portfolio/new">Que tal ser o primeiro?</a></span>
         </div>
+        
         	<div th:if="${postagens != null}">
-		        
-		
 				<div class="row" th:each="post : ${postagens}">
 			        <div class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
 			            <div class="[ panel panel-default ] panel-google-plus">
@@ -77,12 +79,12 @@
 			                </div>
 			                
 			                <div class="panel-heading">
-			                    <img class="[ img-circle pull-left ]" src="http://lls.studentlifenetwork.com/bundles/slnsocialcontest/images/default-avatar.png" alt="Mouse0270" />
-			                    <h3>Robert McIntosh</h3>
+			                    <img class="[ img-circle pull-left ]" src="http://lls.studentlifenetwork.com/bundles/slnsocialcontest/images/default-avatar.png" />
+			                    <h3>Usuario</h3>
 			                    <h5><time th:text="${post.data}" class="horapostagem"></time> </h5>
 			                </div>
 			                <div class="panel-body">
-			                    <p th:text="${post.mensagem}">negativa bambam.</p>
+			                    <p class="texto" th:text="${post.mensagem}">negativa bambam.</p>
 			                </div>
 			                <!-- Quando tiver foto, vai aqui -->
 			                <div class="panel-footer" th:if="*{false}">
@@ -105,6 +107,7 @@
 	<script type="text/javascript" th:src="@{http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/portfolio.js}"></script>
 	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	
 	
 </body>
 </html>

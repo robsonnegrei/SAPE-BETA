@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="UTF-8"></meta>
+	<title>Nova Postagem</title>
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/portfolio.css"/>
+	
+</head>
+<body>
+
+
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <div th:replace="/header :: header"></div>
+	  <div class="mdl-layout__drawer">
+	    <span class="mdl-layout-title">Regionais</span>
+	    <nav class="mdl-navigation">
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Califórnia</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Novo</a>
+      	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Campo Velho</a>
+    	  <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Centro</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Cipó dos Anjos</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Custódio</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Dom Maurício</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">José Jucá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juá</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Juatama</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Nemésio Bezerra</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Riacho Verde</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">São João dos Queiroz</a>
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Tapuiará</a> 
+	      <a class="mdl-navigation__link mdl-js-ripple-effect" href="">Várzea da Onça</a>
+	    </nav>
+	  </div>
+	  <main class="mdl-layout__content">
+		 <div class="page-content">
+		    <!-- Your content goes here -->
+		    
+	    	<div th:if="${erro}" class="alert alert-warning" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" ></span>
+				<text th:text="${erro}"></text>
+			</div>
+	        
+	        <div class="row">
+		        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
+		            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
+		                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="sample5" placeholder="O que está acontecendo?"></textarea>
+		                <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" />
+		            </form>
+		        </div>
+	        </div>
+	      </div>
+		</main>
+		</div>
+		<!-- Scripts -->
+		<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
+	    <script type="text/javascript" th:src="@{https://code.getmdl.io/1.1.3/material.min.js}"></script>
+	    <script type="text/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/portfolio.js}"></script>
+		<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+		
+	
+</body>
+</html>

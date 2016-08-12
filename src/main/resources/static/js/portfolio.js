@@ -26,9 +26,9 @@ $(function () {
 //Document Ready
 $(document).ready(function(){
 	$('.horapostagem').each(function(index){
-		 console.log( index + ": " + $( this ).text() );
+		 //console.log( index + ": " + $( this ).text() );
 		 var horaPostagem = moment($( this ).text()).format("DD/MM/YYYY - hh:mm");
-		 console.log( index + ": " + horaPostagem );
+		 //console.log( index + ": " + horaPostagem );
 		 $( this ).text(horaPostagem);
 	});
 	
