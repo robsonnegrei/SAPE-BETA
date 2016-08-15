@@ -173,3 +173,11 @@ CREATE TABLE IF NOT EXISTS `sape`.`usuario_funcao` (
     REFERENCES `sape`.`usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+    
+-- em 15/08/2016, altera tabela de imagem
+ALTER TABLE `sape`.`imagem` 
+DROP COLUMN `linkImagem`,
+ADD COLUMN `nome` VARCHAR(300) NULL AFTER `idPost`,
+ADD COLUMN `tamanho` VARCHAR(20) NOT NULL AFTER `nome`,
+ADD COLUMN `tipo` VARCHAR(20) NOT NULL AFTER `tamanho`,
+ADD COLUMN `bytes` BLOB NOT NULL AFTER `tipo`;
