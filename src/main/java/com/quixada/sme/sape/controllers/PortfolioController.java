@@ -38,16 +38,13 @@ public class PortfolioController {
 	{
 		Post p = new Post();
 		model.addAttribute("postagem", p);
-		
 		return PORTFOLIO_NOVO;
 	}
 	
 	@RequestMapping(value = {"portfolio","portfolio/","portfolio/index"})
 	public String index(Model model, HttpServletRequest request)
 	{
-		//Post p = new Post();
-		//model.addAttribute("postagem", p);
-		
+
 		try {
 			model.addAttribute("postagens",pDAO.listar());
 		} catch (SQLException e) {
@@ -58,7 +55,7 @@ public class PortfolioController {
 	}
 	
 	
-	@RequestMapping(value = {"portfolio/add"})
+	@RequestMapping(value = {"portfolio/add"}, method = RequestMethod.POST)
 	public String addPost(@Validated @ModelAttribute(value="postagem") Post p, 
 	BindingResult bindingResult,
 	Model model,

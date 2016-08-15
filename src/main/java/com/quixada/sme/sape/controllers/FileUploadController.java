@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.quixada.sme.model.MetaArquivo;
+import com.quixada.sme.model.MetaImagem;
 
 @RequestMapping(value = {"/portfolio/controller"} )
 @RestController
 public class FileUploadController {
 
-	LinkedList<MetaArquivo> files = new LinkedList<MetaArquivo>();
-	MetaArquivo fileMeta = null;
+	LinkedList<MetaImagem> files = new LinkedList<MetaImagem>();
+	MetaImagem fileMeta = null;
 	/***************************************************
 	 * URL: /rest/controller/upload  
 	 * upload(): receives files
@@ -32,7 +32,7 @@ public class FileUploadController {
 	 * @return LinkedList<FileMeta> as json format
 	 ****************************************************/
 	@RequestMapping(value="/upload", method = RequestMethod.POST)
-	public @ResponseBody LinkedList<MetaArquivo> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody LinkedList<MetaImagem> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
  
 		//1. build an iterator
 		 Iterator<String> itr =  request.getFileNames();
@@ -50,7 +50,7 @@ public class FileUploadController {
 				 files.pop();
 			 
 			 //2.3 create new fileMeta
-			 fileMeta = new MetaArquivo();
+			 fileMeta = new MetaImagem();
 			 fileMeta.setFileName(mpf.getOriginalFilename());
 			 fileMeta.setFileSize(mpf.getSize()/1024+" Kb");
 			 fileMeta.setFileType(mpf.getContentType());
@@ -84,7 +84,7 @@ public class FileUploadController {
 	 ****************************************************/
 	@RequestMapping(value = "/get/{value}", method = RequestMethod.GET)
 	 public void get(HttpServletResponse response,@PathVariable String value){
-		 MetaArquivo getFile = files.get(Integer.parseInt(value));
+		 MetaImagem getFile = files.get(Integer.parseInt(value));
 		 try {		
 			 	response.setContentType(getFile.getFileType());
 			 	response.setHeader("Content-disposition", "attachment; filename=\""+getFile.getFileName()+"\"");
