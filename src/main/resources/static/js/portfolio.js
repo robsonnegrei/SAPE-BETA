@@ -1,3 +1,5 @@
+
+//Codigo para o 'card' das ponstagens
 $(function () {
    $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
         var $panel = $(this).closest('.panel-google-plus');

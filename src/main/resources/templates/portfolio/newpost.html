@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/portfolio.css"/>
-	
+
 </head>
 <body>
 
@@ -42,9 +42,28 @@
 		 <div class="page-content">
 		    <!-- Your content goes here -->
 		    
-	    	<div th:if="${erro}" class="alert alert-warning" role="alert">
+	    	<div th:if="${erro}" class="alert alert-warning" role="alert" id="errors">
 				<span class="glyphicon glyphicon-exclamation-sign" ></span>
 				<text th:text="${erro}"></text>
+			</div>
+	        
+			<div style="width:500px;padding:20px">
+				<div class="fileUpload btn btn-primary">
+    				<span>Selecionar Imagem</span>
+					<input id="fileupload" class="upload" type="file" name="files[]" data-url="controller/upload" multiple="multiple" accept="image/*"></input>
+					<div class="mdl-tooltip" for="fileupload">Selecionar uma ou mais fotos.</div>
+				</div>
+				<div id="progress" class="progress">
+			    	<div class="bar" style="width: 0%;"></div>
+				</div>
+				<table id="uploaded-files" class="table">
+					<tr>
+						<th>Nome do Arquivo</th>
+						<th>Tamanho</th>
+						<th>Tipo</th>
+					</tr>
+				</table>
+				
 			</div>
 	        
 	        <div class="row">
@@ -59,7 +78,6 @@
 		</main>
 		</div>
 		<!-- Scripts -->
-		<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
 	    <script type="text/javascript" th:src="@{https://code.getmdl.io/1.1.3/material.min.js}"></script>
 	    <script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}"></script>
 		<script type="text/javascript" th:src="@{http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js}"></script>
@@ -67,7 +85,8 @@
 		<script type="text/javascript" th:src="@{/js/jquery.ui.widget.js}"></script>
 		<script type="text/javascript" th:src="@{/js/jquery.iframe-transport.js}"></script>
 		<script type="text/javascript" th:src="@{/js/jquery.fileupload.js}"></script>
+		<script type="text/javascript" th:src="@{/js/uploadimagem.js}"></script>
+		<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
 		
-	
 </body>
 </html>
