@@ -4,7 +4,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 //Classe utilizada no upload de arquivos - imagens no caso
 @JsonIgnoreProperties({"bytes"})
-public class MetaArquivo {
+public class MetaImagem {
+	private int id;
 	private String fileName;
 	private String fileSize;
 	private String fileType;
@@ -35,4 +36,12 @@ public class MetaArquivo {
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }
