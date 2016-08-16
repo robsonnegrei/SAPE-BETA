@@ -22,8 +22,8 @@ $(function () {
                 		$('<tr/>')
                 		.append($('<td/>').text(file.fileName))
                 		.append($('<td/>').text(file.fileSize))
-                		.append($('<td/>').text(file.fileType))
-                		.append($('<td/>').html("<a href='controller/get/"+index+"'>Click</a>"))
+                		//.append($('<td/>').text(file.fileType))
+                		//.append($('<td/>').html("<a href='controller/get/"+index+"'>Click</a>"))
                 		)//end $("#uploaded-files").append()
             }); 
         },

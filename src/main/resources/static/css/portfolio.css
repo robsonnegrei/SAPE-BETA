@@ -196,3 +196,8 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+
+#postForm #mensagem{
+	border: 1px solid  rgba(0,0,0,.12);
+	margin-top: 2%;
+}

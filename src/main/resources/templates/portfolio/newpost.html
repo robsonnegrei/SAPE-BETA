@@ -47,30 +47,29 @@
 				<text th:text="${erro}"></text>
 			</div>
 	        
-			<div style="width:500px;padding:20px">
-				<div class="fileUpload btn btn-primary">
-    				<span>Selecionar Imagem</span>
-					<input id="fileupload" class="upload" type="file" name="files[]" data-url="controller/upload" multiple="multiple" accept="image/*"></input>
-					<div class="mdl-tooltip" for="fileupload">Selecionar uma ou mais fotos.</div>
-				</div>
-				<div id="progress" class="progress">
-			    	<div class="bar" style="width: 0%;"></div>
-				</div>
-				<table id="uploaded-files" class="table">
-					<tr>
-						<th>Nome do Arquivo</th>
-						<th>Tamanho</th>
-						<th>Tipo</th>
-					</tr>
-				</table>
-				
-			</div>
 	        
 	        <div class="row">
 		        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
 		            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
-		                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="sample5" placeholder="O que está acontecendo?"></textarea>
+		            	<input type="hidden" th:field="*{idPost}"></input>
+		                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="mensagem" placeholder="O que está acontecendo?"></textarea>
+		                
+		                <div class="fileUpload btn btn-primary" id="btnAddImg">
+		    				<span class="glyphicon glyphicon-plus"> </span>
+							<input id="fileupload" class="upload" type="file" name="files[]" data-url="controller/upload" multiple="multiple" accept="image/*"></input>
+							
+						</div>
+						<div id="progress" class="progress">
+					    	<div class="bar" style="width: 0%;"></div>
+						</div>
+		                <table id="uploaded-files" class="table">
+							<tr>
+								<th>Nome do Arquivo</th>
+								<th>Tamanho</th>
+							</tr>
+						</table>
 		                <input id="submit" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell" />
+		                
 		            </form>
 		        </div>
 	        </div>
