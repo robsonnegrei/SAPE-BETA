@@ -1,11 +1,13 @@
 package com.quixada.sme.model;
 
+import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 //Classe utilizada no upload de arquivos - imagens no caso
 @JsonIgnoreProperties({"bytes"})
 public class MetaImagem {
 	private int id;
+	private int idPost;
 	private String fileName;
 	private String fileSize;
 	private String fileType;
@@ -43,5 +45,14 @@ public class MetaImagem {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+	public int getIdPost() {
+		return idPost;
+	}
+	public void setIdPost(int idPost) {
+		this.idPost = idPost;
+	}
+	public String generateBase64Image()
+	{
+	    return Base64.encodeBase64String(this.getBytes());
+	}
 }

@@ -5,24 +5,22 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class Post {
 	private int idPost;
 	private int idProfessor;
 	@NotNull
-	@NotEmpty
 	private String mensagem;
 	private Timestamp data;
 	private List<MetaImagem> images;
 	
 	public Post(){}
-	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<MetaImagem> linkImages) {
+	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<MetaImagem> Images) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;
 		this.mensagem = mensagem;
 		this.data = data;
-		this.images = linkImages;
+		this.images = Images;
 	}
 	public int getIdPost() {
 		return idPost;
@@ -48,11 +46,11 @@ public class Post {
 	public void setData(Timestamp data) {
 		this.data = data;
 	}
-	public List<MetaImagem> getLinkImages() {
+	public List<MetaImagem> getImages() {
 		return images;
 	}
-	public void setLinkImages(List<MetaImagem> linkImages) {
-		this.images = linkImages;
+	public void setImages(List<MetaImagem> images) {
+		this.images = images;
 	}
 	
 	

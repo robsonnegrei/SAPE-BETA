@@ -1,12 +1,15 @@
 package com.quixada.sme.sape.controllers;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.quixada.sme.dao.ImagemDAO;
 import com.quixada.sme.model.MetaImagem;
+import com.quixada.sme.model.Usuario;
 
-@RequestMapping(value = {"/portfolio/controller"} )
 @RestController
+@RequestMapping(value = {"/portfolio/controller"} )
+@ComponentScan(value={"com.quixada.sme.dao"})
 public class FileUploadController {
 
+	@Autowired
+	private ImagemDAO picDAO; 
+	
 	LinkedList<MetaImagem> files = new LinkedList<MetaImagem>();
-	MetaImagem fileMeta = null;
+	MetaImagem imagemMeta = null;
 	/***************************************************
 	 * URL: /rest/controller/upload  
 	 * upload(): receives files
@@ -43,30 +52,32 @@ public class FileUploadController {
 			 
 			 //2.1 get next MultipartFile
 			 mpf = request.getFile(itr.next()); 
-			 System.out.println(mpf.getOriginalFilename() +" uploaded! "+files.size());
+			 System.out.println("Arquivo " + mpf.getOriginalFilename() +" enviado! "+files.size() + " usr: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
 			 //2.2 if files > 10 remove the first from the list
-			 if(files.size() >= 10)
-				 files.pop();
+			 // if(files.size() >= 10)
+			 //	 files.pop();
 			 
 			 //2.3 create new fileMeta
-			 fileMeta = new MetaImagem();
-			 fileMeta.setFileName(mpf.getOriginalFilename());
-			 fileMeta.setFileSize(mpf.getSize()/1024+" Kb");
-			 fileMeta.setFileType(mpf.getContentType());
+			 imagemMeta = new MetaImagem();
+			 imagemMeta.setFileName(mpf.getOriginalFilename());
+			 imagemMeta.setFileSize(mpf.getSize()/1024+" Kb");
+			 imagemMeta.setFileType(mpf.getContentType());
 			 
 			 try {
-				fileMeta.setBytes(mpf.getBytes());
+				imagemMeta.setBytes(mpf.getBytes());
 				
 				// copy file to local disk (make sure the path "e.g. D:/temp/files" exists)
-				FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("G:/temp/files/"+mpf.getOriginalFilename()));
-				
-			} catch (IOException e) {
+				//FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("G:/temp/files/"+mpf.getOriginalFilename()));
+				//Salvar no banco de dados.
+				imagemMeta.setIdPost(Integer.parseInt(request.getParameter("idPost")));
+				picDAO.adiciona(imagemMeta);
+			} catch (IOException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			 //2.4 add to files
-			 files.add(fileMeta);
+			 files.add(imagemMeta);
 			 
 		 }
 		 
