@@ -87,8 +87,11 @@
 			                    <p class="texto" th:text="${post.mensagem}">negativa bambam.</p>
 			                </div>
 			                <!-- Quando tiver foto, vai aqui -->
-			                <div class="panel-footer" th:if="*{false}">
+			                <!-- th:if="${!#lists.isEmpty(post.images)"} -->
+			                <div class="panel-footer">
 			                   Anexo:
+			                   <img th:each="img : ${post.images}" th:src="@{'data:image/jpeg;base64,'+${img.generateBase64Image()}}"/>
+				                  
 			                </div>
 			                
 			            </div>

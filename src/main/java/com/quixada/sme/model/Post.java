@@ -15,12 +15,12 @@ public class Post {
 	private List<MetaImagem> images;
 	
 	public Post(){}
-	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<MetaImagem> Images) {
+	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<MetaImagem> images) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;
 		this.mensagem = mensagem;
 		this.data = data;
-		this.images = Images;
+		this.images = images;
 	}
 	public int getIdPost() {
 		return idPost;

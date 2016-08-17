@@ -3,6 +3,7 @@ package com.quixada.sme.sape.controllers;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.quixada.sme.dao.ImagemDAO;
 import com.quixada.sme.dao.PostDAO;
+import com.quixada.sme.model.MetaImagem;
 import com.quixada.sme.model.Post;
 import com.quixada.sme.model.Usuario;
 
@@ -33,10 +37,20 @@ public class PortfolioController {
 	@Autowired
 	private PostDAO pDAO;
 	
+	@Autowired
+	private ImagemDAO picDAO;
+	
 	@RequestMapping(value = {"portfolio/new"},method = RequestMethod.GET )
-	public String novo(Model model, HttpServletRequest request)
+	public String novo(Model model, HttpServletRequest request, HttpSession session)
 	{
 		Post p = new Post();
+		Usuario usr = (Usuario) session.getAttribute("usuario");
+		p.setIdProfessor(usr.getIdUsuario());
+		try {
+			pDAO.adiciona(p);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		model.addAttribute("postagem", p);
 		return PORTFOLIO_NOVO;
 	}
@@ -46,11 +60,16 @@ public class PortfolioController {
 	{
 
 		try {
-			model.addAttribute("postagens",pDAO.listar());
+			List<Post> postagens = pDAO.listarTodos();
+			for (Post post : postagens) {
+				post.setImages(picDAO.buscaPorIdPost(post.getIdPost()));
+			}
+			
+			model.addAttribute("postagens",postagens);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return PORTFOLIO_INDEX;
 	}
 	
@@ -73,7 +92,7 @@ public class PortfolioController {
 		java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
 		p.setData(sqlDate);
 		try {
-			pDAO.adiciona(p);
+			pDAO.editar(p);
 		} catch (SQLException e) {
 			redirect.addFlashAttribute("erro", e.getMessage());
 			e.printStackTrace();
@@ -82,4 +101,5 @@ public class PortfolioController {
 		
 		return REDIRECT_PORTFOLIO_INDEX;
 	}
+	
 }

@@ -51,13 +51,12 @@
 	        <div class="row">
 		        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
 		            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
-		            	<input type="hidden" th:field="*{idPost}"></input>
+		            	<input type="text" th:field="*{idPost}"></input>
 		                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="mensagem" placeholder="O que está acontecendo?"></textarea>
 		                
 		                <div class="fileUpload btn btn-primary" id="btnAddImg">
 		    				<span class="glyphicon glyphicon-plus"> </span>
 							<input id="fileupload" class="upload" type="file" name="files[]" data-url="controller/upload" multiple="multiple" accept="image/*"></input>
-							
 						</div>
 						<div id="progress" class="progress">
 					    	<div class="bar" style="width: 0%;"></div>

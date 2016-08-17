@@ -35,16 +35,3 @@ $(document).ready(function(){
 	});
 	
 });
-
-//Hover do botao de adicionar imagem na postagem
-$('#btnAddImg').hover(
-	    function() {
-	        var $this = $(this); // caching $(this)
-	        $this.data('initialText', $this.text());
-	        $this.text("Clique para anexar fotos");
-	    },
-	    function() {
-	        var $this = $(this); // caching $(this)
-	        $this.html('<span class="glyphicon glyphicon-plus"> </span>');//$this.data('initialText'));
-	    }
-	);
