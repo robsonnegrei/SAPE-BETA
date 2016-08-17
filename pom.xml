@@ -96,6 +96,13 @@
 			<version>1.9.12</version>
 		</dependency>
 		<!-- Fim Dependencias para upload de imagens - 12/08/2016 -->
+		<!-- Apache Codec para conversao de byte array para Base64 para view -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+		<!--  -->
 	</dependencies>
 	
 	<build>
