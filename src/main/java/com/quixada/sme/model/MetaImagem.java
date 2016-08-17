@@ -53,8 +53,7 @@ public class MetaImagem {
 	}
 	public String generateBase64Image()
 	{
-		this.base64 = Base64.encodeBase64String(this.getBytes());
-	    return base64;
+		return Base64.encodeBase64String(this.getBytes());
 	}
 	
 	
