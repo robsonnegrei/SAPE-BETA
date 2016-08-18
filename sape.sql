@@ -173,16 +173,12 @@ CREATE TABLE IF NOT EXISTS `sape`.`usuario_funcao` (
     REFERENCES `sape`.`usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-<<<<<<< HEAD
 
 -- em 10/08/2016
    
 ALTER TABLE `sape`.`avaliacao` 
 ADD COLUMN `nivel` TINYINT(1) NULL AFTER `idAluno`;
-
 ALTER TABLE `sape`.`avaliacao` ADD COLUMN `nomeAluno` TINYINT(1) NULL AFTER `nivel`;
-
-=======
     
 -- em 15/08/2016, altera tabela de imagem
 ALTER TABLE `sape`.`imagem` 
@@ -191,4 +187,4 @@ ADD COLUMN `nome` VARCHAR(300) NULL AFTER `idPost`,
 ADD COLUMN `tamanho` VARCHAR(20) NOT NULL AFTER `nome`,
 ADD COLUMN `tipo` VARCHAR(20) NOT NULL AFTER `tamanho`,
 ADD COLUMN `bytes` MEDIUMBLOB NOT NULL AFTER `tipo`;
->>>>>>> master
+
