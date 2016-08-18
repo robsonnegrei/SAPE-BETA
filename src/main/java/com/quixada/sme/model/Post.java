@@ -1,22 +1,26 @@
 package com.quixada.sme.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
+
 
 public class Post {
 	private int idPost;
 	private int idProfessor;
 	@NotNull
 	private String mensagem;
-	private Date data;
+	private Timestamp data;
+	private List<MetaImagem> images;
 	
 	public Post(){}
-	public Post(int idPost, int idProfessor, String mensagem, Date data) {
+	public Post(int idPost, int idProfessor, String mensagem, Timestamp data, List<MetaImagem> images) {
 		this.idPost = idPost;
 		this.idProfessor = idProfessor;
 		this.mensagem = mensagem;
 		this.data = data;
+		this.images = images;
 	}
 	public int getIdPost() {
 		return idPost;
@@ -36,12 +40,18 @@ public class Post {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
-
+	public List<MetaImagem> getImages() {
+		return images;
+	}
+	public void setImages(List<MetaImagem> images) {
+		this.images = images;
+	}
+	
 	
 }
