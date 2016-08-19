@@ -141,9 +141,6 @@ CREATE TABLE IF NOT EXISTS `sape`.`usuario` (
   `idUsuario` INT(11) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NULL DEFAULT NULL,
   `senha` VARCHAR(255) NULL DEFAULT NULL,
-  `isProfCoordenadorLei` TINYINT(1) NULL DEFAULT NULL,
-  `isAdmin` TINYINT(1) NULL DEFAULT NULL,
-  `isProfessor` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -200,6 +197,23 @@ DEFAULT CHARACTER SET = utf8;
 
 INSERT INTO `sape`.`usuario` (`idUsuario`, `email`, `senha`, `isProfCoordenadorLei`, `isAdmin`, `isProfessor`) VALUES ('1', 'admin@sape.com', '@#12345', '0', '1', '0');
 INSERT INTO `sape`.`usuario_funcao` (`idUsuario`, `funcao`) VALUES ('1', 'ADMIN');
+-- Regionais
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Califórnia');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Campo Novo');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Campo Velho');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Centro');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Cipó dos Anjos');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Custódio');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Dom Maurício');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('José Jucá');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Juá');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Juatama');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Nemésio Bezerra');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Riacho Verde');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('São João');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('São João dos Queiroz');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Tapuiará');
+INSERT INTO `sape`.`regional` (`nome`) VALUES ('Várzea da Onça');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
