@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `sape`.`usuario_funcao` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-INSERT INTO `sape`.`usuario` (`idUsuario`, `email`, `senha`, `isProfCoordenadorLei`, `isAdmin`, `isProfessor`) VALUES ('1', 'admin@sape.com', '@#12345', '0', '1', '0');
+INSERT INTO `sape`.`usuario` (`idUsuario`, `email`, `senha`) VALUES ('1', 'admin@sape.com', '@#12345');
 INSERT INTO `sape`.`usuario_funcao` (`idUsuario`, `funcao`) VALUES ('1', 'ADMIN');
 -- Regionais
 INSERT INTO `sape`.`regional` (`nome`) VALUES ('Califórnia');
