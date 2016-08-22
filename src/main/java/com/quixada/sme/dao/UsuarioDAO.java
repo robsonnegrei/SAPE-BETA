@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mysql.jdbc.Statement;
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Usuario;
 
@@ -23,21 +24,25 @@ public class UsuarioDAO {
 	public void adiciona(Usuario usuario) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO usuario "
-				+ "( email, senha, isProfCoordenadorLei, isAdmin, isProfessor) "
-				+ "VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement stmt = con.prepareStatement(sql);
+				+ "( email, senha) "
+				+ "VALUES (?, ?)";
+		PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		stmt.setString(1, usuario.getEmail());
 		stmt.setString(2, usuario.getSenha());
-		ResultSet rs = stmt.executeQuery();
+		stmt.execute();
+		ResultSet result = stmt.getGeneratedKeys();
+		if(result.next()){
+			usuario.setIdUsuario(result.getInt(1));
+		}
 		//Adiciona funcao do usuario
 		if (usuario.getIsAdmin()==1) {
-			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "ADMIN");
+			funcaoDAO.adicionaFuncao(usuario.getIdUsuario(), "ADMIN");
 		}
 		if (usuario.getIsProfCoordenadorLei()==1) {
-			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "PCLEI");
+			funcaoDAO.adicionaFuncao(usuario.getIdUsuario(), "PCLEI");
 		}
 		if (usuario.getIsProfessor()==1) {
-			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "PROFESSOR");
+			funcaoDAO.adicionaFuncao(usuario.getIdUsuario(), "PROFESSOR");
 		}
 	}
 	

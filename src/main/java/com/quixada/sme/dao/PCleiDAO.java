@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.quixada.sme.factory.ConnectionFactory;
-import com.quixada.sme.model.Professor;
+import com.quixada.sme.model.PClei;
 
-public class ProfessorDAO {
+@Component
+public class PCleiDAO {
 
-	public void adiciona(Professor professor) throws SQLException {
+	public void adiciona(PClei professor) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
 		String INSERT_QUERY = "INSERT INTO pcLei "
@@ -24,7 +27,7 @@ public class ProfessorDAO {
 		statement.execute();
 	}
 
-	public Professor busca(int id) throws SQLException {
+	public PClei busca(int id) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
 		String SELECT_QUERY = "SELECT * FROM pcLei WHERE idUsuario=" + id;
@@ -33,9 +36,9 @@ public class ProfessorDAO {
 
 		ResultSet rs = statement.executeQuery();
 
-		Professor professor  = null;
+		PClei professor  = null;
 		if(rs.next()) {
-			professor = new Professor();
+			professor = new PClei();
 			professor.setIdProfessor(rs.getInt(1));
 			professor.setIdRegional(rs.getInt(2));
 			professor.setIdUsuario(rs.getInt(3));
@@ -45,7 +48,7 @@ public class ProfessorDAO {
 	}	
 
 
-	public void editar (Professor professor) throws SQLException {
+	public void editar (PClei professor) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 		String UPDATE_QUERY = "UPDATE pcLei"
 				+ "SET idRegional=?, idUsuario=?, nome=?" 

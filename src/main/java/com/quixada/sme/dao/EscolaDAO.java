@@ -2,15 +2,17 @@ package com.quixada.sme.dao;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Escola;
-import com.quixada.sme.model.Usuario;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
+@Component
 public class EscolaDAO {
 	private Connection conexao; 
 	

@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Regional;
 
-
+@Component
 public class RegionalDAO {
 	
 	public void adiciona(Regional regional) throws SQLException{
