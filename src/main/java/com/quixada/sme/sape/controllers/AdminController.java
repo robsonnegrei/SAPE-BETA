@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +23,16 @@ import com.quixada.sme.model.Usuario;
 @Controller
 public class AdminController {
 
+	@Autowired
+	private UsuarioDAO uDAO;
+	
 	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request, Model model){
 		HttpSession session = request.getSession();
 		//** Codigo que seta usuario MOVIDO PARA com.quixada.sme.sape.config.CustomAuthenticationSuccessHandler
 		
-			UsuarioDAO dao = new UsuarioDAO();
 			try {
-				List<Usuario> usrList = dao.listarTodos();
+				List<Usuario> usrList = uDAO.listarTodos();
 				session.setAttribute("listaUsuarios", usrList);
 			} catch (SQLException e) {
 		
@@ -56,14 +59,13 @@ public class AdminController {
 		//validações antes de salvar
 		if (bindingResult.hasErrors()) {
 			redirect.addFlashAttribute("erroAdd",bindingResult.getAllErrors().get(0).toString());
-			//System.err.println("ERROS\n" + bindingResult);
 			return "redirect:/admin/index";
 		}
 		if (usuario == null) {
 			redirect.addFlashAttribute("erroAdd","Usuario invalido!");
 			return "redirect:/admin/index";
 		}
-		UsuarioDAO uDAO = new UsuarioDAO();
+		
 		String email = usuario.getEmail();
 		try {
 			if (uDAO.buscar(email) != null) {
@@ -94,9 +96,9 @@ public class AdminController {
 		if(request.getParameter("user")!= null){
 			int id = Integer.parseInt( request.getParameter("user"));
 			//System.err.println(id);
-			UsuarioDAO dao = new UsuarioDAO();
+			
 			try {
-				dao.excluir(id);
+				uDAO.excluir(id);
 				request.getSession().setAttribute("erroRmUser", "false");
 
 			} catch (SQLException e) {

@@ -2,6 +2,7 @@ package com.quixada.sme.sape.config;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.dao.UsuarioDAO;
@@ -45,7 +49,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			
 			RequestCache rc = new HttpSessionRequestCache();
 			SavedRequest savedRequest = rc.getRequest(request, response);
-			response.sendRedirect(savedRequest.getRedirectUrl());
-			//response.sendRedirect("/admin");
+			
+			try{
+				Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+				if (roles.contains(new SimpleGrantedAuthority("ADMIN"))) {
+					response.sendRedirect("/admin");
+					return;
+				}
+				response.sendRedirect(savedRequest.getRedirectUrl());
+			}
+			catch(NullPointerException e){
+				response.sendRedirect("/");
+			}
 	}
 }
