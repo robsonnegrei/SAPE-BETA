@@ -106,9 +106,19 @@
 				  </td>
 			      <td th:text="${usuario.idUsuario}">1</td>
 			      <td th:text="${usuario.email}">exemplo@email.com</td>
-			      <td th:text="${usuario.isProfCoordenadorLei}"></td>
-			      <td th:text="${usuario.isAdmin}"></td>
-			      <td th:text="${usuario.isProfessor}"></td>
+			      <td>
+			      	<span th:if="${usuario.isProfCoordenadorLei==1}">Sim</span>
+			      	<span th:if="${usuario.isProfCoordenadorLei!=1}">Não</span>
+			      </td>
+			      <td>
+			      	<span th:if="${usuario.isAdmin==1}">Sim</span>
+			      	<span th:if="${usuario.isAdmin!=1}">Não</span>
+			      </td>
+			      <td>
+			      	<span th:if="${usuario.isProfessor==1}">Sim</span>
+			      	<span th:if="${usuario.isProfessor!=1}">Não</span>
+			      </td>
+			      
 			    </tr>
 			  </tbody> 
 			</table>

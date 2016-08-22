@@ -56,6 +56,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 					response.sendRedirect("/admin");
 					return;
 				}
+				if (roles.contains(new SimpleGrantedAuthority("PCLEI"))) {
+					response.sendRedirect("/pclei");
+					return;
+				}
 				response.sendRedirect(savedRequest.getRedirectUrl());
 			}
 			catch(NullPointerException e){
