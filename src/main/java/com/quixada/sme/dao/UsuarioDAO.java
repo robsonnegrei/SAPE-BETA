@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.factory.ConnectionFactory;
@@ -16,6 +17,8 @@ import com.quixada.sme.model.Usuario;
 @Component
 public class UsuarioDAO {
 	
+	@Autowired
+	private Usuario_FuncaoDAO funcaoDAO;
 	
 	public void adiciona(Usuario usuario) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
@@ -25,10 +28,17 @@ public class UsuarioDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, usuario.getEmail());
 		stmt.setString(2, usuario.getSenha());
-		stmt.setInt(3, usuario.getIsProfCoordenadorLei());
-		stmt.setInt(4, usuario.getIsAdmin());
-		stmt.setInt(5, usuario.getIsProfessor());
-		stmt.execute();
+		ResultSet rs = stmt.executeQuery();
+		//Adiciona funcao do usuario
+		if (usuario.getIsAdmin()==1) {
+			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "ADMIN");
+		}
+		if (usuario.getIsProfCoordenadorLei()==1) {
+			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "PCLEI");
+		}
+		if (usuario.getIsProfessor()==1) {
+			funcaoDAO.adicionaFuncao(rs.getInt("idUsuario"), "PROFESSOR");
+		}
 	}
 	
 	public Usuario buscar(String email) throws SQLException{
@@ -44,8 +54,7 @@ public class UsuarioDAO {
 			usr.setIdUsuario(rs.getInt(1));
 			usr.setEmail(rs.getString(2));
 			usr.setSenha(rs.getString(3));
-			usr.setIsProfCoordenadorLei(rs.getInt(4));
-			usr.setIsAdmin(rs.getInt(5));
+			funcaoDAO.fillFuncao(usr);
 		}
 		return usr;
 	}
@@ -61,24 +70,26 @@ public class UsuarioDAO {
 			usr = new Usuario();
 			usr.setIdUsuario(rs.getInt(1));
 			usr.setEmail(rs.getString(2));
-			usr.setSenha(rs.getString(3));
-			usr.setIsProfCoordenadorLei(rs.getInt(4));
-			usr.setIsAdmin(rs.getInt(5));
+			funcaoDAO.fillFuncao(usr);
 		}
 		return usr;
 	}
-
+	
+	/**
+	 * Altera somente EMAIL E/OU SENHA do usuario
+	 * 
+	 * @param usuario Usuario que sera alterado, deve estar com id preenchido
+	 * @throws SQLException
+	 */
 	public void editar(Usuario usuario) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "UPDATE usuario "
-				+ "SET email=?, senha=?, isProfCoordenadorLei=?, isAdmin=? "
+				+ "SET email=?, senha=? "
 				+ "WHERE idUsuario=" + usuario.getIdUsuario();
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, usuario.getEmail());
 		stmt.setString(2, usuario.getSenha());
-		stmt.setInt(3, usuario.getIsProfCoordenadorLei());
-		stmt.setInt(4, usuario.getIsAdmin());
 		stmt.execute();
 	}
 	
@@ -102,8 +113,7 @@ public class UsuarioDAO {
 			usr.setIdUsuario(rs.getInt(1));
 			usr.setEmail(rs.getString(2));
 			usr.setSenha(rs.getString(3));
-			usr.setIsProfCoordenadorLei(rs.getInt(4));
-			usr.setIsAdmin(rs.getInt(5));
+			funcaoDAO.fillFuncao(usr);
 			usrList.add(usr);
 		}
 		return usrList;
