@@ -1,15 +1,15 @@
 package com.quixada.sme.model;
 
-public class Professor {
+public class PClei {
 	private int idProfessor;
 	private int idRegional;
 	private int idUsuario;
 	private String nome;
 
-	public Professor (){
+	public PClei (){
 
 	}
-	public Professor(int idProfessor, int idRegional, int idUsuario, String nome) {
+	public PClei(int idProfessor, int idRegional, int idUsuario, String nome) {
 		this.idProfessor = idProfessor;
 		this.idRegional = idRegional;
 		this.idUsuario = idUsuario;
