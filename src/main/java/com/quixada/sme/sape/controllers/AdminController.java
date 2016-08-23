@@ -12,11 +12,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.quixada.sme.dao.PCleiDAO;
+import com.quixada.sme.dao.RegionalDAO;
 import com.quixada.sme.dao.UsuarioDAO;
+import com.quixada.sme.model.PClei;
+import com.quixada.sme.model.Regional;
 import com.quixada.sme.model.Usuario;
 
 
@@ -25,6 +31,10 @@ public class AdminController {
 
 	@Autowired
 	private UsuarioDAO uDAO;
+	@Autowired
+	private RegionalDAO reDAO;
+	
+	@Autowired private PCleiDAO pcDAO;
 	
 	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request, Model model){
@@ -47,12 +57,23 @@ public class AdminController {
 		//HttpSession session = request.getSession();
 		//Security redireciona pro login se não estiver autenticado
 		Usuario usuario = new Usuario();
+		PClei pclei = new PClei();
+		List<Regional> regionais = null;
+		try {
+			regionais = reDAO.listar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("pclei", pclei);
 		model.addAttribute("usuario", usuario);
+		model.addAttribute("regionais", regionais);
 		return "admin/formUser";
 	}
 	
 	@RequestMapping(value = {"admin/addUser"}, method = RequestMethod.POST)
-	public String addUser( @Validated @ModelAttribute(value="usuario") Usuario usuario, 
+	public String addUser( @Validated @ModelAttribute(value="usuario") Usuario usuario,
+		@ModelAttribute(value="pclei") PClei pclei,
 		BindingResult bindingResult, 
 		HttpServletRequest request,
 		RedirectAttributes redirect){
@@ -84,6 +105,10 @@ public class AdminController {
 		//
 		try {
 			uDAO.adiciona(usuario);
+			if (usuario.getIsProfCoordenadorLei()==1) {
+				pclei.setIdUsuario(usuario.getIdUsuario());
+				pcDAO.adiciona(pclei);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			redirect.addFlashAttribute("erroAdd",e.getMessage());
@@ -91,14 +116,15 @@ public class AdminController {
 		}
 		return "redirect:/admin/index";
 	}
-	@RequestMapping("admin/rmUser")
-	public String removerUser(HttpServletRequest request){
-		if(request.getParameter("user")!= null){
-			int id = Integer.parseInt( request.getParameter("user"));
-			//System.err.println(id);
+	@RequestMapping("admin/rmuser")
+	public String removerUser(HttpServletRequest request, @RequestParam("id") int id){
+			
+		    //int id = Integer.parseInt( request.getParameter("user"));
 			
 			try {
+				
 				uDAO.excluir(id);
+				//Se for pclei remover tambem
 				request.getSession().setAttribute("erroRmUser", "false");
 
 			} catch (SQLException e) {
@@ -106,7 +132,6 @@ public class AdminController {
 				e.printStackTrace();
 				request.getSession().setAttribute("erroRmUser", "true");
 			}
-		}
 		
 		return "redirect:/admin/index";
 	}

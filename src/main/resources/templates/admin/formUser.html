@@ -40,29 +40,39 @@
 	    <div class="page-content"><!-- Your content goes here -->
 	 	<div class="col-md-2"></div>
 	 	<div class="col-md-4 SAPE_divFormLayout">
-		 	<form action="#" th:action="@{/admin/addUser}" th:object="${usuario}" method="post" id="UserForm">
+		 	<form action="#" th:action="@{/admin/addUser}" method="post" id="UserForm">
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="text" id="email" th:field="*{email}" required="required"> </input>
+    			<input class="mdl-textfield__input" type="text" id="email" th:field="${usuario.email}" required="required"> </input>
     			<label class="mdl-textfield__label" for="email" >Email:</label>
 			  </div>
 			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    			<input class="mdl-textfield__input" type="password" id="senha" th:field="*{senha}" required="required"> </input>
+    			<input class="mdl-textfield__input" type="password" id="senha" th:field="${usuario.senha}" required="required"> </input>
     			<label class="mdl-textfield__label" for="senha">Senha:</label>
     		  </div>
     		  
     			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="profCoordLEI">
-  					<input type="checkbox" id="profCoordLEI" name="radio" class="mdl-checkbox__input"  th:field="*{isProfCoordenadorLei}" th:value="1" ></input>
-  					<input type="hidden" id="profCoordLEI_" name="radio" class="mdl-checkbox__input" th:field="*{isProfCoordenadorLei}" th:value="0" ></input>    					 
+  					<input type="checkbox" id="profCoordLEI" name="radio" class="mdl-checkbox__input"  th:field="${usuario.isProfCoordenadorLei}" th:value="1" ></input>
+  					<input type="hidden" id="profCoordLEI_" name="radio" class="mdl-checkbox__input" th:field="${usuario.isProfCoordenadorLei}" th:value="0" ></input>    					 
   					<span class="mdl-checkbox__label">É Professor-Coordenador LEI?</span>
 				</label>
+				<div class="mdl-textfield mdl-js-textfield">
+					<label class="mdl-label" for="idRegional" >Regional:</label>
+					<select th:field="${pclei.idRegional}" name="idRegional">
+						<option th:each="regional : ${regionais}" th:value="${regional.idRegional}" th:text="${regional.nome}"></option>
+					</select>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    				<input class="mdl-textfield__input" type="text" id="nome" th:field="${pclei.nome}"></input>
+    				<label class="mdl-textfield__label" for="nome" >Nome - PCLEI:</label>
+			  	</div>
 				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isAdmin">
-   					<input type="checkbox" id="isAdmin" name="radio" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="1"></input>
-   					<input type="hidden" id="isAdmin_" name="radio" class="mdl-checkbox__input" th:field="*{isAdmin}" th:value="0"></input>
+   					<input type="checkbox" id="isAdmin" name="radio" class="mdl-checkbox__input" th:field="${usuario.isAdmin}" th:value="1"></input>
+   					<input type="hidden" id="isAdmin_" name="radio" class="mdl-checkbox__input" th:field="${usuario.isAdmin}" th:value="0"></input>
    					<span class="mdl-checkbox__label">É Administrador?</span>
   				</label>
   				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isProfessor">
-   					<input type="checkbox" id="isProfessor" name="radio" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="1"></input>
-   					<input type="hidden" id="isProfessor_" name="radio" class="mdl-checkbox__input" th:field="*{isProfessor}" th:value="0"></input>
+   					<input type="checkbox" id="isProfessor" name="radio" class="mdl-checkbox__input" th:field="${usuario.isProfessor}" th:value="1"></input>
+   					<input type="hidden" id="isProfessor_" name="radio" class="mdl-checkbox__input" th:field="${usuario.isProfessor}" th:value="0"></input>
    					<span class="mdl-checkbox__label">É Professor?</span>
   				</label>
 				

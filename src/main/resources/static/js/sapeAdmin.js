@@ -15,9 +15,11 @@ function excluirUsuario(id) {
 	decisao = confirm("Deseja realmente excluir o Usuario?");
 	if (decisao){
 		if(id != null  && id >= 0)
-			window.location.href="rmUser="+id;
+			//window.location.href="rmUser="+id;
+			location.href='/admin/rmuser?id='+id; 
 			alert("Você removeu o usuário");
 	}
+	
 }
 
 
