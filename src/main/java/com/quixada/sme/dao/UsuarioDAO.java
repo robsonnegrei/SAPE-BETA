@@ -99,6 +99,7 @@ public class UsuarioDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
+		funcaoDAO.limparFuncoes(id);
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "DELETE FROM usuario WHERE idUsuario="+ id;
 		

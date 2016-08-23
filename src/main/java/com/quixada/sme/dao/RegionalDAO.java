@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -56,5 +58,20 @@ public class RegionalDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
-
+	
+	public List<Regional> listar() throws SQLException{
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "SELECT * FROM regional";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		List<Regional> resultado = new ArrayList<Regional>();
+		while (rs.next()) {
+			Regional regional = new Regional();
+			regional.setIdRegional(rs.getInt(1));			
+			regional.setNome(rs.getString(2));
+			resultado.add(regional);
+		}
+		return resultado;
+	}
 }

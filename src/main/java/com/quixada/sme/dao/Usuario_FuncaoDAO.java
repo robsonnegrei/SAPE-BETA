@@ -61,6 +61,15 @@ public class Usuario_FuncaoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
+	/*
+	 * Remove as funcoes do usuario
+	 */
+	public void limparFuncoes(int id) throws SQLException{
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id;
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.execute();
+	}
 	
 	public List<String> funcoesAtribuidas(int id) throws SQLException {
 		Connection con = ConnectionFactory.getMySqlConnection();
