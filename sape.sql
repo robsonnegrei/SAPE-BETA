@@ -218,3 +218,15 @@ INSERT INTO `sape`.`regional` (`nome`) VALUES ('Várzea da Onça');
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+ALTER TABLE `sape`.`pclei` 
+DROP FOREIGN KEY `FK_Professor_post`;
+
+ALTER TABLE `sape`.`post` 
+ADD INDEX `FK_Post_Professor_idx` (`idProfessor` ASC);
+ALTER TABLE `sape`.`post` 
+ADD CONSTRAINT `FK_Post_Professor`
+  FOREIGN KEY (`idProfessor`)
+  REFERENCES `sape`.`pclei` (`idProfessor`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
