@@ -42,7 +42,7 @@ public class PCLeiController {
 		HttpSession session = request.getSession();
 		Usuario usr = (Usuario)session.getAttribute("usuario");
 		try {
-				PClei pcLei = pDAO.busca(usr.getIdUsuario());
+				PClei pcLei = pDAO.buscaPorIdUsuario(usr.getIdUsuario());
 				ArrayList<Escola> escolas = esDAO.getEscolasRegional(pcLei.getIdRegional());
 				Regional regional = reDAO.buscar(pcLei.getIdRegional());
 				if(escolas.isEmpty())

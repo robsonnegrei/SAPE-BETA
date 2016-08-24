@@ -30,7 +30,7 @@ public class PCleiDAO {
 	public PClei busca(int id) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();
 
-		String SELECT_QUERY = "SELECT * FROM pcLei WHERE idUsuario=" + id;
+		String SELECT_QUERY = "SELECT * FROM pcLei WHERE idProfessor=" + id;
 
 		PreparedStatement statement = conexao.prepareStatement(SELECT_QUERY);
 
@@ -46,7 +46,28 @@ public class PCleiDAO {
 		}
 		return professor;
 	}	
+	/*
+	 * Retorna um pc lei que tenha o id de usuario informado
+	 */
+	public PClei buscaPorIdUsuario(int idUsuario) throws SQLException {
+		Connection conexao = ConnectionFactory.getMySqlConnection();
 
+		String SELECT_QUERY = "SELECT * FROM pcLei WHERE idUsuario=" + idUsuario;
+
+		PreparedStatement statement = conexao.prepareStatement(SELECT_QUERY);
+
+		ResultSet rs = statement.executeQuery();
+
+		PClei professor  = null;
+		if(rs.next()) {
+			professor = new PClei();
+			professor.setIdProfessor(rs.getInt(1));
+			professor.setIdRegional(rs.getInt(2));
+			professor.setIdUsuario(rs.getInt(3));
+			professor.setNome(rs.getString(4));
+		}
+		return professor;
+	}	
 
 	public void editar (PClei professor) throws SQLException {
 		Connection conexao = ConnectionFactory.getMySqlConnection();

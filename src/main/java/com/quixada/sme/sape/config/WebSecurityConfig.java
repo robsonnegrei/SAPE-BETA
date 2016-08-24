@@ -46,17 +46,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .antMatchers("/PCLei/**").hasAuthority("PCLEI")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI")
 		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
-         .anyRequest().authenticated()
          .and()
      .formLogin()
          .loginPage("/login").failureUrl("/login?error").successHandler(handler)
          .usernameParameter("username").passwordParameter("password")
          .permitAll()
          .and()
-     .logout().logoutSuccessUrl("/login?logout") 
-        .and()
-     .exceptionHandling().accessDeniedPage("/403");
-		
+     .logout().logoutSuccessUrl("/login?logout");
+       
 	}
 	
 }

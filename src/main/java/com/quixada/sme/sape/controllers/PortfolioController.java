@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.quixada.sme.dao.ImagemDAO;
+import com.quixada.sme.dao.PCleiDAO;
 import com.quixada.sme.dao.PostDAO;
 import com.quixada.sme.model.MetaImagem;
+import com.quixada.sme.model.PClei;
 import com.quixada.sme.model.Post;
 import com.quixada.sme.model.Usuario;
 
@@ -40,13 +42,20 @@ public class PortfolioController {
 	@Autowired
 	private ImagemDAO picDAO;
 	
+	@Autowired private PCleiDAO pcDAO;
+	
 	@RequestMapping(value = {"portfolio/new"},method = RequestMethod.GET )
-	public String novo(Model model, HttpServletRequest request, HttpSession session)
+	public String novo(Model model, HttpServletRequest request, HttpSession session, RedirectAttributes redirect)
 	{
 		Post p = new Post();
 		Usuario usr = (Usuario) session.getAttribute("usuario");
-		p.setIdProfessor(usr.getIdUsuario());
 		try {
+			PClei lei = pcDAO.buscaPorIdUsuario(usr.getIdUsuario());
+			if (lei==null) {
+				redirect.addFlashAttribute("erro","Sua conta não permite escrever posts.");
+				return REDIRECT_PORTFOLIO_INDEX;
+			}
+			p.setIdProfessor(lei.getIdProfessor());
 			pDAO.adiciona(p);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,8 +95,6 @@ public class PortfolioController {
 			return REDIRECT_PORTFOLIO_INDEX;
 		}
 		
-		Usuario usr = (Usuario) session.getAttribute("usuario");
-		p.setIdProfessor(usr.getIdUsuario());
 		LocalDateTime agora = LocalDateTime.now();
 		java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
 		p.setData(sqlDate);

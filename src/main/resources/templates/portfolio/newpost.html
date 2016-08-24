@@ -51,7 +51,8 @@
 	        <div class="row">
 		        <div id="postForm" class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
 		            <form action="#" th:action="@{/portfolio/add}" th:object="${postagem}" method="post">
-		            	<input type="text" th:field="*{idPost}"></input>
+		            	<input type="hidden" th:field="*{idPost}" name="idPost"></input>
+		            	<input type="hidden" th:field="*{idProfessor}" name="idProfessor"></input>
 		                <textarea class="mdl-textfield__input" type="text" th:field="*{mensagem}" rows= "5" id="mensagem" placeholder="O que está acontecendo?"></textarea>
 		                
 		                <div class="fileUpload btn btn-primary" id="btnAddImg">

@@ -14,7 +14,7 @@ public class AppConfig {
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
 	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/sape");
 	    driverManagerDataSource.setUsername("root");
-	    driverManagerDataSource.setPassword("");
+	    driverManagerDataSource.setPassword("12345");
 	    return driverManagerDataSource;
 	}
 	
