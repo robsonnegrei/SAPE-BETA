@@ -3,7 +3,7 @@
 
 
 
-###Utilização
+###Utilização:
 
 Antes de utilizar:
 
@@ -11,3 +11,10 @@ Antes de utilizar:
 
 
 2. Configurar o banco de dados em ConnectionFactory.java
+
+###Documentação Aberta:
+
+  [Documento Visão] 
+
+  [Documento Visão]: <http://daringfireball.net>
+  
