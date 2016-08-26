@@ -1,5 +1,5 @@
 ## SAPE
-**Sistema de Acompanhamento de Projetos Educacionais**
+**Sistema de Acompanhamento Online de Projetos Educacionais**
 
 
 
