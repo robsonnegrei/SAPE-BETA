@@ -16,5 +16,5 @@ Antes de utilizar:
 
   [Documento Visão] 
 
-  [Documento Visão]: <http://daringfireball.net>
+  [Documento Visão]: <https://docs.google.com/document/d/1-YlKQVaULGCqkQhcJJyIc8XI6s2bhvmLhb-yCWYkRrU/edit?usp=sharing>
   
