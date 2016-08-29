@@ -6,18 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Aluno;
 
+@Component
 public class AlunoDAO {
 	public void adiciona(Aluno aluno) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO aluno "
-				+ "( idEscola, nome) "
+				+ "( idEscola, nome, nivelAtual) "
 				+ "VALUES ( ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aluno.getIdEscola());
 		stmt.setString(2, aluno.getNome());
+		stmt.setString(3, aluno.getNivel_atual());
 		stmt.execute();
 	}
 	
@@ -33,6 +37,7 @@ public class AlunoDAO {
 			aluno.setIdAluno(rs.getInt(1));
 			aluno.setIdEscola(rs.getInt(2));
 			aluno.setNome(rs.getString(3));
+			aluno.setNivel_atual(rs.getString(4));
 		}
 		return aluno;
 	}
@@ -40,12 +45,13 @@ public class AlunoDAO {
 	public void editar(Aluno aluno) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "UPDATE aluno "
-				+ "SET idEscola=?, nome=? "
+				+ "SET idEscola=?, nome=?, nivelAtual=?"
 				+ "WHERE idAluno=" + aluno.getIdAluno();
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aluno.getIdEscola());
 		stmt.setString(2, aluno.getNome());
+		stmt.setString(3, aluno.getNivel_atual());
 		stmt.execute();
 	}
 	
@@ -56,6 +62,7 @@ public class AlunoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
+	
 	public ArrayList<Aluno> buscarAlunosPorEscola(int idEscola) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "SELECT * FROM aluno WHERE idEscola="+ idEscola;
@@ -64,7 +71,7 @@ public class AlunoDAO {
 		ResultSet rs = stmt.executeQuery();
 		ArrayList<Aluno> alunos = new ArrayList<>();
 		while(rs.next()){
-			Aluno a = new Aluno(rs.getInt("idAluno"),rs.getInt("idEscola") ,rs.getString("nome"));
+			Aluno a = new Aluno(rs.getInt("idAluno"),rs.getInt("idEscola") ,rs.getString("nome"), rs.getString("nivelAtual"));
 			alunos.add(a);
 		}
 	

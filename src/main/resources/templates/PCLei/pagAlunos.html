@@ -65,6 +65,7 @@
 				    	<th id="tt1"></th>
 				      <th id="tt1">id Único</th>
 				      <th id="tt2">Nome Aluno</th>
+				      <th id="tt3">Nível</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -85,18 +86,16 @@
 					  	</td>
 					  	<td th:text="${aluno.idAluno}"></td>
 				      	<td th:text="${aluno.nome}"></td>
+				      	<td th:if="${aluno.nivel_atual == null} or ${#strings.isEmpty(aluno.nivel_atual)}">Não avaliado!</td>
 				    </tr>
 				  </tbody>
 				</table>
 				<!-- End table Aluno -->
 				<div>
 				<!-- Avaliar Alunos Button -->
-  					<form  th:action="@{/PCLei/avaliar}" method="post" >
-  						<!-- 
-  						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
-  						 -->
-  						<input id="bttAddAluno" name="AVALIAR" type="submit" class="btn btn-primary" velue="AVALIAR"></input>	    	
-  					</form>
+  					
+  				<button id="btnAvaliacao" class="btn btn-primary" value="AVALIAR"> Avaliação!</button>	    	
+  					
 				<!-- end Avaliar Alunos Button -->
 				
 				<form  th:action="@{/PCLei/gerarRelatorio}" method="post" >
@@ -130,7 +129,8 @@
 	  </main>
 	</div>
 	
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>
-     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
 </html>

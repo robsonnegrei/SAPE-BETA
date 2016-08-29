@@ -31,3 +31,12 @@ function load() {
 	var spinner = document.getElementById("SpinnerNovoAluno");
 	spinner.className += "is-active";
 }
+
+$("#btnAvaliacao").click(function() {
+	window.location.href="/PCLei/avaliar";
+});
+//Document Ready
+$(document).ready(function(){
+	
+});
+

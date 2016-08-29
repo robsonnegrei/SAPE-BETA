@@ -241,3 +241,6 @@ CREATE TABLE `sape`.`configuracao` (
   `PeriodosPorAno` INT NOT NULL DEFAULT 5,
   `LimiteDiasReavaliacao` INT NOT NULL DEFAULT 15)
 COMMENT = 'Dados de configuracao do sistema';
+
+ALTER TABLE `sape`.`aluno` 
+ADD COLUMN `nivelAtual` VARCHAR(45) NULL AFTER `nome`;

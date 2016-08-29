@@ -8,6 +8,8 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,29 +22,22 @@ import com.quixada.sme.model.Usuario;
 
 @Controller
 public class AlunoController {
-	private static String USUARIO = "usuario";
 
-@RequestMapping(value ={"PCLei/getAlunos", "getAlunos"})
-	public String listarAlunos(HttpServletRequest request, @RequestParam("idEscola")String idEscola){
+	private static final String USUARIO = "usuario";
+	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
+
+	@Autowired
+	private AlunoDAO aDAO;
 	
-	HttpSession session = request.getSession();
-	AlunoDAO alunoDAO = new AlunoDAO();
-	/* Sem sessão, manda pro login */
-	if (session.getAttribute(USUARIO) == null) {
-		return "redirect:../login";
-	}
-	Usuario usr = (Usuario)session.getAttribute(USUARIO);
-
-	if (usr.getIsProfCoordenadorLei()==0) {
-		return "redirect:../login";
-	}
+	@RequestMapping(value ={"PCLei/getAlunos", "getAlunos"})
+	@PreAuthorize("hasAnyRole('ADMIN','PCLEI')")
+	public String listarAlunos(HttpServletRequest request, @RequestParam("idEscola")String idEscola, HttpSession session){
 	
 	try {
 			int id = Integer.parseInt(idEscola);
-			ArrayList<Aluno> alunos = alunoDAO.buscarAlunosPorEscola(id);
+			ArrayList<Aluno> alunos = aDAO.buscarAlunosPorEscola(id);
 			session.setAttribute("idEscola", id);
 			
-
 			if(alunos.isEmpty()){
 				session.setAttribute("erroGetAlunos", true);
 			}else {
@@ -56,7 +51,7 @@ public class AlunoController {
 			session.setAttribute("erroGetAlunos", true);
 	}
 	
-	return "/PCLei/pagAlunos";
+	return PCLEI_GET_ALUNOS;
 	}
 
 @RequestMapping(value={"PCLei/addAluno","/addAluno"})
@@ -66,7 +61,7 @@ public class AlunoController {
 		String nome = request.getParameter("nome");
 		int idAluno= 0;
 		AlunoDAO Adao = new AlunoDAO();
-		Aluno aluno = new Aluno(idAluno,idEscola,nome);
+		Aluno aluno = new Aluno(idAluno,idEscola,nome,"");
 		
 		try {
 			Adao.adiciona(aluno);
@@ -106,7 +101,7 @@ public class AlunoController {
 	
 		ArrayList<Aluno> Alunos = (ArrayList<Aluno>) request.getSession().getAttribute("ArrayAlunos");
 		if(Alunos.isEmpty()){
-			return "/PCLei/pagAlunos";
+			return PCLEI_GET_ALUNOS;
 		}else{
 			
 			 SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
@@ -136,14 +131,14 @@ public String processoAvaliacaoAlunos(HttpServletRequest request){
 
 	ArrayList<Avaliacao> avaliacoes = (ArrayList<Avaliacao>) request.getSession().getAttribute("ArrayAvaliacao");
 	if(avaliacoes.isEmpty()){
-		return "/PCLei/pagAlunos";
+		return PCLEI_GET_ALUNOS;
 	}else{
 		
 		for (Avaliacao aluno : avaliacoes){                     
 			System.out.println("Nome = " + aluno.getNomeAluno() + "nivel= " + aluno.getNivel());
 		}
 	}
-	return "/PCLei/pagAlunos";
+	return PCLEI_GET_ALUNOS;
 }
 
 }
