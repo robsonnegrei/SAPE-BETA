@@ -234,3 +234,10 @@ ADD CONSTRAINT `FK_Post_Professor`
   
 ALTER TABLE `sape`.`avaliacao` 
 CHANGE COLUMN `ano` `ano` INT NULL DEFAULT NULL ;
+
+CREATE TABLE `sape`.`configuracao` (
+  `AnoAvaliacaoAtual` INT NOT NULL DEFAULT 2016,
+  `PeriodoAvaliacaoAtual` INT NOT NULL DEFAULT 1,
+  `PeriodosPorAno` INT NOT NULL DEFAULT 5,
+  `LimiteDiasReavaliacao` INT NOT NULL DEFAULT 15)
+COMMENT = 'Dados de configuracao do sistema';
