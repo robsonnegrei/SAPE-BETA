@@ -1,17 +1,18 @@
 package com.quixada.sme.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Avaliacao {
 	private int idAvaliacao;
-	private Date ano;
-	private Date data;
-	private int periodo;
+	private int ano;
+	private Timestamp data;
+	private int periodo; //1,2,3,4,5
 	private int idAluno;
 	private String nomeAluno;
-	private int nivel;
+	private String nivel;
+	
 	public Avaliacao(){}
-	public Avaliacao(int idAvaliacao, Date ano, Date data, int periodo, int idAluno ,String nomeAluno, int nivel) {
+	public Avaliacao(int idAvaliacao, int ano, Timestamp data, int periodo, int idAluno ,String nomeAluno, String nivel) {
 		this.idAvaliacao = idAvaliacao;
 		this.ano = ano;
 		this.data = data;
@@ -20,10 +21,10 @@ public class Avaliacao {
 		this.nomeAluno = nomeAluno;
 		this.nivel = nivel;
 	}
-	public int getNivel() {
+	public String getNivel() {
 		return nivel;
 	}
-	public void setNivel(int nivel) {
+	public void setNivel(String nivel) {
 		this.nivel = nivel;
 	}
 	public String getNomeAluno() {
@@ -38,16 +39,10 @@ public class Avaliacao {
 	public void setIdAvaliacao(int idAvaliacao) {
 		this.idAvaliacao = idAvaliacao;
 	}
-	public Date getAno() {
-		return ano;
-	}
-	public void setAno(Date ano) {
-		this.ano = ano;
-	}
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
 	public int getPeriodo() {
@@ -62,4 +57,11 @@ public class Avaliacao {
 	public void setIdAluno(int idAluno) {
 		this.idAluno = idAluno;
 	}
+	public int getAno() {
+		return ano;
+	}
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+	
 }

@@ -16,11 +16,11 @@ public class AvaliacaoDAO {
 				+ "( ano, data, periodo, idAluno, nivel, nomeAluno) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setDate(1, aval.getAno());
-		stmt.setDate(2, aval.getData());
+		stmt.setInt(1, aval.getAno());
+		stmt.setTimestamp(2, aval.getData());
 		stmt.setInt(3, aval.getPeriodo());
 		stmt.setInt(4, aval.getIdAluno());
-		stmt.setInt(5, aval.getNivel());
+		stmt.setString(5, aval.getNivel());
 		stmt.setString(6, aval.getNomeAluno());
 		stmt.execute();
 	}
@@ -35,29 +35,30 @@ public class AvaliacaoDAO {
 		if (rs.next()) {
 			aval = new Avaliacao();
 			aval.setIdAvaliacao(rs.getInt(1));
-			aval.setAno(rs.getDate(2));
-			aval.setData(rs.getDate(3));
+			aval.setAno(rs.getInt(2));
+			aval.setData(rs.getTimestamp(3));
 			aval.setPeriodo(rs.getInt(4));
 			aval.setIdAluno(rs.getInt(5));
 			aval.setNomeAluno(rs.getString(6));
 		}
 		return aval;
 	}
-
-	public void editar(Avaliacao aval) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "UPDATE avaliacao "
-				+ "SET ano=?, data=?, periodo=?, idAluno=? "
-				+ "WHERE idAvaliacao=" + aval.getIdAvaliacao();
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setDate(1, aval.getAno());
-		stmt.setDate(2, aval.getData());
-		stmt.setInt(3, aval.getPeriodo());
-		stmt.setInt(4, aval.getIdAluno());
-		stmt.setString(5, aval.getNomeAluno());
-		stmt.execute();
-	}
+//Atualizar
+//
+//	public void editar(Avaliacao aval) throws SQLException{
+//		Connection con = ConnectionFactory.getMySqlConnection();
+//		String sql = "UPDATE avaliacao "
+//				+ "SET ano=?, data=?, periodo=?, idAluno=? "
+//				+ "WHERE idAvaliacao=" + aval.getIdAvaliacao();
+//		
+//		PreparedStatement stmt = con.prepareStatement(sql);
+//		stmt.setDate(1, aval.getAno());
+//		stmt.setDate(2, aval.getData());
+//		stmt.setInt(3, aval.getPeriodo());
+//		stmt.setInt(4, aval.getIdAluno());
+//		stmt.setString(5, aval.getNomeAluno());
+//		stmt.execute();
+//	}
 	
 	public void excluir(int id) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
@@ -66,6 +67,7 @@ public class AvaliacaoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
 	}
+	
 	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "select COUNT(*) from aluno join avaliacao"

@@ -230,3 +230,7 @@ ADD CONSTRAINT `FK_Post_Professor`
   REFERENCES `sape`.`pclei` (`idProfessor`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+  
+ALTER TABLE `sape`.`avaliacao` 
+CHANGE COLUMN `ano` `ano` INT NULL DEFAULT NULL ;
