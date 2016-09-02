@@ -19,7 +19,7 @@
 	    <div class="page-content">
 	    	<!-- Your content goes here -->
 	    	<!-- mensagem de erro -->
-	    	<div th:if="${session.erroRmAluno}">
+	    	<div th:if="${erroRmAluno}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
@@ -28,7 +28,7 @@
         	</div>
         	<!-- fim da mensagem de erro -->
         	<!-- mensagem de erro -->
-	    	<div th:if="${session.erroAddAluno}">
+	    	<div th:if="${erroAddAluno}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
@@ -50,8 +50,15 @@
  						 <h3 th:text="${session.regional.nome}" ></h3>
 				</div>
         	</div>
+        	<!-- Periodo de avaliacao -->
+	    	<div th:if="${session.regional} != null">
+        		 <div class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 						 <h3 >Periodo de Avaliação: 2016.1</h3>
+				</div>
+        	</div>
+        	
 	    	<!-- Nenhuma escola encontrada mostra mensagem -->
-	    	<div th:if="${session.erroGetAlunos}">
+	    	<div th:if="${erroGetAlunos}">
            		<div class="alert alert-danger" role="alert">
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
  					<span class="sr-only">Error:</span>
@@ -62,37 +69,33 @@
 	    	<div class="col-md-6 SAPE_amdUsrTable">
 	    		<!-- Table Escolas -->
 	    		
-	    		<form action="#" th:action="@{/PCLei/processarAvaliacao}" method="post">
-	    		
-	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-				  <thead>
-				    <tr>
-				    
-				      <th id="tt1">id Único</th>
-				      <th id="tt2">Nome Aluno</th>
-				      <th>Pré Silábico</th>
-				      <th>Silábico</th>
-				      <th>Silábico Alfabético</th>
-				       <th>Alfabético</th>
-				      <th>Ortográfico</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-					   <tr th:each="person, rowStat : *{session.ArrayAvaliacao}">
-							<td th:text="*{person.idAluno}"></td>
-				      		<td th:text="*{person.nomeAluno}"></td>
-							<td>
-								<input type="checkbox" id="isSila" class="mdl-checkbox__input"  th:value="1" th:name="${person.nivel}"  th:field="*{arrayAvaliacao[__${rowStat.index}__].nivel}" />
-								<input type="hidden" id="isSila" th:name="${person.nivel}" class="mdl-checkbox__input" th:field="*{arrayAvaliacao[__${rowStat.index}__].nivel}" th:value="0"/>
-							</td>
-							<td><input type="checkbox" th:value="2" th:name="${person.nivel}"/></td>
-							<td><input type="checkbox" th:value="3" th:name="${person.nivel}"/></td>
-							<td><input type="checkbox" th:value="4" th:name="${person.nivel}"/></td>
-							<td><input type="checkbox" th:value="5" th:name="${person.nivel}"/></td>
-						</tr>
-				</tbody>
-				</table>
-					 <input type="submit" class="btn btn-primary" value="Enviar"></input>
+	    		<form action="#" th:action="@{/PCLei/avaliar}" method="post" >
+	    			<!-- Table Alunos -->
+		    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
+					  <thead>
+					    <tr>
+					      <th id="tt2">Nome Aluno</th>
+					      <th id="tt3">Nível</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	 <tr th:each="aluno : ${ArrayAlunos}">
+					      	<td th:text="${aluno.nome}" th:name="nome"></td>
+					      	<td>
+					      		<select name="nivel">
+									<option th:value="${'Pré-Silábico'}" th:text="Pré-Silábico"></option>
+									<option th:value="${'Silábico'}" th:text="Silábico"></option>
+									<option th:value="${'Silábico-Alfabético'}" th:text="Silábico-Alfabético"></option>
+									<option th:value="${'Alfabético-Ortográfico'}" th:text="Alfabético-Ortográfico"></option>
+									<option th:value="${'Ortográfico'}" th:text="Ortográfico"></option>
+					      		</select>
+					      	</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Processar!"></input>
+	    			
 				</form>
 				
 				<!-- End table Aluno -->

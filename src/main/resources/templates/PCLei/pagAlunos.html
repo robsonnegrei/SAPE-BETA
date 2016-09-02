@@ -58,7 +58,7 @@
         	</div>
    			<div class="col-md-2"></div>
 	    	<div class="col-md-6 SAPE_amdUsrTable">
-	    		<!-- Table Escolas -->
+	    		<!-- Table Alunos -->
 	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
 				  <thead>
 				    <tr>
@@ -69,7 +69,7 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-				  	 <tr th:each="aluno : ${session.ArrayAlunos}">
+				  	 <tr th:each="aluno : ${ArrayAlunos}">
 				      <td>
 				      	<button th:id="'btnEditarAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
 							<i class="material-icons md-18 azul">edit</i>
@@ -86,7 +86,7 @@
 					  	</td>
 					  	<td th:text="${aluno.idAluno}"></td>
 				      	<td th:text="${aluno.nome}"></td>
-				      	<td th:if="${aluno.nivel_atual == null} or ${#strings.isEmpty(aluno.nivel_atual)}">Não avaliado!</td>
+				      	<td th:if="${aluno.nivel == null} or ${#strings.isEmpty(aluno.nivel)}">Não avaliado!</td>
 				    </tr>
 				  </tbody>
 				</table>
@@ -103,7 +103,7 @@
   						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
   						 -->
   						<input id="bttAddAluno" name="RELATORIO" type="submit" class="btn btn-primary" value="RELATORIO"></input>	    	
-  					</form>
+  				</form>
 				</div>
 			</div>
 			<!-- button add Aluno -->

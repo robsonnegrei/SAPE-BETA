@@ -40,7 +40,7 @@
 	    <div class="page-content"><!-- Your content goes here -->
 	 	<div class="col-md-2"></div>
 	 	<div class="col-md-4 SAPE_divFormLayout">
-		 	<form action="#" th:action="@{/admin/addUser}" method="post" id="UserForm">
+		 	<form th:action="@{/admin/addUser}" method="post" id="UserForm">
 		 	  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     			<input class="mdl-textfield__input" type="text" id="email" th:field="${usuario.email}" required="required"> </input>
     			<label class="mdl-textfield__label" for="email" >Email:</label>
