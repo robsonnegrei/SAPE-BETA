@@ -1,17 +1,20 @@
 package com.quixada.sme.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Aluno {
 	private int idAluno;
 	private int idEscola;
 	private String nome;
-	private String nivel_atual;
+	private String nivel;
 	
 	public Aluno(){}
 	public Aluno(int idAluno, int idEscola, String nome, String nivel) {
 		this.idAluno = idAluno;
 		this.idEscola = idEscola;
 		this.nome = nome;
-		this.nivel_atual = nivel;
+		this.nivel = nivel;
 	}
 	public int getIdAluno() {
 		return idAluno;
@@ -31,11 +34,11 @@ public class Aluno {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getNivel_atual() {
-		return nivel_atual;
+	public String getNivel() {
+		return nivel;
 	}
-	public void setNivel_atual(String nivel_atual) {
-		this.nivel_atual = nivel_atual;
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
 	}
 	
 	

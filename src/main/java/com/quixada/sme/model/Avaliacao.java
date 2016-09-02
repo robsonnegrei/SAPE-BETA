@@ -8,17 +8,15 @@ public class Avaliacao {
 	private Timestamp data;
 	private int periodo; //1,2,3,4,5
 	private int idAluno;
-	private String nomeAluno;
 	private String nivel;
 	
 	public Avaliacao(){}
-	public Avaliacao(int idAvaliacao, int ano, Timestamp data, int periodo, int idAluno ,String nomeAluno, String nivel) {
+	public Avaliacao(int idAvaliacao, int ano, Timestamp data, int periodo, int idAluno , String nivel) {
 		this.idAvaliacao = idAvaliacao;
 		this.ano = ano;
 		this.data = data;
 		this.periodo = periodo;
 		this.idAluno = idAluno;
-		this.nomeAluno = nomeAluno;
 		this.nivel = nivel;
 	}
 	public String getNivel() {
@@ -27,12 +25,7 @@ public class Avaliacao {
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
 	}
-	public String getNomeAluno() {
-		return nomeAluno;
-	}
-	public void setNomeAluno(String nome) {
-		this.nomeAluno = nome;
-	}
+	
 	public int getIdAvaliacao() {
 		return idAvaliacao;
 	}
