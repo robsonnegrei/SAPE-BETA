@@ -1,9 +1,13 @@
 package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,27 +15,33 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quixada.sme.dao.AlunoDAO;
+import com.quixada.sme.dao.AvaliacaoDAO;
 import com.quixada.sme.model.Aluno;
 import com.quixada.sme.model.Avaliacao;
 import com.quixada.sme.model.Usuario;
 
+@SessionAttributes({ "ArrayAlunos"})
 @Controller
 public class AlunoController {
 
-	private static final String USUARIO = "usuario";
 	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
 
-	@Autowired
-	private AlunoDAO aDAO;
+	@Autowired private AlunoDAO aDAO;
+	@Autowired private AvaliacaoDAO avalDAO;
 	
 	@RequestMapping(value ={"PCLei/getAlunos", "getAlunos"})
 	@PreAuthorize("hasAnyRole('ADMIN','PCLEI')")
-	public String listarAlunos(HttpServletRequest request, @RequestParam("idEscola")String idEscola, HttpSession session){
+	public String listarAlunos(Model model, @RequestParam("idEscola")String idEscola, HttpSession session){
 	
 	try {
 			int id = Integer.parseInt(idEscola);
@@ -39,22 +49,28 @@ public class AlunoController {
 			session.setAttribute("idEscola", id);
 			
 			if(alunos.isEmpty()){
-				session.setAttribute("erroGetAlunos", true);
+				model.addAttribute("erroGetAlunos", true);
+				//session.setAttribute("erroGetAlunos", true);
 			}else {
-				session.setAttribute("erroGetAlunos", false);
+				model.addAttribute("erroGetAlunos", false);
+				
+				//session.setAttribute("erroGetAlunos", false);
 			}
-			session.setAttribute("ArrayAlunos", alunos);
+			
+			model.addAttribute("ArrayAlunos", alunos);
+			//session.setAttribute("ArrayAlunos", alunos);
 	
 	} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			session.setAttribute("erroGetAlunos", true);
+			model.addAttribute("erroGetAlunos", true);
+			//session.setAttribute("erroGetAlunos", true);
 	}
 	
 	return PCLEI_GET_ALUNOS;
 	}
 
-@RequestMapping(value={"PCLei/addAluno","/addAluno"})
+	@RequestMapping(value={"PCLei/addAluno","/addAluno"})
 	public String AddAlunos(HttpServletRequest request){
 	if(request.getParameter("nome")!= null){
 		int idEscola = Integer.parseInt(request.getParameter("idEscola"));
@@ -77,7 +93,7 @@ public class AlunoController {
 	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
 	}
 
-@RequestMapping(value={"PCLei/rmAluno","/rmAluno"})
+	@RequestMapping(value={"PCLei/rmAluno","/rmAluno"})
 	public String excluirAlunos(HttpServletRequest request){
 		if(request.getParameter("aluno")!= null){
 			int id = Integer.parseInt(request.getParameter("aluno"));
@@ -96,48 +112,56 @@ public class AlunoController {
 		int idEscola = (int) request.getSession().getAttribute("idEscola");
 		return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
 	}
-@RequestMapping(value="/PCLei/avaliar",method = RequestMethod.POST)
-	public String avaliarAlunos(HttpServletRequest request){
 	
-		ArrayList<Aluno> Alunos = (ArrayList<Aluno>) request.getSession().getAttribute("ArrayAlunos");
-		if(Alunos.isEmpty()){
-			return PCLEI_GET_ALUNOS;
-		}else{
-			
-			 SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
-			 Calendar cal = Calendar.getInstance();
+	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.GET)
+	public String avaliarAlunos(HttpSession session, 
+			ModelAndView model){
+		try{	
+			int idEscola = ((int) session.getAttribute("idEscola"));
+			ArrayList<Aluno> alunos = aDAO.buscarAlunosPorEscola(idEscola);
+			if(alunos.isEmpty()){
+				return PCLEI_GET_ALUNOS;
+			}else{
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+				Calendar cal = Calendar.getInstance();
 			    
-			ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
-			
-			for (Aluno aluno : Alunos){                     
-				Avaliacao av = new Avaliacao();
-				av.setNomeAluno(aluno.getNome());
-				av.setIdAluno(aluno.getIdAluno());
-				arrAvaliacao.add(av);
+				//ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
+				model.addObject("ArrayAlunos", alunos);
 			}
-			request.getSession().setAttribute("ArrayAvaliacao",arrAvaliacao);
-			
-			/*java.util.Date data = new java.util.Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			sdf.format(data);
-			Date date = (Date) data;
-			 */
-			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
 		}
 		return "/PCLei/pagAvaliarAlunos";
 	}
-@RequestMapping(value="/PCLei/processarAvaliacao",method = RequestMethod.POST)
-public String processoAvaliacaoAlunos(HttpServletRequest request){
+	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.POST)
+	public String processoAvaliacaoAlunos(ModelAndView model,
+		@ModelAttribute(value="ArrayAlunos")ArrayList<Aluno> alunos, 
+		BindingResult result){
 
-	ArrayList<Avaliacao> avaliacoes = (ArrayList<Avaliacao>) request.getSession().getAttribute("ArrayAvaliacao");
-	if(avaliacoes.isEmpty()){
+	//Atualizar os alunos
+	
+	//Gerar as avaliacoes e salvar
+	if(alunos.isEmpty()){
 		return PCLEI_GET_ALUNOS;
 	}else{
-		
-		for (Avaliacao aluno : avaliacoes){                     
-			System.out.println("Nome = " + aluno.getNomeAluno() + "nivel= " + aluno.getNivel());
+		for (Aluno aluno : alunos) {
+			Avaliacao aval = new Avaliacao();
+			aval.setAno(LocalDate.now().getYear());
+			LocalDateTime agora = LocalDateTime.now();
+			java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
+			aval.setData(sqlDate);
+			aval.setIdAluno(aluno.getIdAluno());
+			aval.setNivel(aluno.getNivel());
+			aval.setPeriodo(-1); //deve vir das configurações do sistema
+			try {
+				avalDAO.adiciona(aval);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
+	model.addObject("ArrayAlunos", alunos);
 	return PCLEI_GET_ALUNOS;
 }
 
