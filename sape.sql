@@ -244,3 +244,6 @@ COMMENT = 'Dados de configuracao do sistema';
 
 ALTER TABLE `sape`.`aluno` 
 ADD COLUMN `nivelAtual` VARCHAR(45) NULL AFTER `nome`;
+
+ALTER TABLE `sape`.`avaliacao` 
+CHANGE COLUMN `nivel` `nivel` VARCHAR(25) NULL DEFAULT NULL ;
