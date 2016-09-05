@@ -1,9 +1,9 @@
 ## SAPE
-**Sistema de Acompanhamento de Projetos Educacionais**
+**Sistema de Acompanhamento Online de Projetos Educacionais**
 
 
 
-###Utilização
+###Utilização:
 
 Antes de utilizar:
 
@@ -11,3 +11,10 @@ Antes de utilizar:
 
 
 2. Configurar o banco de dados em ConnectionFactory.java
+
+###Documentação Aberta:
+
+  [Documento Visão] 
+
+  [Documento Visão]: <https://docs.google.com/document/d/1-YlKQVaULGCqkQhcJJyIc8XI6s2bhvmLhb-yCWYkRrU/edit?usp=sharing>
+  
