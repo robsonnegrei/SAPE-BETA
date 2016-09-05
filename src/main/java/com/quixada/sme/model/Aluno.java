@@ -15,6 +15,10 @@ public class Aluno {
 		this.idEscola = idEscola;
 		this.nome = nome;
 		this.nivel = nivel;
+		if (nivel == null) {
+			this.nivel = "";
+		}
+		
 	}
 	public int getIdAluno() {
 		return idAluno;
@@ -32,7 +36,12 @@ public class Aluno {
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		if (nome == null) {
+			this.nome = "";
+		}
+		else{
+			this.nome = nome;
+		}
 	}
 	public String getNivel() {
 		return nivel;

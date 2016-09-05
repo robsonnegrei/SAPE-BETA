@@ -21,7 +21,22 @@ public class AlunoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aluno.getIdEscola());
 		stmt.setString(2, aluno.getNome());
-		stmt.setString(3, aluno.getNivel_atual());
+		stmt.setString(3, aluno.getNivel());
+		stmt.execute();
+	}
+	
+	/*
+	 * Atualiza o nivel do aluno de acordo com seu ID
+	 * 
+	 */
+	public void atualizarNivel(Aluno aluno) throws SQLException{
+		Connection con = ConnectionFactory.getMySqlConnection();
+		String sql = "UPDATE aluno "
+				+ "SET nivelAtual=?"
+				+ "WHERE idAluno=" + aluno.getIdAluno();
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, aluno.getNivel());
 		stmt.execute();
 	}
 	
@@ -37,7 +52,7 @@ public class AlunoDAO {
 			aluno.setIdAluno(rs.getInt(1));
 			aluno.setIdEscola(rs.getInt(2));
 			aluno.setNome(rs.getString(3));
-			aluno.setNivel_atual(rs.getString(4));
+			aluno.setNivel(rs.getString(4));
 		}
 		return aluno;
 	}
@@ -51,7 +66,7 @@ public class AlunoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aluno.getIdEscola());
 		stmt.setString(2, aluno.getNome());
-		stmt.setString(3, aluno.getNivel_atual());
+		stmt.setString(3, aluno.getNivel());
 		stmt.execute();
 	}
 	

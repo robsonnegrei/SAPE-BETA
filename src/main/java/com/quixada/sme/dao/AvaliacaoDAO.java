@@ -5,15 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Avaliacao;
 
+@Component
 public class AvaliacaoDAO {
 
 	public void adiciona(Avaliacao aval) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO avaliacao "
-				+ "( ano, data, periodo, idAluno, nivel, nomeAluno) "
+				+ "( ano, data, periodo, idAluno, nivel) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aval.getAno());
@@ -21,7 +24,6 @@ public class AvaliacaoDAO {
 		stmt.setInt(3, aval.getPeriodo());
 		stmt.setInt(4, aval.getIdAluno());
 		stmt.setString(5, aval.getNivel());
-		stmt.setString(6, aval.getNomeAluno());
 		stmt.execute();
 	}
 	
@@ -39,7 +41,6 @@ public class AvaliacaoDAO {
 			aval.setData(rs.getTimestamp(3));
 			aval.setPeriodo(rs.getInt(4));
 			aval.setIdAluno(rs.getInt(5));
-			aval.setNomeAluno(rs.getString(6));
 		}
 		return aval;
 	}
