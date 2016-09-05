@@ -86,7 +86,7 @@
 					  	</td>
 					  	<td th:text="${aluno.idAluno}"></td>
 				      	<td th:text="${aluno.nome}"></td>
-				      	<td th:if="${aluno.nivel == null} or ${#strings.isEmpty(aluno.nivel)}">Não avaliado!</td>
+				      	<td th:text="${#strings.defaultString(aluno.nivel,'Não avaliado!')}"></td>
 				    </tr>
 				  </tbody>
 				</table>

@@ -68,8 +68,7 @@
    			<div class="col-md-2"></div>
 	    	<div class="col-md-6 SAPE_amdUsrTable">
 	    		<!-- Table Escolas -->
-	    		
-	    		<form action="#" th:action="@{/PCLei/avaliar}" method="post" >
+	    	<form th:action="@{/PCLei/avaliar}" th:method="post">
 	    			<!-- Table Alunos -->
 		    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
 					  <thead>
@@ -79,24 +78,26 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					  	 <tr th:each="aluno : ${ArrayAlunos}">
-					      	<td th:text="${aluno.nome}" th:name="nome"></td>
+					  	 <tr th:each="aluno,stat : ${wrapper.alunosList}">
+					      	<td th:name="|alunosList[${stat.index}].nome|" th:text="${aluno.getNome()}"></td>
 					      	<td>
-					      		<select name="nivel">
+					      		<input type="hidden" th:name="|alunosList[${stat.index}].idAluno|" th:value="${aluno.getIdAluno()}" ></input>
+					      		<input type="hidden" th:name="|alunosList[${stat.index}].idEscola|" th:value="${aluno.getIdEscola()}" ></input>
+					      		<!-- <input th:name="|alunosList[${stat.index}].nivel|" th:value="${aluno.getNivel()}" ></input> -->
+					      		<select th:name="|alunosList[${stat.index}].nivel|" th:value="${aluno.getNivel()}">
 									<option th:value="${'Pré-Silábico'}" th:text="Pré-Silábico"></option>
 									<option th:value="${'Silábico'}" th:text="Silábico"></option>
 									<option th:value="${'Silábico-Alfabético'}" th:text="Silábico-Alfabético"></option>
 									<option th:value="${'Alfabético-Ortográfico'}" th:text="Alfabético-Ortográfico"></option>
-									<option th:value="${'Ortográfico'}" th:text="Ortográfico"></option>
+									<option th:value="${'Ortográfico'}" th:text="Ortográfico"></option> 
 					      		</select>
 					      	</td>
 					    </tr>
 					  </tbody>
 					</table>
 					
-					<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Processar!"></input>
-	    			
-				</form>
+					<input type="submit" id="processar" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Processar!"></input>
+	    		</form>
 				
 				<!-- End table Aluno -->
 			</div>
