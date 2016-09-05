@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ssisaias/SAPE-BETA.svg?branch=master)](https://travis-ci.org/ssisaias/SAPE-BETA)
+
 ## SAPE
 **Sistema de Acompanhamento Online de Projetos Educacionais**
 
