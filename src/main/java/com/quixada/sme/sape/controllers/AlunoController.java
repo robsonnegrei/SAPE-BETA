@@ -27,10 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.quixada.sme.dao.AlunoDAO;
 import com.quixada.sme.dao.AvaliacaoDAO;
 import com.quixada.sme.model.Aluno;
+import com.quixada.sme.model.AlunosAvalForm;
 import com.quixada.sme.model.Avaliacao;
-import com.quixada.sme.model.Usuario;
 
-@SessionAttributes({ "ArrayAlunos"})
 @Controller
 public class AlunoController {
 
@@ -115,37 +114,44 @@ public class AlunoController {
 	
 	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.GET)
 	public String avaliarAlunos(HttpSession session, 
-			ModelAndView model){
+			Model model)
+	 {
+		
 		try{	
 			int idEscola = ((int) session.getAttribute("idEscola"));
-			ArrayList<Aluno> alunos = aDAO.buscarAlunosPorEscola(idEscola);
-			if(alunos.isEmpty()){
+			AlunosAvalForm alunos = new AlunosAvalForm();
+			alunos.setAlunosList(aDAO.buscarAlunosPorEscola(idEscola));
+			if(alunos.getAlunosList().isEmpty()){
 				return PCLEI_GET_ALUNOS;
 			}else{
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
 				Calendar cal = Calendar.getInstance();
-			    
+
 				//ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
-				model.addObject("ArrayAlunos", alunos);
+				
+				model.addAttribute("wrapper", alunos);
 			}
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 		}
+	    
 		return "/PCLei/pagAvaliarAlunos";
 	}
-	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.POST)
-	public String processoAvaliacaoAlunos(ModelAndView model,
-		@ModelAttribute(value="ArrayAlunos")ArrayList<Aluno> alunos, 
-		BindingResult result){
 
-	//Atualizar os alunos
-	
+	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.POST)
+	public String processoAvaliacaoAlunos(
+		@ModelAttribute AlunosAvalForm alunos,
+		Model model,
+		BindingResult result,
+		HttpSession session){
+		
+	 
 	//Gerar as avaliacoes e salvar
-	if(alunos.isEmpty()){
+	if(alunos.getAlunosList().isEmpty()){
 		return PCLEI_GET_ALUNOS;
 	}else{
-		for (Aluno aluno : alunos) {
+		for (Aluno aluno : alunos.getAlunosList()) {
 			Avaliacao aval = new Avaliacao();
 			aval.setAno(LocalDate.now().getYear());
 			LocalDateTime agora = LocalDateTime.now();
@@ -153,16 +159,20 @@ public class AlunoController {
 			aval.setData(sqlDate);
 			aval.setIdAluno(aluno.getIdAluno());
 			aval.setNivel(aluno.getNivel());
-			aval.setPeriodo(-1); //deve vir das configurações do sistema
+			aval.setPeriodo(1); //deve vir das configurações do sistema, pelo amor de shiva
 			try {
 				avalDAO.adiciona(aval);
+				//Atualizar nivel do aluno!
+				aDAO.atualizarNivel(aluno);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	model.addObject("ArrayAlunos", alunos);
-	return PCLEI_GET_ALUNOS;
+
+	int idEscola = (int) session.getAttribute("idEscola");
+	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
 }
+
 
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,5 +37,18 @@ public class HomeController {
 //		}
 		return "/login";
 	}
+	
+	 // Error page
+	  @RequestMapping("/error.html")
+	  public String error(HttpServletRequest request, Model model) {
+	    model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code"));
+	    Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+	    String errorMessage = null;
+	    if (throwable != null) {
+	      errorMessage = throwable.getMessage();
+	    }
+	    model.addAttribute("errorMessage", errorMessage);
+	    return "error.html";
+	  }
 
 }
