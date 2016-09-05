@@ -1,4 +1,4 @@
-﻿package com.quixada.sme.sape.controllers;
+package com.quixada.sme.sape.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
