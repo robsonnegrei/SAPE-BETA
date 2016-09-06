@@ -16,12 +16,12 @@ public class AlunoDAO {
 	public void adiciona(Aluno aluno) throws SQLException{
 		Connection con = ConnectionFactory.getMySqlConnection();
 		String sql = "INSERT INTO aluno "
-				+ "( idEscola, nome, nivelAtual) "
+				+ "( idEscola, nome) "
 				+ "VALUES ( ?, ?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, aluno.getIdEscola());
 		stmt.setString(2, aluno.getNome());
-		stmt.setString(3, aluno.getNivel());
+		//stmt.setString(3, aluno.getNivel());
 		stmt.execute();
 	}
 	
