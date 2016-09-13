@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
+	//slf4j
 	private static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value ={ "/","/home"})
@@ -28,14 +29,13 @@ public class HomeController {
 	public String login(HttpServletRequest request){
 		if(request.getMethod().toLowerCase().equals("post")){
 			LOGGER.debug("Request com Post recebida!");
-			
 		}
 //		HttpSession session = request.getSession();
 //		//Sem sessão, manda pro login
 //		if (session.getAttribute("usuario") == null) {
 //			return "/";
 //		}
-		return "/login";
+		return "login";
 	}
 	
 	 // Error page

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.quixada.sme.sape.config.CustomAuthenticationSuccessHandler;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -43,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 http
 		 .authorizeRequests()
 		 .antMatchers("/admin/**").hasAuthority("ADMIN")
-		 .antMatchers("/PCLei/**").hasAuthority("PCLEI")
+		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI")
 		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
          .and()
