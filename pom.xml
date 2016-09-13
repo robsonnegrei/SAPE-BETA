@@ -5,11 +5,10 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>SAPE</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.4-BETA</version>
 	<packaging>jar</packaging>
 
 	<name>SAPE</name>
-	<description>SAPE project for Spring Boot para Acompanhamento de Projetos Educacionais</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -112,4 +111,5 @@
 	</build>
 	
 
+	<description>SAPE - Sistema de Acompanhamento Online de Projetos Educacionais</description>
 </project>
