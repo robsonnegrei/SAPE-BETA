@@ -26,7 +26,7 @@ public class HomeController {
 		return "index";
 	}
 	@RequestMapping(value = "/login",  method = { RequestMethod.GET, RequestMethod.POST })
-	public String login(HttpServletRequest request){
+	public String login(HttpServletRequest request, Model model){
 		if(request.getMethod().toLowerCase().equals("post")){
 			LOGGER.debug("Request com Post recebida!");
 		}
@@ -35,6 +35,7 @@ public class HomeController {
 //		if (session.getAttribute("usuario") == null) {
 //			return "/";
 //		}
+		
 		return "login";
 	}
 	

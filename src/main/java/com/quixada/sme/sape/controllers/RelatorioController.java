@@ -21,7 +21,7 @@ public class RelatorioController {
 	private static final int periodo4 = 4;
 	public static final String PAG_RELATORIO = "PCLei/pagRelatorio";
 
-	@RequestMapping(value = "/PCLei/gerarRelatorio", method = RequestMethod.POST )
+	@RequestMapping(value = "/PCLei/gerarRelatorio", method = {RequestMethod.POST, RequestMethod.GET} )
 	public String getRelatorio(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
