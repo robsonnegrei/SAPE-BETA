@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"/>
 	<title>Login do SAPE</title>
@@ -62,7 +62,7 @@
 			
 			</form>
 			<br></br>
-			<form method="post" action="/autenticar">
+			<form method="post" action="/visitar">
 				<input name="username" value="visitante@sape.com" hidden="true"/>
 				<button onclick="onclickLogin()" type="submit" name="visitante" class="btn btn-success btn-block">Entrar como visitante</button>
 			</form>
@@ -74,9 +74,8 @@
 	    </div>
 	  </main>
 	</div>
-
-
-
+	
+	
        
  		
  <!-- Scripts -->		

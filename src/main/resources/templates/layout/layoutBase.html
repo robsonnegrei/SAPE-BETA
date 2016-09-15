@@ -27,8 +27,11 @@
 		      <!-- Navigation. We hide it in small screens. -->
 		      <nav class="mdl-navigation mdl-layout--large-screen-only">
 		      	<ul class="nav navbar-nav">
+		      		<li  sec:authorize="hasAnyAuthority('PCLEI')"><a class="mdl-navigation__link" href="/pclei">Inicio</a></li>
+		      		<li  sec:authorize="hasAnyAuthority('ADMIN')"><a class="mdl-navigation__link" href="/admin">Inicio</a></li>
+		      		<li  sec:authorize="hasAnyAuthority('VISITANTE')"><a class="mdl-navigation__link" href="/PCLei/gerarRelatorio">Relatórios de desempenho</a></li>
 		      		<li><a class="mdl-navigation__link" href="/portfolio">Portfolio Digital</a></li>
-		        	<li><a class="mdl-navigation__link" href="/logout">Logout</a></li>
+		        	<li sec:authorize="isAuthenticated()"><a class="mdl-navigation__link" href="/logout">Logout</a></li>
 		        </ul>
 		      </nav>
 		 </div>
@@ -36,7 +39,12 @@
 	
 	<section layout:fragment="content"></section>
 	
-	
+	<footer sec:authorize="hasAnyAuthority('ADMIN')" class="footer" style="position:absolute;bottom:0">
+      <div class="container">
+        <p class="text-muted" th:text="${session.versao}"></p>
+      </div>
+    </footer>
+    
 	<!-- Aqui os scripts comuns -->
 	<script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/sapeAdmin.js}"></script>
