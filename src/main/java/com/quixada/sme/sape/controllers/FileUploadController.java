@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +29,9 @@ import com.quixada.sme.model.Usuario;
 @RequestMapping(value = {"/portfolio/controller"} )
 @ComponentScan(value={"com.quixada.sme.dao"})
 public class FileUploadController {
-
+	
+	private static Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+	
 	@Autowired
 	private ImagemDAO picDAO; 
 	

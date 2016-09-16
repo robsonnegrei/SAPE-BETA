@@ -14,24 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	//slf4j
-	private static Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	//private static Logger loger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value ={ "/","/home"})
 	public String index(HttpServletRequest request){
-		HttpSession session = request.getSession();
 		return "home";
 	}
+	
 	@RequestMapping(value = "/login",  method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(HttpServletRequest request, Model model){
-		if(request.getMethod().toLowerCase().equals("post")){
-			LOGGER.debug("Request com Post recebida!");
-		}
-//		HttpSession session = request.getSession();
-//		//Sem sessão, manda pro login
-//		if (session.getAttribute("usuario") == null) {
-//			return "/";
-//		}
-		
 		return "login";
 	}
 	

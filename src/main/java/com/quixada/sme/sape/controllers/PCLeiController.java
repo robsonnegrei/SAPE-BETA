@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ import com.quixada.sme.model.Usuario;
 
 @Controller
 public class PCLeiController {
+	
+	private static Logger logger = LoggerFactory.getLogger(PCLeiController.class);
+	
 	private static String USUARIO = "usuario";
 	private static String ESCOLA = "escola";
 	private static String PROFESSOR = "professor";
@@ -51,14 +56,13 @@ public class PCLeiController {
 					session.setAttribute("erroGetEscolas", false);
 				}
 				session.setAttribute("ArrayEscolas", escolas);
-				System.err.println("nome Regional=" + regional.getNome());
-				System.err.println("id Regional=" + regional.getIdRegional());
+				logger.info("listar escolas : " + regional.getIdRegional() + " " + regional.getNome());
 
 				session.setAttribute(PROFESSOR, pcLei );
 				session.setAttribute(REGIONAL, regional );
 		
 		} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				logger.error("pclei : " + e.getMessage());
 				e.printStackTrace();
 				session.setAttribute("erroGetEscolas", true);
 		}
@@ -66,8 +70,8 @@ public class PCLeiController {
 		return "PCLei/index";
 	}
 	@RequestMapping(value = {"PCLei/newSchoolForm"})
-	public String newUserForm(Model model, HttpServletRequest request)
-	{
+	public String newSchoolForm(Model model, HttpServletRequest request)
+	{	
 		HttpSession session = request.getSession();
 		
 		//Sem sessão, manda pro login
@@ -86,39 +90,41 @@ public class PCLeiController {
 	}
 	@RequestMapping(value = {"PCLei/addSchool"}, method = RequestMethod.POST)
 	public String addUser(@ModelAttribute(value="escola") Escola escola, BindingResult bindingResult, HttpServletRequest request){
-		/*verificar se a escola*/
 		if (bindingResult.hasErrors()) {
 			System.out.println("ERROS\n" + bindingResult);
 		}
+		HttpSession session = request.getSession();
+		Usuario usr = (Usuario)session.getAttribute("usuario");
+		logger.info("Req nova escola : " + usr.getEmail());
 		if (escola==null) {
 			return "redirect:/pclei/index";
 		}
 		try {
-			HttpSession session = request.getSession();
+			
 			Regional Regional = (com.quixada.sme.model.Regional) session.getAttribute(REGIONAL);
 			escola.setIdRegional(Regional.getIdRegional());
 			esDAO.addEscola(escola);
 			session.setAttribute("erroAddSchool", "false");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Adicionar escola : " + e.getMessage());
 			request.getSession().setAttribute("erroAddSchool", "true");
 			return "redirect:/PCLei/index";
 		}
 		return "redirect:/pclei/index";
 	}
 	@RequestMapping(value={"PCLei/rmSchool","rmSchool"})
-	public String removerUser(HttpServletRequest request){
+	public String removerEscola(HttpServletRequest request, HttpSession session){
 		if(request.getParameter("escola")!= null){
+			Usuario usr = (Usuario)session.getAttribute("usuario");
 			int id = Integer.parseInt( request.getParameter("escola"));
+			logger.info("Apagar escola : Solicitante - " + usr.getEmail() + " Alvo " + id);
 			//System.err.println(id);
-			
 			try {
 				esDAO.excluir(id);
 				request.getSession().setAttribute("erroRmSchool", "false");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Remover escola : " + e.getMessage());
 				request.getSession().setAttribute("erroRmSchool", "true");
 			}
 		}
