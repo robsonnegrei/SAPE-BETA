@@ -58,7 +58,7 @@ public class VisitanteController {
 		
 		
 		session.setAttribute("regional", regional);
-		return "redirect:/home";
+		return "redirect:home";
 	}
 	
 	@RequestMapping(value ={"/visitar"}, method = RequestMethod.POST)
@@ -85,6 +85,11 @@ public class VisitanteController {
 		session.setAttribute("idEscola", 1); //remover essa linha
 		session.setAttribute("usuario", usuarioAutenticado);
 		
-		return "/home";
+		return "portfolio/index";
+	}
+	
+	@RequestMapping(value ={"/visitar"}, method = RequestMethod.GET)
+	public String rederecionaGet(HttpSession session){
+		return "redirect:login";
 	}
 }

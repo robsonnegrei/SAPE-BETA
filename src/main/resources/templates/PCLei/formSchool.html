@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8"></meta>
-	<title>Novo Usuario</title>
-	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="/css/sapecss.css"/>
-	<link rel="stylesheet" type="text/css" href="/css/sapeAdmin.css"/>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+<head>	
+	<title>SAPE - nova escola</title>
 </head>
-<body>
-
-
+	<section layout:fragment="content">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <div th:replace="/header :: header"></div>
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
 	    <!-- Your content goes here -->
@@ -39,6 +33,5 @@
 	<script type="text/javascript" src="/js/sapeAdmin.js"></script>
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-</body>
-
+</section>
 </html>

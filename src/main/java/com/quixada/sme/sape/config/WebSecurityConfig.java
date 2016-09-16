@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI","VISITANTE")
 		 .antMatchers("/visitar").permitAll()
+		 .antMatchers("/").permitAll()
 		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
          .and()
      .formLogin()

@@ -19,11 +19,7 @@ public class HomeController {
 	@RequestMapping(value ={ "/","/home"})
 	public String index(HttpServletRequest request){
 		HttpSession session = request.getSession();
-		//Sem sessão, manda pro login
-		if (session.getAttribute("usuario") == null) {
-			return "redirect:/login";
-		}
-		return "index";
+		return "home";
 	}
 	@RequestMapping(value = "/login",  method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(HttpServletRequest request, Model model){
@@ -40,16 +36,16 @@ public class HomeController {
 	}
 	
 	 // Error page
-	  @RequestMapping("/error.html")
-	  public String error(HttpServletRequest request, Model model) {
-	    model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code"));
-	    Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
-	    String errorMessage = null;
-	    if (throwable != null) {
-	      errorMessage = throwable.getMessage();
-	    }
-	    model.addAttribute("errorMessage", errorMessage);
-	    return "error.html";
-	  }
+//	  @RequestMapping("/error.html")
+//	  public String error(HttpServletRequest request, Model model) {
+//	    model.addAttribute("errorCode", request.getAttribute("javax.servlet.error.status_code"));
+//	    Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+//	    String errorMessage = null;
+//	    if (throwable != null) {
+//	      errorMessage = throwable.getMessage();
+//	    }
+//	    model.addAttribute("errorMessage", errorMessage);
+//	    return "error.html";
+//	  }
 
 }

@@ -5,7 +5,6 @@
 
 	<groupId>com.quixada.sme</groupId>
 	<artifactId>SAPE</artifactId>
-	<version>1.0.5-BETA</version>
 	<packaging>jar</packaging>
 
 	<name>SAPE</name>

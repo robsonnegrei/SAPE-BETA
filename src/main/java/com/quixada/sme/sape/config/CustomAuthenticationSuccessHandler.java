@@ -38,7 +38,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 			HttpSession session = request.getSession();
 			String email = (String) SecurityContextHolder.getContext().getAuthentication().getName();
-			session.setAttribute("versao", "1.0.4-BETA");
+			session.setAttribute("versao", "1.0.7-BETA");
 			try {
 				Usuario usuarioAutenticado = uDao.buscar(email);
 				//Aqui seta o usuario com suas propriedades

@@ -1,4 +1,5 @@
-###Cheat - Sheet
+###SAPE - Cheat Sheet
+#Author @ssisaias
 
 #Criar a imagem do SAPE
 #Deve estar no diretorio /docker
