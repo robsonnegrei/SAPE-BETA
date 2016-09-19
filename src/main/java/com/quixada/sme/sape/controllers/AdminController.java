@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ import com.quixada.sme.model.Usuario;
 
 @Controller
 public class AdminController {
+	
+	private static Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	@Autowired
 	private UsuarioDAO uDAO;
@@ -45,8 +49,7 @@ public class AdminController {
 				List<Usuario> usrList = uDAO.listarTodos();
 				session.setAttribute("listaUsuarios", usrList);
 			} catch (SQLException e) {
-		
-				e.printStackTrace();
+				logger.error("Erro index Admin : " + e.getMessage());
 			}
 		return "admin/index";
 	}
@@ -62,7 +65,7 @@ public class AdminController {
 		try {
 			regionais = reDAO.listar();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erro ao carregar form usuario : " + e.getMessage());
 		}
 		
 		model.addAttribute("pclei", pclei);
@@ -108,9 +111,11 @@ public class AdminController {
 			if (usuario.getIsProfCoordenadorLei()==1) {
 				pclei.setIdUsuario(usuario.getIdUsuario());
 				pcDAO.adiciona(pclei);
+				
 			}
+			logger.info("Novo usuario cadastrado : " + usuario.getEmail());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erro add usuario : " + e.getMessage());
 			redirect.addFlashAttribute("erroAdd",e.getMessage());
 			return "redirect:/admin/index";
 		}
@@ -124,12 +129,11 @@ public class AdminController {
 			try {
 				
 				uDAO.excluir(id);
-				//Se for pclei remover tambem
+				logger.info("Usuario removido : " + id);
 				request.getSession().setAttribute("erroRmUser", "false");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Erro excluir usuario : " + e.getMessage());
 				request.getSession().setAttribute("erroRmUser", "true");
 			}
 		

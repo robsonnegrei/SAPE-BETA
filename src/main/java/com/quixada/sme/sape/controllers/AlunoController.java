@@ -12,8 +12,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +35,9 @@ import com.quixada.sme.model.Avaliacao;
 
 @Controller
 public class AlunoController {
-
+	
+	private static Logger logger = LoggerFactory.getLogger(AlunoController.class);
+	
 	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
 
 	@Autowired private AlunoDAO aDAO;
@@ -60,8 +65,7 @@ public class AlunoController {
 			//session.setAttribute("ArrayAlunos", alunos);
 	
 	} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.error("Listar alunos : " + e.getMessage());
 			model.addAttribute("erroGetAlunos", true);
 			//session.setAttribute("erroGetAlunos", true);
 	}
@@ -82,8 +86,7 @@ public class AlunoController {
 			Adao.adiciona(aluno);
 			request.getSession().setAttribute("erroAddAluno", "false");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Add aluno : " + e.getMessage());
 			request.getSession().setAttribute("erroAddAluno", "true");
 		}
 		
@@ -103,8 +106,7 @@ public class AlunoController {
 				request.getSession().setAttribute("erroRmAluno", "false");
 	
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Excluir aluno : " + e.getMessage());
 				request.getSession().setAttribute("erroRmAluno", "true");
 			}
 		}
@@ -124,16 +126,12 @@ public class AlunoController {
 			if(alunos.getAlunosList().isEmpty()){
 				return PCLEI_GET_ALUNOS;
 			}else{
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
-				Calendar cal = Calendar.getInstance();
-
-				//ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
-				
+			
 				model.addAttribute("wrapper", alunos);
 			}
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			logger.error("Erro : " + e.getMessage());
 		}
 	    
 		return "/PCLei/pagAvaliarAlunos";
@@ -160,12 +158,13 @@ public class AlunoController {
 			aval.setIdAluno(aluno.getIdAluno());
 			aval.setNivel(aluno.getNivel());
 			aval.setPeriodo(1); //deve vir das configurações do sistema, pelo amor de shiva
+			logger.info("Avaliacao concluida : " + aval.getIdAvaliacao() + " por : " + SecurityContextHolder.getContext().getAuthentication().getName());
 			try {
 				avalDAO.adiciona(aval);
 				//Atualizar nivel do aluno!
 				aDAO.atualizarNivel(aluno);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erro ao avaliar alunos : " + e.getMessage());
 			}
 		}
 	}
