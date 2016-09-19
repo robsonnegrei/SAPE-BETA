@@ -36,9 +36,9 @@ public class PortfolioController {
 	
 	private static Logger logger = LoggerFactory.getLogger(PortfolioController.class);
 	
-	public static final String REDIRECT_PORTFOLIO_INDEX = "redirect:/portfolio/index";
-	public static final String PORTFOLIO_INDEX = "/portfolio/index";
-	public static final String PORTFOLIO_NOVO = "/portfolio/newpost";
+	public static final String REDIRECT_PORTFOLIO_INDEX = "redirect:portfolio/index";
+	public static final String PORTFOLIO_INDEX = "portfolio/index";
+	public static final String PORTFOLIO_NOVO = "portfolio/newpost";
 	
 	@Autowired
 	private PostDAO pDAO;

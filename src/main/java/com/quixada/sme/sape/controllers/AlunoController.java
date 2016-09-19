@@ -38,7 +38,7 @@ public class AlunoController {
 	
 	private static Logger logger = LoggerFactory.getLogger(AlunoController.class);
 	
-	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
+	private static final String PCLEI_GET_ALUNOS = "PCLei/pagAlunos";
 
 	@Autowired private AlunoDAO aDAO;
 	@Autowired private AvaliacaoDAO avalDAO;
