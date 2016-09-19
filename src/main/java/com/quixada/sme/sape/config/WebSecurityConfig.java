@@ -24,10 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	//verifica os dados contidos no banco
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("usuario").password("senha").roles("ADMIN");
-//		auth.inMemoryAuthentication().withUser("jooj").password("12345").roles("PCLEI");
-//		auth.inMemoryAuthentication().withUser("user").password("password").roles("ADMIN");
-		
+
 	  auth.inMemoryAuthentication().withUser("visitante@sape.com").password("").roles("VISITANTE");
 	  //Geral
 	  auth.jdbcAuthentication().dataSource(dataSource)
@@ -35,9 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"select email,senha,1 from usuario where email=?")
 		.authoritiesByUsernameQuery(
 			"select usuario.email, usuario_funcao.funcao from usuario join usuario_funcao on usuario.idUsuario = usuario_funcao.idUsuario where usuario.email=?");
-	  	//Query de funcao testada no SQL server 5.6
+	  	//Query testada no SQL server 5.6
 	  
 	}	
+	
 	//aqui ele seta as views de acordo com usuario e senha, mostra página de erro
 	//seta a página de login que contém o form de acesso e passa os parâmetros
 	@Override
@@ -51,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI","VISITANTE")
 		 .antMatchers("/visitar").permitAll()
+		 .antMatchers("/").permitAll()
 		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
          .and()
      .formLogin()

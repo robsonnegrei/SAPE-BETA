@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,23 +26,15 @@ import com.quixada.sme.model.Usuario;
 
 @Controller
 public class VisitanteController {
-	private HttpSession session = null;
-	private static int ID_VISITANTE = -1;
 	
+	private static Logger logger = LoggerFactory.getLogger(VisitanteController.class);
 	
 	@RequestMapping("/escolas")
 	public String getEscolasRegional(HttpSession session, @RequestParam("idRegional")String idRegional, @RequestParam("nome")String nome){
+		
 		EscolaDAO dao = new EscolaDAO(); 
-		/*
-		Usuario usr = (Usuario) session.getAttribute("usuario");
-		if(usr.getIdUsuario() == ID_VISITANTE ){
-			this.session = session;
-		}else{
-			return "redirect:/login";
-		}
-		*/
 		Regional regional = new Regional(Integer.parseInt(idRegional), nome);
-	
+		logger.info("getEscolasRegional executado");
 		try {
 			ArrayList<Escola> escolas = dao.getEscolasRegional(regional.getIdRegional());
 			if(escolas.isEmpty())
@@ -51,18 +45,19 @@ public class VisitanteController {
 			session.setAttribute("ArrayEscolas", escolas);
 	
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.error("Em getEscolasRegional :: " + e.getMessage());;
+			//e.printStackTrace();
 			session.setAttribute("erroGetEscolas", true);
 		}
 		
 		
 		session.setAttribute("regional", regional);
-		return "redirect:/home";
+		return "redirect:home";
 	}
 	
 	@RequestMapping(value ={"/visitar"}, method = RequestMethod.POST)
 	public String autenticarVisitante(HttpSession session){
+		logger.info("Novo visitante");
 		//Identificação do visitante
 		SecureRandom random = new SecureRandom();
 	    byte bytes[] = new byte[8];
@@ -84,7 +79,14 @@ public class VisitanteController {
 		session.setMaxInactiveInterval(1200); //20 minutos
 		session.setAttribute("idEscola", 1); //remover essa linha
 		session.setAttribute("usuario", usuarioAutenticado);
-		
-		return "/home";
+		logger.info("Visitante: " + "visitante"+token+"@sape" + " salvo em memoria. inatividade: 1200 s");
+
+		return "portfolio/index";
+	}
+	
+	@RequestMapping(value ={"/visitar"}, method = RequestMethod.GET)
+	public String rederecionaGet(HttpSession session){
+		logger.info("Redirecionando visitante");
+		return "redirect:login";
 	}
 }
