@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.quixada.sme.sape.config.CustomAuthenticationSuccessHandler;
-
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -46,18 +44,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 .authorizeRequests()
 		 .antMatchers("/PCLei/gerarRelatorio","PCLei/pagRelatorio").hasAuthority("VISITANTE")
 		 .antMatchers("/admin/**").hasAuthority("ADMIN")
-		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI")
+		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI", "ADMIN")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI","VISITANTE")
 		 .antMatchers("/visitar").permitAll()
 		 .antMatchers("/").permitAll()
 		 .antMatchers("/css/**", "/js/**","/img/**","/bootstrap/**","/public/**").permitAll()
          .and()
+     .exceptionHandling().accessDeniedPage("/403")
+        .and()
      .formLogin()
          .loginPage("/login").failureUrl("/login?error").successHandler(handler)
          .usernameParameter("username").passwordParameter("password")
          .permitAll()
          .and()
      .logout().logoutSuccessUrl("/login?logout");
+	 
        
 	}
 	

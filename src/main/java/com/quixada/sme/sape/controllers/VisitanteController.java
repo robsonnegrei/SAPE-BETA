@@ -59,21 +59,22 @@ public class VisitanteController {
 	public String autenticarVisitante(HttpSession session){
 		logger.info("Novo visitante");
 		//Identificação do visitante
+		char[] permitido = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 		SecureRandom random = new SecureRandom();
-	    byte bytes[] = new byte[8];
-	    random.nextBytes(bytes);
-	    String token = bytes.toString();
+		StringBuilder token = new StringBuilder();
+		for (int i = 0; i < 4; i++) {
+			token.append(random.nextInt(permitido.length));
+		}
 	    //Autoridade
-	  
 	    List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 	    GrantedAuthority ga = new SimpleGrantedAuthority("VISITANTE");
 	    grantedAuthorities.add(ga);
 	    //cria o visitante - Spring Security safe
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken("visitante"+token+"@sape", "default",grantedAuthorities);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken("visitante"+token.toString()+"@sape", "default",grantedAuthorities);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		//usuario da sessio
+		//usuario da session
 		Usuario usuarioAutenticado = new Usuario();
-		usuarioAutenticado.setEmail("visitante"+token+"@sape");
+		usuarioAutenticado.setEmail("visitante"+token.toString()+"@sape");
 		usuarioAutenticado.setIdUsuario(-1);
 		usuarioAutenticado.setSenha("default");
 		session.setMaxInactiveInterval(1200); //20 minutos

@@ -26,6 +26,11 @@ public class HomeController {
 		return "login";
 	}
 	
+	@RequestMapping(value ={ "/403"})
+	public String acessoNegado(HttpServletRequest request){
+		return "403";
+	}
+	
 	 // Error page
 //	  @RequestMapping("/error.html")
 //	  public String error(HttpServletRequest request, Model model) {
