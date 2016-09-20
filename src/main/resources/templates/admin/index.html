@@ -47,6 +47,13 @@
 				<div th:text="${erroAdd}"></div>
 			</div>
         </div>
+        <div th:if="${erro}">
+       		<div class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only" th:text="${erro}">Error:</span>
+				<div th:text="${erro}"></div>
+			</div>
+        </div>
         <!-- 
 	 	Bem vindo <span th:utext="${session.usuario.email}"></span>
 	 	<br></br>

@@ -5,18 +5,56 @@
     layout:decorator="layout/layoutBase">
 <head>	
 	<title>Inicio</title>
+	<link rel="stylesheet" th:href="@{http://www.w3schools.com/lib/w3.css}"></link>
 </head>
 
 <section layout:fragment="content">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	 
 	  <main class="mdl-layout__content container-fluid ">
+	  
 	    <div class="page-content">
 	    <!-- Your content goes here -->
-		   
+			<div class="w3-content w3-section" style="max-width:600px">
+			
+			    <div class="w3-display-container mySlides">
+				  <img th:src="@{img/img1.jpg}" style="width:100%"></img>
+				  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+				    Bem vindo ao SAPE.
+				  </div>
+				</div>
+				
+				<div class="w3-display-container mySlides">
+				  <img th:src="@{img/img2.jpg}" style="width:100%"></img>
+				  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+				    Bem vindo ao SAPE.
+				  </div>
+				</div>
+				
+			</div>
 		</div>
+		
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			var myIndex = 0;
+			carousel();
+			
+			function carousel() {
+			    var i;
+			    var x = document.getElementsByClassName("mySlides");
+			    for (i = 0; i < x.length; i++) {
+			       x[i].style.display = "none";
+			    }
+			    myIndex++;
+			    if (myIndex > x.length) {myIndex = 1}
+			    x[myIndex-1].style.display = "block";
+			    setTimeout(carousel, 6000); // Change image every 2 seconds
+			}
+		/*]]>*/
+	    </script>
+		
 	  </main>
-	</div> 		
-
+	</div>
+	 		
 </section>
 </html>
