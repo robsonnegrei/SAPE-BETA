@@ -42,9 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 http.csrf().disable();
 	 http
 		 .authorizeRequests()
-		 .antMatchers("/PCLei/gerarRelatorio","PCLei/pagRelatorio").hasAuthority("VISITANTE")
+		 .antMatchers("/pclei/gerarRelatorio","PCLei/pagRelatorio").authenticated()
 		 .antMatchers("/admin/**").hasAuthority("ADMIN")
-		 .antMatchers("/PCLei/**").hasAnyAuthority("PCLEI", "ADMIN")
+		 .antMatchers("/pclei/**").hasAnyAuthority("PCLEI", "ADMIN")
 		 .antMatchers("/portfolio/**").hasAnyAuthority("ADMIN","PCLEI","VISITANTE")
 		 .antMatchers("/visitar").permitAll()
 		 .antMatchers("/").permitAll()

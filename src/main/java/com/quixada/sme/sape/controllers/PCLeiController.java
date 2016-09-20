@@ -65,7 +65,7 @@ public class PCLeiController {
 					session.setAttribute("erroGetEscolas", false);
 				}
 				session.setAttribute("ArrayEscolas", escolas);
-				logger.info("listar escolas : " + regional.getIdRegional() + " " + regional.getNome());
+				logger.info("Regional : " + regional.getIdRegional() + " " + regional.getNome());
 
 				session.setAttribute(PROFESSOR, pcLei );
 				session.setAttribute(REGIONAL, regional );
