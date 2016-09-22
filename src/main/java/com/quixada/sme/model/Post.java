@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.stereotype.Component;
 
+@Component
 public class Post {
 	private int idPost;
 	private int idProfessor;

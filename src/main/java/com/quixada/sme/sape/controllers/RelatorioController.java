@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,13 +21,17 @@ public class RelatorioController {
 	private static final int periodo3 = 3;
 	private static final int periodo4 = 4;
 	public static final String PAG_RELATORIO = "PCLei/pagRelatorio";
-
-	@RequestMapping(value = "/PCLei/gerarRelatorio", method = {RequestMethod.POST, RequestMethod.GET} )
+	
+	@Autowired
+	private AvaliacaoDAO avaliacaoDAO;
+	@Autowired
+	private EscolaDAO escolaDao;
+	
+	@RequestMapping(value = "/pclei/gerarRelatorio", method = {RequestMethod.POST, RequestMethod.GET} )
 	public String getRelatorio(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
-		AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO();
-		EscolaDAO escolaDao = new EscolaDAO();
+		
 		
 		//int idRegional = (int)session.getAttribute("regional.id");
 		int idEscola = (int)session.getAttribute("idEscola");	
