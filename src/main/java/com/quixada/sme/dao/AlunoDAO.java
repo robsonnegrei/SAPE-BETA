@@ -6,15 +6,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Aluno;
 
+
+
 @Component
+@ComponentScan(value={"com.quixada.sme.sape.config"})
 public class AlunoDAO {
+	
+	@Autowired
+	DataSource ds;
+
+	
 	public void adiciona(Aluno aluno) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "INSERT INTO aluno "
 				+ "( idEscola, nome) "
 				+ "VALUES ( ?, ?)";
@@ -30,7 +41,7 @@ public class AlunoDAO {
 	 * 
 	 */
 	public void atualizarNivel(Aluno aluno) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "UPDATE aluno "
 				+ "SET nivelAtual=?"
 				+ "WHERE idAluno=" + aluno.getIdAluno();
@@ -41,7 +52,7 @@ public class AlunoDAO {
 	}
 	
 	public Aluno buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM aluno WHERE idAluno="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -58,7 +69,7 @@ public class AlunoDAO {
 	}
 
 	public void editar(Aluno aluno) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "UPDATE aluno "
 				+ "SET idEscola=?, nome=?, nivelAtual=?"
 				+ "WHERE idAluno=" + aluno.getIdAluno();
@@ -71,7 +82,7 @@ public class AlunoDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "DELETE FROM aluno WHERE idAluno="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -79,7 +90,7 @@ public class AlunoDAO {
 	}
 	
 	public ArrayList<Aluno> buscarAlunosPorEscola(int idEscola) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM aluno WHERE idEscola="+ idEscola;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -89,7 +100,7 @@ public class AlunoDAO {
 			Aluno a = new Aluno(rs.getInt("idAluno"),rs.getInt("idEscola") ,rs.getString("nome"), rs.getString("nivelAtual"));
 			alunos.add(a);
 		}
-	
+
 		return alunos;
 		
 	}

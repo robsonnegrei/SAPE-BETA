@@ -8,21 +8,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mysql.jdbc.Statement;
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Usuario;
 
 @Component
 public class UsuarioDAO {
 	
 	@Autowired
+	DataSource ds;
+	
+	@Autowired
 	private Usuario_FuncaoDAO funcaoDAO;
 	
 	public void adiciona(Usuario usuario) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "INSERT INTO usuario "
 				+ "( email, senha) "
 				+ "VALUES (?, ?)";
@@ -47,7 +51,7 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario buscar(String email) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM usuario WHERE email='"+email+"'";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -65,7 +69,7 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM usuario WHERE idUsuario="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -87,7 +91,7 @@ public class UsuarioDAO {
 	 * @throws SQLException
 	 */
 	public void editar(Usuario usuario) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "UPDATE usuario "
 				+ "SET email=?, senha=? "
 				+ "WHERE idUsuario=" + usuario.getIdUsuario();
@@ -100,7 +104,7 @@ public class UsuarioDAO {
 	
 	public void excluir(int id) throws SQLException{
 		funcaoDAO.limparFuncoes(id);
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "DELETE FROM usuario WHERE idUsuario="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -108,7 +112,7 @@ public class UsuarioDAO {
 	}
 	
 	public List<Usuario> listarTodos() throws SQLException {
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM usuario";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);

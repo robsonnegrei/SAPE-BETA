@@ -7,16 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.factory.ConnectionFactory;
+import com.jolbox.bonecp.BoneCPDataSource;
 import com.quixada.sme.model.Regional;
 
 @Component
 public class RegionalDAO {
 	
+	@Autowired
+	DataSource ds;
+	
 	public void adiciona(Regional regional) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "INSERT INTO regional "
 				+ "(nome) "
 				+ "VALUES (?)";
@@ -26,7 +32,7 @@ public class RegionalDAO {
 	}
 	
 	public Regional buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM regional WHERE idRegional="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -41,7 +47,7 @@ public class RegionalDAO {
 	}
 
 	public void editar(Regional regional) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "UPDATE reginoal "
 				+ "SET nome=? "
 				+ "WHERE idReginonal=" + regional.getIdRegional();
@@ -52,7 +58,7 @@ public class RegionalDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "DELETE FROM regional WHERE idRegional="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -60,7 +66,7 @@ public class RegionalDAO {
 	}
 	
 	public List<Regional> listar() throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM regional";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);

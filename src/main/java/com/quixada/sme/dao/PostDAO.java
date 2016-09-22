@@ -7,16 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mysql.jdbc.Statement;
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Post;
 
 @Component
 public class PostDAO {
+	
+	@Autowired
+	DataSource ds;
+	
 	public Post adiciona(Post post) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "INSERT INTO post "
 				+ "( idProfessor, mensagem, data) "
 				+ "VALUES ( ?, ?, ?)";
@@ -35,7 +41,7 @@ public class PostDAO {
 	
 	
 	public Post buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM post WHERE idPost="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -52,7 +58,7 @@ public class PostDAO {
 	}
 
 	public void editar(Post post) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "UPDATE post "
 				+ "SET idProfessor=?, mensagem=?, data=? "
 				+ "WHERE idPost=" + post.getIdPost();
@@ -65,7 +71,7 @@ public class PostDAO {
 	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "DELETE FROM post WHERE idPost="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -73,7 +79,7 @@ public class PostDAO {
 	}
 	
 	public List<Post> listarTodos() throws SQLException {
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM post";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);

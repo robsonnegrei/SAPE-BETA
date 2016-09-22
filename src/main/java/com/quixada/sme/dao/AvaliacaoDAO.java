@@ -5,16 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Avaliacao;
 
+@ComponentScan(value={"com.quixada.sme"})
 @Component
 public class AvaliacaoDAO {
 
+	@Autowired
+	DataSource ds;
+
 	public void adiciona(Avaliacao aval) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "INSERT INTO avaliacao "
 				+ "( ano, data, periodo, idAluno, nivel) "
 				+ "VALUES (?, ?, ?, ?, ?)";
@@ -28,7 +35,7 @@ public class AvaliacaoDAO {
 	}
 	
 	public Avaliacao buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "SELECT * FROM avaliacao WHERE idAvaliacao="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -47,7 +54,7 @@ public class AvaliacaoDAO {
 //Atualizar
 //
 //	public void editar(Avaliacao aval) throws SQLException{
-//		Connection con = ConnectionFactory.getMySqlConnection();
+//		Connection con = ds.getConnection();
 //		String sql = "UPDATE avaliacao "
 //				+ "SET ano=?, data=?, periodo=?, idAluno=? "
 //				+ "WHERE idAvaliacao=" + aval.getIdAvaliacao();
@@ -62,7 +69,7 @@ public class AvaliacaoDAO {
 //	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "DELETE FROM avaliacao WHERE idAvaliacao="+ id;
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -70,7 +77,7 @@ public class AvaliacaoDAO {
 	}
 	
 	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
+		Connection con = ds.getConnection();
 		String sql = "select COUNT(*) from aluno join avaliacao"
 				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
 		
