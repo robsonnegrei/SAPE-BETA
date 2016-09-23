@@ -23,14 +23,13 @@ public class AppConfig {
 	 	ds.setJdbcUrl("jdbc:mysql://localhost:3306/sape");	// set the JDBC url
 		ds.setUsername("root");							// set the username
 		ds.setPassword("12345");	
-		ds.setIdleConnectionTestPeriod(60);
-	    ds.setIdleMaxAge(240);
+		ds.setIdleConnectionTestPeriodInMinutes(60);
+	    ds.setIdleMaxAgeInMinutes(60);
 	    ds.setMaxConnectionsPerPartition(20);
 	    ds.setMinConnectionsPerPartition(5);
 	    ds.setPartitionCount(3);
 	    ds.setAcquireIncrement(5);
-	    ds.setStatementCacheSize(100);
-	    ds.setReleaseHelperThreads(2);
+	    ds.setStatementsCacheSize(50);
 		//logger.debug("Conexao obtida: " + ds.getJdbcUrl() + " : " + ds.getUser());
 		return ds; 	// fetch a connection
 	}
