@@ -82,7 +82,7 @@ public class VisitanteController {
 		session.setAttribute("usuario", usuarioAutenticado);
 		logger.info("Visitante: " + "visitante"+token+"@sape" + " salvo em memoria. inatividade: 1200 s");
 
-		return "portfolio/index";
+		return "redirect:portfolio/index";
 	}
 	
 	@RequestMapping(value ={"/visitar"}, method = RequestMethod.GET)

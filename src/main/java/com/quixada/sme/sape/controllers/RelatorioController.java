@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.quixada.sme.dao.AvaliacaoDAO;
 import com.quixada.sme.dao.EscolaDAO;
+import com.quixada.sme.model.Avaliacao;
 import com.quixada.sme.model.Escola;
+import com.quixada.sme.model.Nivel;
 
 @Controller
 public class RelatorioController {
@@ -70,29 +72,29 @@ public class RelatorioController {
 		
 		//pegando dados por escola
 		try {
-			 resPeriodoPreSilabico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, 1);
-			 resPeriodoSilabico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, 2);
-			 resPeriodoSilabicoAlfa1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, 3);
-			 resPeriodoAlfabetico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, 4);
-			 resPeriodoOrtografico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, 5);
+			 resPeriodoPreSilabico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, Nivel.PRE_SILABICO);
+			 resPeriodoSilabico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, Nivel.SILABICO);
+			 resPeriodoSilabicoAlfa1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, Nivel.SILABICO_ALFABETICO);
+			 resPeriodoAlfabetico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, Nivel.ALFABETICO_ORTOGRAFICO);
+			 resPeriodoOrtografico1 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo1, Nivel.ORTOGRAFICO);
 			
-			 resPeriodoPreSilabico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2,1);
-			 resPeriodoSilabico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 2);
-			 resPeriodoSilabicoAlfa2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 3);
-			 resPeriodoAlfabetico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 4);
-			 resPeriodoOrtografico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 5);
-			
-			 resPeriodoPreSilabico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 1);
-			 resPeriodoSilabico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 2);
-			 resPeriodoSilabicoAlfa3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 3);
-			 resPeriodoAlfabetico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 4);
-			 resPeriodoOrtografico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 5);
-			
-			 resPeriodoPreSilabico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 1);
-			 resPeriodoSilabico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 2);
-			 resPeriodoSilabicoAlfa4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 3);
-			 resPeriodoAlfabetico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 4);
-			 resPeriodoOrtografico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 5);
+//			 resPeriodoPreSilabico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2,1);
+//			 resPeriodoSilabico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 2);
+//			 resPeriodoSilabicoAlfa2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 3);
+//			 resPeriodoAlfabetico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 4);
+//			 resPeriodoOrtografico2 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo2, 5);
+//			
+//			 resPeriodoPreSilabico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 1);
+//			 resPeriodoSilabico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 2);
+//			 resPeriodoSilabicoAlfa3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 3);
+//			 resPeriodoAlfabetico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 4);
+//			 resPeriodoOrtografico3 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo3, 5);
+//			
+//			 resPeriodoPreSilabico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 1);
+//			 resPeriodoSilabico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 2);
+//			 resPeriodoSilabicoAlfa4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 3);
+//			 resPeriodoAlfabetico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 4);
+//			 resPeriodoOrtografico4 = avaliacaoDAO.resultAvaliacaoPorPeriodo(idEscola, periodo4, 5);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

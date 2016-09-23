@@ -90,7 +90,6 @@ public class EscolaDAO {
 			Escola e = new Escola(rs.getInt("idEscola"),rs.getInt("idRegional") ,rs.getString("nome"));
 			escolas.add(e);
 		}
-		ds = null;
 		return escolas;
 	}
 

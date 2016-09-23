@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.model.Avaliacao;
+import com.quixada.sme.model.Nivel;
 
 @ComponentScan(value={"com.quixada.sme"})
 @Component
@@ -76,14 +77,14 @@ public class AvaliacaoDAO {
 		stmt.execute();
 	}
 	
-	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
+	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, String nivel) throws SQLException{
 		Connection con = ds.getConnection();
-		String sql = "select COUNT(*) from aluno join avaliacao"
-				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
-		
+		//String sql = "select COUNT(*) from aluno join avaliacao"
+		//		+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
+		String sql =  "select COUNT(*) from aluno join avaliacao ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?;";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, idEscola);
-		stmt.setInt(2, nivel);
+		stmt.setString(2, nivel);
 		stmt.setInt(3, periodo);
 	
 		ResultSet rs = stmt.executeQuery();
