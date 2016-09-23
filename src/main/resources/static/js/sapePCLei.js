@@ -33,7 +33,7 @@ function load() {
 }
 
 $("#btnAvaliacao").click(function() {
-	window.location.href="/PCLei/avaliar";
+	window.location.href="/pclei/avaliar";
 });
 //Document Ready
 $(document).ready(function(){

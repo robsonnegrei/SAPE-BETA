@@ -2,12 +2,9 @@ package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.quixada.sme.dao.AlunoDAO;
 import com.quixada.sme.dao.AvaliacaoDAO;
@@ -34,16 +30,19 @@ import com.quixada.sme.model.AlunosAvalForm;
 import com.quixada.sme.model.Avaliacao;
 
 @Controller
+@ComponentScan(value={"com.quixada.sme.dao"})
 public class AlunoController {
 	
 	private static Logger logger = LoggerFactory.getLogger(AlunoController.class);
 	
-	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
-
+	private static final String PCLEI_GET_ALUNOS = "pclei/pagAlunos";
+	private static final String PCLEI_AVALIAR_ALUNOS = "pclei/pagAvaliarAlunos";
+	private static final String PCLEI_GET_ALUNOS_ESCOLA = "redirect:/pclei/getAlunos?idEscola=";
+	
 	@Autowired private AlunoDAO aDAO;
 	@Autowired private AvaliacaoDAO avalDAO;
 	
-	@RequestMapping(value ={"PCLei/getAlunos", "getAlunos"})
+	@RequestMapping(value ={"pclei/getAlunos", "getAlunos"})
 	@PreAuthorize("hasAnyRole('ADMIN','PCLEI')")
 	public String listarAlunos(Model model, @RequestParam("idEscola")String idEscola, HttpSession session){
 	
@@ -73,7 +72,7 @@ public class AlunoController {
 	return PCLEI_GET_ALUNOS;
 	}
 
-	@RequestMapping(value={"PCLei/addAluno","/addAluno"})
+	@RequestMapping(value={"pclei/addAluno","/addAluno"})
 	public String AddAlunos(HttpServletRequest request){
 	if(request.getParameter("nome")!= null){
 		int idEscola = Integer.parseInt(request.getParameter("idEscola"));
@@ -92,10 +91,10 @@ public class AlunoController {
 		
 	}
 	int idEscola = (int) request.getSession().getAttribute("idEscola");
-	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+	return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 	}
 
-	@RequestMapping(value={"PCLei/rmAluno","/rmAluno"})
+	@RequestMapping(value={"pclei/rmAluno","/rmAluno"})
 	public String excluirAlunos(HttpServletRequest request){
 		if(request.getParameter("aluno")!= null){
 			int id = Integer.parseInt(request.getParameter("aluno"));
@@ -111,10 +110,10 @@ public class AlunoController {
 			}
 		}
 		int idEscola = (int) request.getSession().getAttribute("idEscola");
-		return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+		return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 	}
 	
-	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.GET)
+	@RequestMapping(value="/pclei/avaliar", method=RequestMethod.GET)
 	public String avaliarAlunos(HttpSession session, 
 			Model model)
 	 {
@@ -134,10 +133,10 @@ public class AlunoController {
 			logger.error("Erro : " + e.getMessage());
 		}
 	    
-		return "/PCLei/pagAvaliarAlunos";
+		return PCLEI_AVALIAR_ALUNOS;
 	}
 
-	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.POST)
+	@RequestMapping(value="/pclei/avaliar", method=RequestMethod.POST)
 	public String processoAvaliacaoAlunos(
 		@ModelAttribute AlunosAvalForm alunos,
 		Model model,
@@ -158,7 +157,7 @@ public class AlunoController {
 			aval.setIdAluno(aluno.getIdAluno());
 			aval.setNivel(aluno.getNivel());
 			aval.setPeriodo(1); //deve vir das configurações do sistema, pelo amor de shiva
-			logger.info("Avaliacao concluida : " + aval.getIdAvaliacao() + " por : " + SecurityContextHolder.getContext().getAuthentication().getName());
+			logger.info(aluno.getNome() + " : avaliado : " + aval.getIdAvaliacao() + " : por : " + SecurityContextHolder.getContext().getAuthentication().getName());
 			try {
 				avalDAO.adiciona(aval);
 				//Atualizar nivel do aluno!
@@ -170,7 +169,7 @@ public class AlunoController {
 	}
 
 	int idEscola = (int) session.getAttribute("idEscola");
-	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+	return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 }
 
 

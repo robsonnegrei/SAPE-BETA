@@ -7,6 +7,7 @@
 	<title>SAPE - Alunos</title>
 </head>
 	<section layout:fragment="content">
+	
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	  <main class="mdl-layout__content">
 	    <div class="page-content">
@@ -91,7 +92,7 @@
   					
 				<!-- end Avaliar Alunos Button -->
 				
-				<form  th:action="@{/PCLei/gerarRelatorio}" method="post" >
+				<form  th:action="@{/pclei/gerarRelatorio}" method="post" >
   						<!-- 
   						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
   						 -->
@@ -106,7 +107,7 @@
     					<h3 class="panel-title">Adicionar Aluno</h3>
     				</div>
     				<div class="panel-body">
-					 	<form th:action="@{/PCLei/addAluno}" method="post" >
+					 	<form th:action="@{/pclei/addAluno}" method="post" >
 						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
 			    			<label class="mdl-textfield__label" for="nome">Nome:</label>
@@ -121,5 +122,7 @@
 	    </div>
 	  </main>
 	</div>
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>	
 </section>
 </html>

@@ -1,21 +1,33 @@
 package com.quixada.sme.sape.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-@Configuration
+@Component
 public class AppConfig {
 	
+	private static Logger logger = LoggerFactory.getLogger(AppConfig.class);
+	
+	
 	@Bean(name = "dataSource")
-	public DriverManagerDataSource dataSource() {
-	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:mysql://sape_sql:3306/sape");
-	    driverManagerDataSource.setUsername("root");
-	    driverManagerDataSource.setPassword("12345");
-	    return driverManagerDataSource;
+	public HikariDataSource dataSource() throws ClassNotFoundException {
+		HikariConfig config = new HikariConfig();	
+		//config.setDriverClass("com.mysql.jdbc.Driver");
+		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
+		config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
+	 	config.setJdbcUrl("jdbc:mysql://sape_sql:3306/sape");	
+		config.setUsername("root");
+		config.setPassword("12345");
+		config.addDataSourceProperty("cachePrepStmts", "true");
+		config.addDataSourceProperty("prepStmtCacheSize", "250");
+		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+	    HikariDataSource ds = new HikariDataSource(config);
+		return ds; 	// fetch a connection
 	}
 	
 	

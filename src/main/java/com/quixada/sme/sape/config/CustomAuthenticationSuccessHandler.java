@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.dao.UsuarioDAO;
@@ -41,7 +40,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			throws IOException, ServletException {
 			HttpSession session = request.getSession();
 			String email = (String) SecurityContextHolder.getContext().getAuthentication().getName();
-			session.setAttribute("versao", "1.0.9-BETA");
+			session.setAttribute("versao", "1.1.0-BETA");
 			try {
 				Usuario usuarioAutenticado = uDao.buscar(email);
 				//Aqui seta o usuario com suas propriedades
@@ -67,6 +66,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				response.sendRedirect(savedRequest.getRedirectUrl());
 			}
 			catch(NullPointerException e){
+				logger.error("Erro ao redirecionar apos login : " + e.getMessage() + " - redirecionando para [/]");
 				response.sendRedirect("/");
 			}
 	}

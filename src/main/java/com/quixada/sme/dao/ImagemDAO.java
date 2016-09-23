@@ -8,19 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.MetaImagem;;
 
-
+@ComponentScan(value={"com.quixada.sme"})
 @Component
 public class ImagemDAO {
+
+	@Autowired
+	DataSource ds;
 	
 	public void adiciona(MetaImagem imagem) throws SQLException {
-		Connection conexao = ConnectionFactory.getMySqlConnection();
+		Connection conexao = ds.getConnection();
 
 		String INSERT_QUERY = "INSERT INTO imagem "
 				+ " (idPost,nome,tamanho,tipo,bytes) "
@@ -34,10 +39,11 @@ public class ImagemDAO {
 		Blob imgBytes = new SerialBlob(imagem.getBytes());
 		statement.setBlob(5, imgBytes);
 		statement.execute();
+		conexao.close();
 	}
 
 	public MetaImagem busca(int id) throws SQLException {
-		Connection conexao = ConnectionFactory.getMySqlConnection();
+		Connection conexao = ds.getConnection();
 
 		String SELECT_QUERY = "SELECT * FROM imagem WHERE idImagem=" + id;
 
@@ -59,11 +65,12 @@ public class ImagemDAO {
 			imagem.setBytes(blobAsBytes);
 			blob.free();
 		}
+		conexao.close();
 		return imagem;
 	}	
 	
 	public List<MetaImagem> buscaPorIdPost(int idPost) throws SQLException {
-		Connection conexao = ConnectionFactory.getMySqlConnection();
+		Connection conexao = ds.getConnection();
 
 		String SELECT_QUERY = "SELECT * FROM imagem WHERE idPost=" + idPost;
 
@@ -87,23 +94,25 @@ public class ImagemDAO {
 			
 			result.add(imagem);
 		}
+		conexao.close();
 		return result;
 	}	
 	
 	
 
 	public void excluir (int id) throws SQLException {
-		Connection conexao = ConnectionFactory.getMySqlConnection();
+		Connection conexao = ds.getConnection();
 
 		String DELETE_QUERY = "DELETE FROM imagem WHERE idImagem=" + id;
 		PreparedStatement statement = conexao.prepareStatement(DELETE_QUERY);
 		statement.execute();
 	}
 	public void excluirPorIdPost(int idPost) throws SQLException {
-		Connection conexao = ConnectionFactory.getMySqlConnection();
+		Connection conexao = ds.getConnection();
 
 		String DELETE_QUERY = "DELETE FROM imagem WHERE idPost=" + idPost;
 		PreparedStatement statement = conexao.prepareStatement(DELETE_QUERY);
 		statement.execute();
+		conexao.close();
 	}
 }

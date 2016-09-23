@@ -80,7 +80,7 @@
 									Excluir escola
 								</div>
 						  	</td>
-						  	<td><a href="/PCLei/getAlunos" th:href="@{/PCLei/getAlunos(idEscola=${escola.idEscola})}">view</a></td>
+						  	<td><a th:href="@{/pclei/getAlunos(idEscola=${escola.idEscola})}">view</a></td>
 					      	<td th:text="${escola.idEscola}"></td>
 					      	<td th:text="${escola.nome}"></td>
 				    </tr>
@@ -90,7 +90,7 @@
 			</div>
 			<!-- button add escola -->
 			<div class="col-md-2">
-				<a href="/PCLei/newSchoolForm">
+				<a href="/pclei/newSchoolForm">
 					<button id="btnAddSchool" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
 		  				<i class="material-icons md-18 verde">add</i>
 					</button>
