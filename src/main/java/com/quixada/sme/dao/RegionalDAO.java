@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jolbox.bonecp.BoneCPDataSource;
 import com.quixada.sme.model.Regional;
 
 @Component
@@ -29,6 +28,7 @@ public class RegionalDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(2, regional.getNome());
 		stmt.execute();
+		con.close();
 	}
 	
 	public Regional buscar(int id) throws SQLException{
@@ -43,6 +43,7 @@ public class RegionalDAO {
 			regional.setIdRegional(rs.getInt(1));			
 			regional.setNome(rs.getString(2));
 		}
+		con.close();
 		return regional;
 	}
 
@@ -55,6 +56,7 @@ public class RegionalDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, regional.getNome());
 		stmt.execute();
+		con.close();
 	}
 	
 	public void excluir(int id) throws SQLException{
@@ -63,6 +65,7 @@ public class RegionalDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public List<Regional> listar() throws SQLException{
@@ -78,6 +81,7 @@ public class RegionalDAO {
 			regional.setNome(rs.getString(2));
 			resultado.add(regional);
 		}
+		con.close();
 		return resultado;
 	}
 }

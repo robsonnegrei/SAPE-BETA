@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SapeApplication {
 	private static Logger logger = LoggerFactory.getLogger(SapeApplication.class);
 	public static void main(String[] args) {
-		logger.info("SAPE - Sistema de Acompanhamento Online de Projetos Educacionais");
+		logger.debug("SAPE - Sistema de Acompanhamento Online de Projetos Educacionais");
 		SpringApplication.run(SapeApplication.class, args);		
 	}
 }

@@ -2,13 +2,11 @@ package com.quixada.sme.sape.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import com.jolbox.bonecp.BoneCPDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Component
 public class AppConfig {
@@ -17,20 +15,18 @@ public class AppConfig {
 	
 	
 	@Bean(name = "dataSource")
-	public BoneCPDataSource dataSource() throws ClassNotFoundException {
-		BoneCPDataSource ds = new BoneCPDataSource();	// create a new configuration object
-		ds.setDriverClass("com.mysql.jdbc.Driver");
-	 	ds.setJdbcUrl("jdbc:mysql://localhost:3306/sape");	// set the JDBC url
-		ds.setUsername("root");							// set the username
-		ds.setPassword("12345");	
-		ds.setIdleConnectionTestPeriodInMinutes(60);
-	    ds.setIdleMaxAgeInMinutes(60);
-	    ds.setMaxConnectionsPerPartition(20);
-	    ds.setMinConnectionsPerPartition(5);
-	    ds.setPartitionCount(3);
-	    ds.setAcquireIncrement(5);
-	    ds.setStatementsCacheSize(50);
-		//logger.debug("Conexao obtida: " + ds.getJdbcUrl() + " : " + ds.getUser());
+	public HikariDataSource dataSource() throws ClassNotFoundException {
+		HikariConfig config = new HikariConfig();	
+		//config.setDriverClass("com.mysql.jdbc.Driver");
+		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
+		config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
+	 	config.setJdbcUrl("jdbc:mysql://sape_sql:3306/sape");	
+		config.setUsername("root");
+		config.setPassword("12345");
+		config.addDataSourceProperty("cachePrepStmts", "true");
+		config.addDataSourceProperty("prepStmtCacheSize", "250");
+		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+	    HikariDataSource ds = new HikariDataSource(config);
 		return ds; 	// fetch a connection
 	}
 	

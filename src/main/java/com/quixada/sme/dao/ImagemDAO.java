@@ -39,6 +39,7 @@ public class ImagemDAO {
 		Blob imgBytes = new SerialBlob(imagem.getBytes());
 		statement.setBlob(5, imgBytes);
 		statement.execute();
+		conexao.close();
 	}
 
 	public MetaImagem busca(int id) throws SQLException {
@@ -64,6 +65,7 @@ public class ImagemDAO {
 			imagem.setBytes(blobAsBytes);
 			blob.free();
 		}
+		conexao.close();
 		return imagem;
 	}	
 	
@@ -92,6 +94,7 @@ public class ImagemDAO {
 			
 			result.add(imagem);
 		}
+		conexao.close();
 		return result;
 	}	
 	
@@ -110,5 +113,6 @@ public class ImagemDAO {
 		String DELETE_QUERY = "DELETE FROM imagem WHERE idPost=" + idPost;
 		PreparedStatement statement = conexao.prepareStatement(DELETE_QUERY);
 		statement.execute();
+		conexao.close();
 	}
 }

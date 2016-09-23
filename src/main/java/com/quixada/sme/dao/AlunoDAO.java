@@ -34,6 +34,7 @@ public class AlunoDAO {
 		stmt.setString(2, aluno.getNome());
 		//stmt.setString(3, aluno.getNivel());
 		stmt.execute();
+		con.close();
 	}
 	
 	/*
@@ -49,6 +50,7 @@ public class AlunoDAO {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, aluno.getNivel());
 		stmt.execute();
+		con.close();
 	}
 	
 	public Aluno buscar(int id) throws SQLException{
@@ -65,6 +67,7 @@ public class AlunoDAO {
 			aluno.setNome(rs.getString(3));
 			aluno.setNivel(rs.getString(4));
 		}
+		con.close();
 		return aluno;
 	}
 
@@ -79,6 +82,7 @@ public class AlunoDAO {
 		stmt.setString(2, aluno.getNome());
 		stmt.setString(3, aluno.getNivel());
 		stmt.execute();
+		con.close();
 	}
 	
 	public void excluir(int id) throws SQLException{
@@ -87,6 +91,7 @@ public class AlunoDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public ArrayList<Aluno> buscarAlunosPorEscola(int idEscola) throws SQLException{
@@ -100,7 +105,7 @@ public class AlunoDAO {
 			Aluno a = new Aluno(rs.getInt("idAluno"),rs.getInt("idEscola") ,rs.getString("nome"), rs.getString("nivelAtual"));
 			alunos.add(a);
 		}
-
+		con.close();
 		return alunos;
 		
 	}

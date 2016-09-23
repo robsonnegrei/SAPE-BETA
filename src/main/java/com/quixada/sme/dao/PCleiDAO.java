@@ -32,6 +32,7 @@ public class PCleiDAO {
 		statement.setInt(2, professor.getIdUsuario());
 		statement.setString(3, professor.getNome());
 		statement.execute();
+		conexao.close();
 	}
 
 	public PClei busca(int id) throws SQLException {
@@ -51,7 +52,9 @@ public class PCleiDAO {
 			professor.setIdUsuario(rs.getInt(3));
 			professor.setNome(rs.getString(4));
 		}
+		conexao.close();
 		return professor;
+		
 	}	
 	/*
 	 * Retorna um pc lei que tenha o id de usuario informado
@@ -73,6 +76,7 @@ public class PCleiDAO {
 			professor.setIdUsuario(rs.getInt(3));
 			professor.setNome(rs.getString(4));
 		}
+		conexao.close();
 		return professor;
 	}	
 
@@ -87,6 +91,7 @@ public class PCleiDAO {
 		statement.setInt(2, professor.getIdUsuario());
 		statement.setString(3, professor.getNome());
 		statement.execute();
+		conexao.close();
 	}
 
 	public void excluir (int id) throws SQLException {
@@ -95,5 +100,6 @@ public class PCleiDAO {
 		String DELETE_QUERY = "DELETE FROM pcLei WHERE idProfessor=" + id;
 		PreparedStatement statement = conexao.prepareStatement(DELETE_QUERY);
 		statement.execute();
+		conexao.close();
 	}
 }

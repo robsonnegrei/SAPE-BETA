@@ -33,6 +33,7 @@ public class AvaliacaoDAO {
 		stmt.setInt(4, aval.getIdAluno());
 		stmt.setString(5, aval.getNivel());
 		stmt.execute();
+		con.close();
 	}
 	
 	public Avaliacao buscar(int id) throws SQLException{
@@ -50,6 +51,7 @@ public class AvaliacaoDAO {
 			aval.setPeriodo(rs.getInt(4));
 			aval.setIdAluno(rs.getInt(5));
 		}
+		con.close();
 		return aval;
 	}
 //Atualizar
@@ -75,6 +77,7 @@ public class AvaliacaoDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, String nivel) throws SQLException{
@@ -91,7 +94,7 @@ public class AvaliacaoDAO {
 		int resultado = 0;
 		if(rs.next())
 			 resultado = rs.getInt(1);
-		
+		con.close();
 		return resultado;
 	}
 }

@@ -36,6 +36,7 @@ public class PostDAO {
 			post.setIdPost(result.getInt(1));
 			return post;
 		}
+		con.close();
 		return null;
 	}
 	
@@ -54,6 +55,7 @@ public class PostDAO {
 			post.setMensagem(rs.getString(3));
 			post.setData(rs.getTimestamp(4));
 		}
+		con.close();
 		return post;
 	}
 
@@ -76,6 +78,7 @@ public class PostDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public List<Post> listarTodos() throws SQLException {
@@ -93,6 +96,7 @@ public class PostDAO {
 			postagem.setData(rs.getTimestamp(4));
 			postList.add(postagem);
 		}
+		con.close();
 		return postList;
 	}
 }

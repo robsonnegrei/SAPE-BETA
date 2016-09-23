@@ -29,6 +29,7 @@ public class Usuario_FuncaoDAO {
 		stmt.setInt(1, id);
 		stmt.setString(2, funcao);
 		stmt.execute();
+		con.close();
 	}
 	
 	public String getFuncao(int id) throws SQLException {
@@ -40,6 +41,7 @@ public class Usuario_FuncaoDAO {
 		if(rs.next()){
 			return rs.getString(1);
 		}
+		con.close();
 		return null;
 	}
 	/**
@@ -65,6 +67,7 @@ public class Usuario_FuncaoDAO {
 		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id +" AND funcao='"+funcao+"'";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	/*
 	 * Remove as funcoes do usuario
@@ -74,6 +77,7 @@ public class Usuario_FuncaoDAO {
 		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id;
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public List<String> funcoesAtribuidas(int id) throws SQLException {
@@ -86,6 +90,7 @@ public class Usuario_FuncaoDAO {
 		while (rs.next()) {
 			usrList.add(rs.getString(1));
 		}
+		con.close();
 		return usrList;
 	}
 };

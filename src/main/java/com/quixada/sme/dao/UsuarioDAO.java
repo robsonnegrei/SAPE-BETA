@@ -48,6 +48,7 @@ public class UsuarioDAO {
 		if (usuario.getIsProfessor()==1) {
 			funcaoDAO.adicionaFuncao(usuario.getIdUsuario(), "PROFESSOR");
 		}
+		con.close();
 	}
 	
 	public Usuario buscar(String email) throws SQLException{
@@ -65,6 +66,7 @@ public class UsuarioDAO {
 			usr.setSenha(rs.getString(3));
 			funcaoDAO.fillFuncao(usr);
 		}
+		con.close();
 		return usr;
 	}
 	
@@ -81,6 +83,7 @@ public class UsuarioDAO {
 			usr.setEmail(rs.getString(2));
 			funcaoDAO.fillFuncao(usr);
 		}
+		con.close();
 		return usr;
 	}
 	
@@ -100,6 +103,7 @@ public class UsuarioDAO {
 		stmt.setString(1, usuario.getEmail());
 		stmt.setString(2, usuario.getSenha());
 		stmt.execute();
+		con.close();
 	}
 	
 	public void excluir(int id) throws SQLException{
@@ -109,6 +113,7 @@ public class UsuarioDAO {
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.execute();
+		con.close();
 	}
 	
 	public List<Usuario> listarTodos() throws SQLException {
@@ -126,6 +131,7 @@ public class UsuarioDAO {
 			funcaoDAO.fillFuncao(usr);
 			usrList.add(usr);
 		}
+		con.close();
 		return usrList;
 	}
 }

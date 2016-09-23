@@ -33,6 +33,7 @@ public class EscolaDAO {
 			Escola e = new Escola(rs.getInt("idEscola"),rs.getInt("idRegional") ,rs.getString("nome"));
 			escolas.add(e);
 		}
+		con.close();
 		return escolas;
 	}
 	
@@ -48,6 +49,7 @@ public class EscolaDAO {
 			escola.setIdRegional(rs.getInt(2));
 			escola.setNome(rs.getString(3));
 		}
+		con.close();
 		return escola;
 	}
 	
@@ -60,6 +62,7 @@ public class EscolaDAO {
 		stm.setInt(2, escola.getIdRegional());
 		stm.setString(3, escola.getNome());
 		stm.execute();
+		con.close();
 	}
 	public void editar(Escola escola) throws SQLException{
 		Connection con = ds.getConnection();
@@ -72,6 +75,7 @@ public class EscolaDAO {
 		stmt.setInt(2, escola.getIdRegional());
 		stmt.setString(3, escola.getNome());
 		stmt.execute();
+		con.close();
 	}
 	public void excluir(int idEscola) throws SQLException{
 		Connection con = ds.getConnection();
@@ -90,6 +94,7 @@ public class EscolaDAO {
 			Escola e = new Escola(rs.getInt("idEscola"),rs.getInt("idRegional") ,rs.getString("nome"));
 			escolas.add(e);
 		}
+		con.close();
 		return escolas;
 	}
 
