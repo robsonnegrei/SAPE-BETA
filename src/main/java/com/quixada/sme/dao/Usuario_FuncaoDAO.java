@@ -33,16 +33,23 @@ public class Usuario_FuncaoDAO {
 	}
 	
 	public String getFuncao(int id) throws SQLException {
-		Connection con = ds.getConnection();
-		String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		if(rs.next()){
-			return rs.getString(1);
+		Connection con = null;
+		try{
+			con = ds.getConnection();
+			String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				return rs.getString(1);
+			}
+			return null;
 		}
-		con.close();
-		return null;
+		finally{
+			if (con != null) {
+				con.close();
+			}
+		}
 	}
 	/**
 	 * Preenche os atributos presentes na classe usuario de acordo com a funcao atribuida na base de dados

@@ -117,22 +117,30 @@ public class UsuarioDAO {
 	}
 	
 	public List<Usuario> listarTodos() throws SQLException {
-		Connection con = ds.getConnection();
-		String sql = "SELECT * FROM usuario";
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		List<Usuario> usrList = new ArrayList<>();
-		while (rs.next()) {
-			Usuario usr = new Usuario();
-			usr.setIdUsuario(rs.getInt(1));
-			usr.setEmail(rs.getString(2));
-			usr.setSenha(rs.getString(3));
-			funcaoDAO.fillFuncao(usr);
-			usrList.add(usr);
+		Connection con = null;
+		try{
+			con = ds.getConnection();
+			String sql = "SELECT * FROM usuario";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			List<Usuario> usrList = new ArrayList<>();
+			while (rs.next()) {
+				Usuario usr = new Usuario();
+				usr.setIdUsuario(rs.getInt(1));
+				usr.setEmail(rs.getString(2));
+				usr.setSenha(rs.getString(3));
+				funcaoDAO.fillFuncao(usr);
+				usrList.add(usr);
+			}
+			return usrList;
 		}
-		con.close();
-		return usrList;
+		finally{
+			if (con != null) {
+				con.close();
+			}		
+		}
+		
 	}
 }
 
