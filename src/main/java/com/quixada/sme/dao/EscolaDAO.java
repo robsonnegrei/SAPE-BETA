@@ -22,80 +22,108 @@ public class EscolaDAO {
 	
 	@Autowired
 	DataSource ds;
-	
+
+	private Connection con;
+
 	public ArrayList<Escola> getEscolas() throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "SELECT * FROM escola";
-		PreparedStatement stm = con.prepareStatement(sql);
-		ArrayList<Escola> escolas = new ArrayList<>();
-		ResultSet rs = stm.executeQuery(sql);
-		while(rs.next()){
-			Escola e = new Escola(rs.getInt("idEscola"),rs.getInt("idRegional") ,rs.getString("nome"));
-			escolas.add(e);
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT * FROM escola";
+			PreparedStatement stm = con.prepareStatement(sql);
+			ArrayList<Escola> escolas = new ArrayList<>();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Escola e = new Escola(rs.getInt("idEscola"), rs.getInt("idRegional"), rs.getString("nome"));
+				escolas.add(e);
+			}
+			con.close();
+			return escolas;
 		}
-		con.close();
-		return escolas;
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public Escola getEscolasPorID(int idEscola) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "SELECT * FROM escola where idEscola ="+idEscola;
-		PreparedStatement stm = con.prepareStatement(sql);
-		ResultSet rs = stm.executeQuery(sql);
-		Escola escola = null;
-		if (rs.next()) {
-			escola = new Escola();
-			escola.setIdEscola(rs.getInt(1));
-			escola.setIdRegional(rs.getInt(2));
-			escola.setNome(rs.getString(3));
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT * FROM escola where idEscola =" + idEscola;
+			PreparedStatement stm = con.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			Escola escola = null;
+			if (rs.next()) {
+				escola = new Escola();
+				escola.setIdEscola(rs.getInt(1));
+				escola.setIdRegional(rs.getInt(2));
+				escola.setNome(rs.getString(3));
+			}
+			return escola;
 		}
-		con.close();
-		return escola;
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public void addEscola( Escola escola) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "INSERT INTO escola"
-				+ "(idEscola, idRegional, nome) values (?, ?, ?) " ;
-		PreparedStatement stm = con.prepareStatement(sql);
-		stm.setInt(1, escola.getIdEscola());
-		stm.setInt(2, escola.getIdRegional());
-		stm.setString(3, escola.getNome());
-		stm.execute();
-		con.close();
+		try {
+			con = ds.getConnection();
+			String sql = "INSERT INTO escola"
+					+ "(idEscola, idRegional, nome) values (?, ?, ?) ";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setInt(1, escola.getIdEscola());
+			stm.setInt(2, escola.getIdRegional());
+			stm.setString(3, escola.getNome());
+			stm.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	public void editar(Escola escola) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "UPDATE escola "
-				+ "SET idEscola=?, idRegional=?, nome=? "
-				+ "WHERE idEscola=" + escola.getIdEscola();
-		
-		PreparedStatement stmt =  con.prepareStatement(sql);
-		stmt.setInt(1, escola.getIdEscola());
-		stmt.setInt(2, escola.getIdRegional());
-		stmt.setString(3, escola.getNome());
-		stmt.execute();
-		con.close();
+		try {
+			con = ds.getConnection();
+			String sql = "UPDATE escola "
+					+ "SET idEscola=?, idRegional=?, nome=? "
+					+ "WHERE idEscola=" + escola.getIdEscola();
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, escola.getIdEscola());
+			stmt.setInt(2, escola.getIdRegional());
+			stmt.setString(3, escola.getNome());
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	public void excluir(int idEscola) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "DELETE FROM escola WHERE idEscola="+ idEscola;
-		PreparedStatement stmt =  con.prepareStatement(sql);
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM escola WHERE idEscola=" + idEscola;
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	public ArrayList<Escola> getEscolasRegional(int idRegional) throws SQLException{
-		String sql = "SELECT * FROM escola WHERE idRegional="+idRegional;
-		Connection con = ds.getConnection();
-		PreparedStatement stm = con.prepareStatement(sql);
-		//stm.setInt(1, idRegional);
-		ArrayList<Escola> escolas = new ArrayList<>();
-		ResultSet rs = stm.executeQuery(sql);
-		while(rs.next()){
-			Escola e = new Escola(rs.getInt("idEscola"),rs.getInt("idRegional") ,rs.getString("nome"));
-			escolas.add(e);
+		try {
+			String sql = "SELECT * FROM escola WHERE idRegional=" + idRegional;
+			con = ds.getConnection();
+			PreparedStatement stm = con.prepareStatement(sql);
+			//stm.setInt(1, idRegional);
+			ArrayList<Escola> escolas = new ArrayList<>();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				Escola e = new Escola(rs.getInt("idEscola"), rs.getInt("idRegional"), rs.getString("nome"));
+				escolas.add(e);
+			}
+			return escolas;
 		}
-		con.close();
-		return escolas;
+		finally {
+			if (con != null) con.close();
+		}
 	}
 
 }

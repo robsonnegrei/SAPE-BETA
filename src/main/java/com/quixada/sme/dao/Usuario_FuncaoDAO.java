@@ -19,21 +19,26 @@ public class Usuario_FuncaoDAO {
 	
 	@Autowired
 	DataSource ds;
+
+	private Connection con;
 	
 	public void adicionaFuncao(int id, String funcao) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "INSERT INTO usuario_funcao "
-				+ "( idUsuario, funcao) "
-				+ "VALUES (?, ?)";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setInt(1, id);
-		stmt.setString(2, funcao);
-		stmt.execute();
-		con.close();
+		try {
+			con = ds.getConnection();
+			String sql = "INSERT INTO usuario_funcao "
+					+ "( idUsuario, funcao) "
+					+ "VALUES (?, ?)";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.setString(2, funcao);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public String getFuncao(int id) throws SQLException {
-		Connection con = null;
 		try{
 			con = ds.getConnection();
 			String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
@@ -70,34 +75,46 @@ public class Usuario_FuncaoDAO {
 	}
 	
 	public void removeFuncao(int id, String funcao) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id +" AND funcao='"+funcao+"'";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.execute();
-		con.close();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM usuario_funcao WHERE idUsuario=" + id + " AND funcao='" + funcao + "'";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	/*
 	 * Remove as funcoes do usuario
 	 */
 	public void limparFuncoes(int id) throws SQLException{
-		Connection con = ds.getConnection();
-		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id;
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.execute();
-		con.close();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM usuario_funcao WHERE idUsuario=" + id;
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public List<String> funcoesAtribuidas(int id) throws SQLException {
-		Connection con = ds.getConnection();
-		String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		List<String> usrList = new ArrayList<>();
-		while (rs.next()) {
-			usrList.add(rs.getString(1));
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario=" + id;
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			List<String> usrList = new ArrayList<>();
+			while (rs.next()) {
+				usrList.add(rs.getString(1));
+			}
+			return usrList;
 		}
-		con.close();
-		return usrList;
+		finally {
+			if (con != null) con.close();
+		}
 	}
 };

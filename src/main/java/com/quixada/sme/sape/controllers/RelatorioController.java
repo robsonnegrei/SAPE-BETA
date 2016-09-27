@@ -22,7 +22,9 @@ public class RelatorioController {
 	private static final int periodo2 = 2;
 	private static final int periodo3 = 3;
 	private static final int periodo4 = 4;
-	public static final String PAG_RELATORIO = "PCLei/pagRelatorio";
+
+	private static final String PAG_RELATORIO = "PCLei/pagRelatorio";
+	private static final String PAG_PCLEI_INDEX_RED = "redirect:/index";
 	
 	@Autowired
 	private AvaliacaoDAO avaliacaoDAO;
@@ -33,10 +35,15 @@ public class RelatorioController {
 	public String getRelatorio(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
-		
-		
+
+		int idEscola = -69;
 		//int idRegional = (int)session.getAttribute("regional.id");
-		int idEscola = (int)session.getAttribute("idEscola");	
+		try {
+			idEscola = (int) session.getAttribute("idEscola");
+		}
+		catch (NullPointerException e){
+			return PAG_PCLEI_INDEX_RED;
+		}
 		Escola escola;
 		try {
 			escola = escolaDao.getEscolasPorID(idEscola);
