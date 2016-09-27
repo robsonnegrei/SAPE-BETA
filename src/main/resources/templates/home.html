@@ -12,11 +12,19 @@
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	 
 	  <main class="mdl-layout__content container-fluid ">
-	  
+
 	    <div class="page-content">
 	    <!-- Your content goes here -->
+			<div th:if="${erro}">
+				<div class="alert alert-danger" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only" th:text="${erro}">Error:</span>
+					<div th:text="${erro}"></div>
+				</div>
+			</div>
+
 			<div class="w3-content w3-section" style="max-width:600px">
-			
+
 			    <div class="w3-display-container mySlides">
 				  <img th:src="@{img/img1.jpg}" style="width:100%"></img>
 				  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">

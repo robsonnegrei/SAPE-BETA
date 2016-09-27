@@ -15,9 +15,8 @@ public class AppConfig {
 		HikariConfig config = new HikariConfig();	
 		//config.setDriverClass("com.mysql.jdbc.Driver");
 		//config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
-		//config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
+		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
 
-	 	config.setJdbcUrl("jdbc:mysql://localhost:3306/sape");	
 		config.setUsername("root");
 		config.setPassword("12345");
 		config.addDataSourceProperty("cachePrepStmts", "true");
