@@ -17,6 +17,7 @@ public class AppConfig {
 		//config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
 		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
 
+	 	config.setJdbcUrl("jdbc:mysql://sape_sql:3306/sape");
 		config.setUsername("root");
 		config.setPassword("12345");
 		config.addDataSourceProperty("cachePrepStmts", "true");
