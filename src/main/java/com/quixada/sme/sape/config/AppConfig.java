@@ -15,7 +15,6 @@ public class AppConfig {
 		HikariConfig config = new HikariConfig();	
 		//config.setDriverClass("com.mysql.jdbc.Driver");
 		//config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
-		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
 
 	 	config.setJdbcUrl("jdbc:mysql://sape_sql:3306/sape");
 		config.setUsername("root");
@@ -25,6 +24,7 @@ public class AppConfig {
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.setMaximumPoolSize(40);
 		config.setMinimumIdle(3);
+		config.setInitializationFailFast(false); //Nao checa conexao ao iniciar ou buildar
 	    HikariDataSource ds = new HikariDataSource(config);
 		return ds; 	// fetch a connection
 	}
