@@ -26,7 +26,7 @@ public class PCleiDAO {
 		try {
 			con = ds.getConnection();
 
-			String INSERT_QUERY = "INSERT INTO pcLei "
+			String INSERT_QUERY = "INSERT INTO pclei "
 					+ " (idRegional, idUsuario, nome) "
 					+ "values (?, ?, ?)";
 
@@ -45,7 +45,7 @@ public class PCleiDAO {
 		try {
 			con = ds.getConnection();
 
-			String SELECT_QUERY = "SELECT * FROM pcLei WHERE idProfessor=" + id;
+			String SELECT_QUERY = "SELECT * FROM pclei WHERE idProfessor=" + id;
 
 			PreparedStatement statement = con.prepareStatement(SELECT_QUERY);
 
@@ -73,7 +73,7 @@ public class PCleiDAO {
 		try {
             con = ds.getConnection();
 
-            String SELECT_QUERY = "SELECT * FROM pcLei WHERE idUsuario=" + idUsuario;
+            String SELECT_QUERY = "SELECT * FROM pclei WHERE idUsuario=" + idUsuario;
 
             PreparedStatement statement = con.prepareStatement(SELECT_QUERY);
 
@@ -97,7 +97,7 @@ public class PCleiDAO {
 	public void editar (PClei professor) throws SQLException {
         try {
             con = ds.getConnection();
-            String UPDATE_QUERY = "UPDATE pcLei"
+            String UPDATE_QUERY = "UPDATE pclei"
                     + "SET idRegional=?, idUsuario=?, nome=?"
                     + "WHERE idProfessor=" + professor.getIdProfessor();
 
@@ -116,7 +116,7 @@ public class PCleiDAO {
         try {
             con = ds.getConnection();
 
-            String DELETE_QUERY = "DELETE FROM pcLei WHERE idProfessor=" + id;
+            String DELETE_QUERY = "DELETE FROM pclei WHERE idProfessor=" + id;
             PreparedStatement statement = con.prepareStatement(DELETE_QUERY);
             statement.execute();
         }
