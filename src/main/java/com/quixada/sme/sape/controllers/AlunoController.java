@@ -30,7 +30,6 @@ import com.quixada.sme.model.AlunosAvalForm;
 import com.quixada.sme.model.Avaliacao;
 
 @Controller
-@ComponentScan(value={"com.quixada.sme.dao"})
 public class AlunoController {
 	
 	private static Logger logger = LoggerFactory.getLogger(AlunoController.class);
@@ -39,8 +38,10 @@ public class AlunoController {
 	private static final String PCLEI_AVALIAR_ALUNOS = "pclei/pagAvaliarAlunos";
 	private static final String PCLEI_GET_ALUNOS_ESCOLA = "redirect:/pclei/getAlunos?idEscola=";
 	
-	@Autowired private AlunoDAO aDAO;
-	@Autowired private AvaliacaoDAO avalDAO;
+	@Autowired 
+	private AlunoDAO aDAO;
+	@Autowired 
+	private AvaliacaoDAO avalDAO;
 	
 	@RequestMapping(value ={"pclei/getAlunos", "getAlunos"})
 	@PreAuthorize("hasAnyRole('ADMIN','PCLEI')")
@@ -78,11 +79,10 @@ public class AlunoController {
 		int idEscola = Integer.parseInt(request.getParameter("idEscola"));
 		String nome = request.getParameter("nome");
 		int idAluno= 0;
-		AlunoDAO Adao = new AlunoDAO();
 		Aluno aluno = new Aluno(idAluno,idEscola,nome,"");
 		
 		try {
-			Adao.adiciona(aluno);
+			aDAO.adiciona(aluno);
 			request.getSession().setAttribute("erroAddAluno", "false");
 		} catch (SQLException e) {
 			logger.error("Add aluno : " + e.getMessage());
@@ -99,9 +99,8 @@ public class AlunoController {
 		if(request.getParameter("aluno")!= null){
 			int id = Integer.parseInt(request.getParameter("aluno"));
 			//System.err.println(id);
-			AlunoDAO Adao = new AlunoDAO();
 			try {
-				Adao.excluir(id);
+				aDAO.excluir(id);
 				request.getSession().setAttribute("erroRmAluno", "false");
 	
 			} catch (SQLException e) {

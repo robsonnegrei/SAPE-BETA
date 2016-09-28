@@ -25,7 +25,7 @@ public class RelatorioController {
 	private static final int periodo3 = 3;
 	private static final int periodo4 = 4;
 
-	private static final String PAG_RELATORIO = "PCLei/pagRelatorio";
+	private static final String PAG_RELATORIO = "pclei/pagRelatorio";
 	//private static final String PAG_HOME = "redirect:home";
 	
 	@Autowired

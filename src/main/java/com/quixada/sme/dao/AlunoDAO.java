@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
 import com.quixada.sme.model.Aluno;
 
 
-
+@ComponentScan(value={"com.quixada.sme"})
 @Component
-@ComponentScan(value={"com.quixada.sme.sape.config"})
 public class AlunoDAO {
 	
 	@Autowired
