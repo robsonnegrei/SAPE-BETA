@@ -45,8 +45,8 @@ public class VisitanteController {
 			session.setAttribute("ArrayEscolas", escolas);
 	
 		} catch (SQLException e) {
-			logger.error("Em getEscolasRegional :: " + e.getMessage());;
-			//e.printStackTrace();
+			logger.error("Em getEscolasRegional :: " + e.getMessage());
+            //e.printStackTrace();
 			session.setAttribute("erroGetEscolas", true);
 		}
 		

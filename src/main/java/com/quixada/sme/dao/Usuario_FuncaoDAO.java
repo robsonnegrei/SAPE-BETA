@@ -117,4 +117,4 @@ public class Usuario_FuncaoDAO {
 			if (con != null) con.close();
 		}
 	}
-};
+}

@@ -29,8 +29,9 @@
 		      	<ul class="nav navbar-nav">
 		      		<li  sec:authorize="hasAnyAuthority('PCLEI')"><a class="mdl-navigation__link" href="/pclei">Inicio</a></li>
 		      		<li  sec:authorize="hasAnyAuthority('ADMIN')"><a class="mdl-navigation__link" href="/admin">Inicio</a></li>
-		      		<li  ><a class="mdl-navigation__link" href="/pclei/gerarRelatorio">Relatórios</a></li>
-		      		<li><a class="mdl-navigation__link" href="/portfolio">Portfolio Digital</a></li>
+		      		<li > <a class="mdl-navigation__link" href="/pclei/gerarRelatorio">Relatórios</a></li>
+		      		<li> <a class="mdl-navigation__link" href="/portfolio">Portfolio Digital</a></li>
+					<li sec:authorize="hasAnyAuthority('ADMIN')"><a class="mdl-navigation__link" href="/admin/cfg">Configurações</a></li>
 		        	<li sec:authorize="isAuthenticated()"><a class="mdl-navigation__link" href="/logout">Sair</a></li>
 		        	<li sec:authorize="!isAuthenticated()"><a class="mdl-navigation__link" href="/login">Entrar</a></li>
 		        </ul>
