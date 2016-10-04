@@ -1,18 +1,15 @@
 package com.quixada.sme.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
+import com.quixada.sme.model.Avaliacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.model.Avaliacao;
-import com.quixada.sme.model.Nivel;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @ComponentScan(value={"com.quixada.sme"})
 @Component

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.model.Escola;
-import com.quixada.sme.sape.config.AppConfig;
 
 
 @Component
