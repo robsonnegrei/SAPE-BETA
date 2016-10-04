@@ -35,13 +35,13 @@
 				<form th:action="@{/admin/cfg/save}" >
 					<div class="mdl-card__supporting-text">
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="number" id="anoAval" th:value="${anoAval}">
+							<input class="mdl-textfield__input" type="number" id="anoAval" th:value="${anoAval}"></input>
 							<label class="mdl-textfield__label" for="anoAval">Ano da avaliação:</label>
 						</div>
 
 					</div>
 					<div class="mdl-card__actions mdl-card--border">
-						<input th:type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:text="Salvar">
+						<input th:type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:value="Salvar">
 						</input>
 					</div>
 				</form>
