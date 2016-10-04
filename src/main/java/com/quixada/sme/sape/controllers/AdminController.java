@@ -3,6 +3,7 @@ package com.quixada.sme.sape.controllers;
 import com.quixada.sme.dao.PCleiDAO;
 import com.quixada.sme.dao.RegionalDAO;
 import com.quixada.sme.dao.UsuarioDAO;
+import com.quixada.sme.model.Configuracao;
 import com.quixada.sme.model.PClei;
 import com.quixada.sme.model.Regional;
 import com.quixada.sme.model.Usuario;
@@ -35,12 +36,16 @@ public class AdminController {
     private static final String ADMIN_FRM_USER = "admin/formUser";
     private static final String ADMIN_CONFIG = "admin/config";
 
-	@Autowired
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
 	private UsuarioDAO uDAO;
-	@Autowired
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
 	private RegionalDAO reDAO;
-	
-	@Autowired private PCleiDAO pcDAO;
+
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired private PCleiDAO pcDAO;
+
 	
 	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request, Model model){
@@ -143,16 +148,12 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "admin/cfg", method = RequestMethod.GET)
-	public String config(HttpServletRequest request, int id){
+	public String config(Model model, HttpServletRequest request){
 		try {
-
-			uDAO.excluir(id);
-			logger.info("Usuario removido : " + id);
-			request.getSession().setAttribute("erroRmUser", "false");
-
+            //carregar configs
+			model.addAttribute("anoAval", Configuracao.ANO_AVALIACAO_ATUAL);
 		} catch (Exception e) {
-			logger.error("Erro excluir usuario : " + e.getMessage());
-			request.getSession().setAttribute("erroRmUser", "true");
+			logger.error("Erro carregar configuracoes : " + e.getMessage());
 		}
 
 		return ADMIN_CONFIG;
