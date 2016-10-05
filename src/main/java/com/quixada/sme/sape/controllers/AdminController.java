@@ -149,13 +149,22 @@ public class AdminController {
 
 	@RequestMapping(value = "admin/cfg", method = RequestMethod.GET)
 	public String config(Model model, HttpServletRequest request){
-		try {
-            //carregar configs
-			model.addAttribute("anoAval", Configuracao.ANO_AVALIACAO_ATUAL);
-		} catch (Exception e) {
-			logger.error("Erro carregar configuracoes : " + e.getMessage());
-		}
 
+		//carregar configs
+		model.addAttribute("anoAval", Configuracao.ANO_AVALIACAO_ATUAL);
+		model.addAttribute("periodo", Configuracao.PERIODO_AVALIACAO_ATUAL);
+		model.addAttribute("periodosAno", Configuracao.PERIODOS_POR_ANO);
+		model.addAttribute("limiteDiasReaval", Configuracao.LIMITE_DIAS_REAVALIACAO);
+
+		return ADMIN_CONFIG;
+	}
+	@RequestMapping(value = "admin/cfg/save", method = RequestMethod.POST)
+	public String saveConfig(Model model, HttpServletRequest request){
+		//validar e alterar configurações
+		int ano_aval = Integer.parseInt(request.getParameter("anoAval"));
+		int periodo = Integer.parseInt(request.getParameter("periodo"));
+		int limite_dias = Integer.parseInt(request.getParameter("limiteDiasReval"));
+		logger.info("Recebidas novas configuracoes: " + ano_aval + periodo + limite_dias );
 		return ADMIN_CONFIG;
 	}
 }

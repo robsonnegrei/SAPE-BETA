@@ -32,13 +32,25 @@
 				<div class="mdl-card__title">
 					<h2 class="mdl-card__title-text">Configurações do SAPE</h2>
 				</div>
-				<form th:action="@{/admin/cfg/save}" >
+				<form th:action="@{/admin/cfg/save}" method="post" onsubmit="return confirm('Deseja realmente alterar essas configurações?');">
 					<div class="mdl-card__supporting-text">
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" type="number" id="anoAval" th:value="${anoAval}"></input>
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="anoAval" th:value="${anoAval}"></input>
 							<label class="mdl-textfield__label" for="anoAval">Ano da avaliação:</label>
 						</div>
 
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="periodo" th:value="${periodo}"></input>
+							<label class="mdl-textfield__label" for="anoAval">Periodo atual:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:value="${periodosAno}"></input>
+							<label class="mdl-textfield__label" for="anoAval">Periodos por ano:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="limiteDiasReval" th:value="${limiteDiasReaval}"></input>
+							<label class="mdl-textfield__label" for="anoAval">Limite de dias para reavaliação:</label>
+						</div>
 					</div>
 					<div class="mdl-card__actions mdl-card--border">
 						<input th:type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:value="Salvar">
