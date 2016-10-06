@@ -7,6 +7,7 @@ import com.quixada.sme.model.Configuracao;
 import com.quixada.sme.model.PClei;
 import com.quixada.sme.model.Regional;
 import com.quixada.sme.model.Usuario;
+import org.codehaus.jackson.map.DeserializerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,12 +160,20 @@ public class AdminController {
 		return ADMIN_CONFIG;
 	}
 	@RequestMapping(value = "admin/cfg/save", method = RequestMethod.POST)
-	public String saveConfig(Model model, HttpServletRequest request){
+	public String saveConfig(Model model, HttpServletRequest request, HttpSession session){
 		//validar e alterar configurações
 		int ano_aval = Integer.parseInt(request.getParameter("anoAval"));
 		int periodo = Integer.parseInt(request.getParameter("periodo"));
 		int limite_dias = Integer.parseInt(request.getParameter("limiteDiasReval"));
-		logger.info("Recebidas novas configuracoes: " + ano_aval + periodo + limite_dias );
+
+		Configuracao.ANO_AVALIACAO_ATUAL = ano_aval;
+		Configuracao.PERIODO_AVALIACAO_ATUAL = periodo;
+		Configuracao.LIMITE_DIAS_REAVALIACAO = limite_dias;
+		Configuracao.save();
+
+		Usuario usr = (Usuario) session.getAttribute("usuario");
+		logger.info("Novas configuraçãoes de sistema submetidas por: " + usr.getEmail());
+
 		return ADMIN_CONFIG;
 	}
 }
