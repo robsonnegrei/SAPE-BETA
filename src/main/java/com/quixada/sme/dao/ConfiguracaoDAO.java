@@ -55,12 +55,10 @@ public class ConfiguracaoDAO {
         try {
             con = ds.getConnection();
             //TEM QUE SER UPDATE ANIMAL
-            String sql = "";//"INSERT INTO configuracao("+field+") VALUES (?)";
+            String sql = "UPDATE configuracao set "+field+"=?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setObject(1,value);
-            if (!stmt.execute()){
-                logger.error(MessageFormat.format("Erro ao inserir campo: {0} Query: {1}",field,sql));
-            }
+            stmt.execute();
         }
         finally {
             if (con != null) con.close();

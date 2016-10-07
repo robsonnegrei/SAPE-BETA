@@ -7,7 +7,6 @@ import com.quixada.sme.model.Configuracao;
 import com.quixada.sme.model.PClei;
 import com.quixada.sme.model.Regional;
 import com.quixada.sme.model.Usuario;
-import org.codehaus.jackson.map.DeserializerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,6 +173,6 @@ public class AdminController {
 		Usuario usr = (Usuario) session.getAttribute("usuario");
 		logger.info("Novas configuraçãoes de sistema submetidas por: " + usr.getEmail());
 
-		return ADMIN_CONFIG;
+		return ADMIN_INDEX;
 	}
 }

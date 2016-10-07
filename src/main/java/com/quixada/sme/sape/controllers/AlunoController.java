@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.quixada.sme.model.Configuracao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,7 @@ public class AlunoController {
 			if(alunos.getAlunosList().isEmpty()){
 				return PCLEI_GET_ALUNOS;
 			}else{
-			
+				model.addAttribute("AvaliacaoHeader", String.valueOf(Configuracao.ANO_AVALIACAO_ATUAL) + "." + String.valueOf(Configuracao.PERIODO_AVALIACAO_ATUAL));
 				model.addAttribute("wrapper", alunos);
 			}
 		}
@@ -149,13 +150,13 @@ public class AlunoController {
 	}else{
 		for (Aluno aluno : alunos.getAlunosList()) {
 			Avaliacao aval = new Avaliacao();
-			aval.setAno(LocalDate.now().getYear());
+			aval.setAno(Configuracao.ANO_AVALIACAO_ATUAL);
 			LocalDateTime agora = LocalDateTime.now();
 			java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
 			aval.setData(sqlDate);
 			aval.setIdAluno(aluno.getIdAluno());
 			aval.setNivel(aluno.getNivel());
-			aval.setPeriodo(1); //deve vir das configurações do sistema, pelo amor de shiva
+			aval.setPeriodo(Configuracao.PERIODO_AVALIACAO_ATUAL); //deve vir das configurações do sistema, pelo amor de shiva
 			logger.info(aluno.getNome() + " : avaliado : " + aval.getIdAvaliacao() + " : por : " + SecurityContextHolder.getContext().getAuthentication().getName());
 			try {
 				avalDAO.adiciona(aval);
