@@ -149,7 +149,11 @@ public class AdminController {
 
 	@RequestMapping(value = "admin/cfg", method = RequestMethod.GET)
 	public String config(Model model, HttpServletRequest request){
-
+		try {
+			Configuracao.load();
+		} catch (SQLException e) {
+			logger.error("Erro ao carregar configuracoes do sistema.");
+		}
 		//carregar configs
 		model.addAttribute("anoAval", Configuracao.ANO_AVALIACAO_ATUAL);
 		model.addAttribute("periodo", Configuracao.PERIODO_AVALIACAO_ATUAL);

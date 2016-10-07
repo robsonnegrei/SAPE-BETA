@@ -17,7 +17,7 @@ public class DatabaseConfig {
 		//config.setDriverClass("com.mysql.jdbc.Driver");
 		//config.addDataSourceProperty("dataSourceClassName", "com.mysql.jdbc.Driver");
 
-	 	config.setJdbcUrl("jdbc:mysql://localhost:3306/sape");
+	 	config.setJdbcUrl("jdbc:mysql://sape_sql:3306/sape");
 		config.setUsername("root");
 		config.setPassword("12345");
 		config.addDataSourceProperty("cachePrepStmts", "true");

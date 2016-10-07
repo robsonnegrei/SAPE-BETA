@@ -24,12 +24,9 @@ public class Configuracao {
 
     private static ConfiguracaoDAO cfgDAO;
 
-    private static boolean invalidConfig = false;
-
     @Autowired
     public Configuracao(ConfiguracaoDAO cfgDAO) throws SQLException {
         this.cfgDAO = cfgDAO;
-        load();
     }
 
     public static void load() throws SQLException {
@@ -76,9 +73,5 @@ public class Configuracao {
         catch (SQLException e) {
             logger.error("Erro ao guardar configurações. Abortando. : " + e.getMessage());
         }
-    }
-
-    public static boolean isValidConfiguration(){
-        return !invalidConfig;
     }
 }
