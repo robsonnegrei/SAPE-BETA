@@ -1,40 +1,51 @@
 package com.quixada.sme.sape.controllers;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.quixada.sme.dao.PCleiDAO;
+import com.quixada.sme.dao.RegionalDAO;
+import com.quixada.sme.dao.UsuarioDAO;
+import com.quixada.sme.model.Configuracao;
+import com.quixada.sme.model.PClei;
+import com.quixada.sme.model.Regional;
+import com.quixada.sme.model.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.quixada.sme.dao.PCleiDAO;
-import com.quixada.sme.dao.RegionalDAO;
-import com.quixada.sme.dao.UsuarioDAO;
-import com.quixada.sme.model.PClei;
-import com.quixada.sme.model.Regional;
-import com.quixada.sme.model.Usuario;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
 
 
 @Controller
 public class AdminController {
-
-	@Autowired
-	private UsuarioDAO uDAO;
-	@Autowired
-	private RegionalDAO reDAO;
 	
-	@Autowired private PCleiDAO pcDAO;
+	private static Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+	private static final String ADMIN_INDEX = "admin/index";
+    private static final String ADMIN_INDEX_REDIR = "redirect:/admin/index";
+    private static final String ADMIN_FRM_USER = "admin/formUser";
+    private static final String ADMIN_CONFIG = "admin/config";
+
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+	private UsuarioDAO uDAO;
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+	private RegionalDAO reDAO;
+
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired private PCleiDAO pcDAO;
+
 	
 	@RequestMapping(value = {"/admin/index","/admin"})
 	public String adminIndex(HttpServletRequest request, Model model){
@@ -45,10 +56,9 @@ public class AdminController {
 				List<Usuario> usrList = uDAO.listarTodos();
 				session.setAttribute("listaUsuarios", usrList);
 			} catch (SQLException e) {
-		
-				e.printStackTrace();
+				logger.error("Erro index Admin : " + e.getMessage());
 			}
-		return "admin/index";
+		return ADMIN_INDEX;
 	}
 
 	@RequestMapping(value = {"admin/newUserForm"})
@@ -62,13 +72,13 @@ public class AdminController {
 		try {
 			regionais = reDAO.listar();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erro ao carregar form usuario : " + e.getMessage());
 		}
 		
 		model.addAttribute("pclei", pclei);
 		model.addAttribute("usuario", usuario);
 		model.addAttribute("regionais", regionais);
-		return "admin/formUser";
+		return ADMIN_FRM_USER;
 	}
 	
 	@RequestMapping(value = {"admin/addUser"}, method = RequestMethod.POST)
@@ -80,27 +90,27 @@ public class AdminController {
 		//validações antes de salvar
 		if (bindingResult.hasErrors()) {
 			redirect.addFlashAttribute("erroAdd",bindingResult.getAllErrors().get(0).toString());
-			return "redirect:/admin/index";
+			return ADMIN_INDEX_REDIR;
 		}
 		if (usuario == null) {
 			redirect.addFlashAttribute("erroAdd","Usuario invalido!");
-			return "redirect:/admin/index";
+			return ADMIN_INDEX_REDIR;
 		}
 		
 		String email = usuario.getEmail();
 		try {
 			if (uDAO.buscar(email) != null) {
 				redirect.addFlashAttribute("erroAdd","Esse email ja esta em uso! Tente novamente com outro email.");
-				return "redirect:/admin/index";
+				return ADMIN_INDEX_REDIR;
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 			redirect.addFlashAttribute("erroAdd",e1.getMessage());
-			return "redirect:/admin/index";
+			return ADMIN_INDEX_REDIR;
 		}
 		if (usuario.getIsAdmin()!= 1 && usuario.getIsProfCoordenadorLei() !=1 && usuario.getIsProfessor()!=1) {
 			redirect.addFlashAttribute("erroAdd","Selecione um papel de usuario!");
-			return "redirect:/admin/index";
+			return ADMIN_INDEX_REDIR;
 		}
 		//
 		try {
@@ -108,13 +118,15 @@ public class AdminController {
 			if (usuario.getIsProfCoordenadorLei()==1) {
 				pclei.setIdUsuario(usuario.getIdUsuario());
 				pcDAO.adiciona(pclei);
+				
 			}
+			logger.info("Novo usuario cadastrado : " + usuario.getEmail());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erro add usuario : " + e.getMessage());
 			redirect.addFlashAttribute("erroAdd",e.getMessage());
-			return "redirect:/admin/index";
+			return ADMIN_INDEX_REDIR;
 		}
-		return "redirect:/admin/index";
+		return ADMIN_INDEX_REDIR;
 	}
 	@RequestMapping("admin/rmuser")
 	public String removerUser(HttpServletRequest request, @RequestParam("id") int id){
@@ -124,15 +136,47 @@ public class AdminController {
 			try {
 				
 				uDAO.excluir(id);
-				//Se for pclei remover tambem
+				logger.info("Usuario removido : " + id);
 				request.getSession().setAttribute("erroRmUser", "false");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Erro excluir usuario : " + e.getMessage());
 				request.getSession().setAttribute("erroRmUser", "true");
 			}
 		
-		return "redirect:/admin/index";
+		return ADMIN_INDEX_REDIR;
+	}
+
+	@RequestMapping(value = "admin/cfg", method = RequestMethod.GET)
+	public String config(Model model, HttpServletRequest request){
+		try {
+			Configuracao.load();
+		} catch (SQLException e) {
+			logger.error("Erro ao carregar configuracoes do sistema.");
+		}
+		//carregar configs
+		model.addAttribute("anoAval", Configuracao.ANO_AVALIACAO_ATUAL);
+		model.addAttribute("periodo", Configuracao.PERIODO_AVALIACAO_ATUAL);
+		model.addAttribute("periodosAno", Configuracao.PERIODOS_POR_ANO);
+		model.addAttribute("limiteDiasReaval", Configuracao.LIMITE_DIAS_REAVALIACAO);
+
+		return ADMIN_CONFIG;
+	}
+	@RequestMapping(value = "admin/cfg/save", method = RequestMethod.POST)
+	public String saveConfig(Model model, HttpServletRequest request, HttpSession session){
+		//validar e alterar configurações
+		int ano_aval = Integer.parseInt(request.getParameter("anoAval"));
+		int periodo = Integer.parseInt(request.getParameter("periodo"));
+		int limite_dias = Integer.parseInt(request.getParameter("limiteDiasReval"));
+
+		Configuracao.ANO_AVALIACAO_ATUAL = ano_aval;
+		Configuracao.PERIODO_AVALIACAO_ATUAL = periodo;
+		Configuracao.LIMITE_DIAS_REAVALIACAO = limite_dias;
+		Configuracao.save();
+
+		Usuario usr = (Usuario) session.getAttribute("usuario");
+		logger.info("Novas configuraçãoes de sistema submetidas por: " + usr.getEmail());
+
+		return ADMIN_INDEX;
 	}
 }

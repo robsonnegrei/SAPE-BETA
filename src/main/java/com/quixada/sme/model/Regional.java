@@ -1,5 +1,8 @@
 package com.quixada.sme.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Regional {
 	private int idRegional;
 	private String nome;

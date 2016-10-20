@@ -2,18 +2,20 @@ package com.quixada.sme.sape.controllers;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.quixada.sme.model.Configuracao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.quixada.sme.dao.AlunoDAO;
 import com.quixada.sme.dao.AvaliacaoDAO;
@@ -32,13 +32,19 @@ import com.quixada.sme.model.Avaliacao;
 
 @Controller
 public class AlunoController {
-
-	private static final String PCLEI_GET_ALUNOS = "/PCLei/pagAlunos";
-
-	@Autowired private AlunoDAO aDAO;
-	@Autowired private AvaliacaoDAO avalDAO;
 	
-	@RequestMapping(value ={"PCLei/getAlunos", "getAlunos"})
+	private static Logger logger = LoggerFactory.getLogger(AlunoController.class);
+	
+	private static final String PCLEI_GET_ALUNOS = "pclei/pagAlunos";
+	private static final String PCLEI_AVALIAR_ALUNOS = "pclei/pagAvaliarAlunos";
+	private static final String PCLEI_GET_ALUNOS_ESCOLA = "redirect:/pclei/getAlunos?idEscola=";
+	
+	@Autowired 
+	private AlunoDAO aDAO;
+	@Autowired 
+	private AvaliacaoDAO avalDAO;
+	
+	@RequestMapping(value ={"pclei/getAlunos", "getAlunos"})
 	@PreAuthorize("hasAnyRole('ADMIN','PCLEI')")
 	public String listarAlunos(Model model, @RequestParam("idEscola")String idEscola, HttpSession session){
 	
@@ -60,8 +66,7 @@ public class AlunoController {
 			//session.setAttribute("ArrayAlunos", alunos);
 	
 	} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.error("Listar alunos : " + e.getMessage());
 			model.addAttribute("erroGetAlunos", true);
 			//session.setAttribute("erroGetAlunos", true);
 	}
@@ -69,50 +74,46 @@ public class AlunoController {
 	return PCLEI_GET_ALUNOS;
 	}
 
-	@RequestMapping(value={"PCLei/addAluno","/addAluno"})
+	@RequestMapping(value={"pclei/addAluno","/addAluno"})
 	public String AddAlunos(HttpServletRequest request){
 	if(request.getParameter("nome")!= null){
 		int idEscola = Integer.parseInt(request.getParameter("idEscola"));
 		String nome = request.getParameter("nome");
 		int idAluno= 0;
-		AlunoDAO Adao = new AlunoDAO();
 		Aluno aluno = new Aluno(idAluno,idEscola,nome,"");
 		
 		try {
-			Adao.adiciona(aluno);
+			aDAO.adiciona(aluno);
 			request.getSession().setAttribute("erroAddAluno", "false");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Add aluno : " + e.getMessage());
 			request.getSession().setAttribute("erroAddAluno", "true");
 		}
 		
 	}
 	int idEscola = (int) request.getSession().getAttribute("idEscola");
-	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+	return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 	}
 
-	@RequestMapping(value={"PCLei/rmAluno","/rmAluno"})
+	@RequestMapping(value={"pclei/rmAluno","/rmAluno"})
 	public String excluirAlunos(HttpServletRequest request){
 		if(request.getParameter("aluno")!= null){
 			int id = Integer.parseInt(request.getParameter("aluno"));
 			//System.err.println(id);
-			AlunoDAO Adao = new AlunoDAO();
 			try {
-				Adao.excluir(id);
+				aDAO.excluir(id);
 				request.getSession().setAttribute("erroRmAluno", "false");
 	
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Excluir aluno : " + e.getMessage());
 				request.getSession().setAttribute("erroRmAluno", "true");
 			}
 		}
 		int idEscola = (int) request.getSession().getAttribute("idEscola");
-		return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+		return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 	}
 	
-	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.GET)
+	@RequestMapping(value="/pclei/avaliar", method=RequestMethod.GET)
 	public String avaliarAlunos(HttpSession session, 
 			Model model)
 	 {
@@ -124,22 +125,18 @@ public class AlunoController {
 			if(alunos.getAlunosList().isEmpty()){
 				return PCLEI_GET_ALUNOS;
 			}else{
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
-				Calendar cal = Calendar.getInstance();
-
-				//ArrayList<Avaliacao> arrAvaliacao = new ArrayList<>();
-				
+				model.addAttribute("AvaliacaoHeader", String.valueOf(Configuracao.ANO_AVALIACAO_ATUAL) + "." + String.valueOf(Configuracao.PERIODO_AVALIACAO_ATUAL));
 				model.addAttribute("wrapper", alunos);
 			}
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			logger.error("Erro : " + e.getMessage());
 		}
 	    
-		return "/PCLei/pagAvaliarAlunos";
+		return PCLEI_AVALIAR_ALUNOS;
 	}
 
-	@RequestMapping(value="/PCLei/avaliar", method=RequestMethod.POST)
+	@RequestMapping(value="/pclei/avaliar", method=RequestMethod.POST)
 	public String processoAvaliacaoAlunos(
 		@ModelAttribute AlunosAvalForm alunos,
 		Model model,
@@ -153,25 +150,26 @@ public class AlunoController {
 	}else{
 		for (Aluno aluno : alunos.getAlunosList()) {
 			Avaliacao aval = new Avaliacao();
-			aval.setAno(LocalDate.now().getYear());
+			aval.setAno(Configuracao.ANO_AVALIACAO_ATUAL);
 			LocalDateTime agora = LocalDateTime.now();
 			java.sql.Timestamp sqlDate = Timestamp.valueOf(agora);
 			aval.setData(sqlDate);
 			aval.setIdAluno(aluno.getIdAluno());
 			aval.setNivel(aluno.getNivel());
-			aval.setPeriodo(1); //deve vir das configurações do sistema, pelo amor de shiva
+			aval.setPeriodo(Configuracao.PERIODO_AVALIACAO_ATUAL); //deve vir das configurações do sistema, pelo amor de shiva
+			logger.info(aluno.getNome() + " : avaliado : " + aval.getIdAvaliacao() + " : por : " + SecurityContextHolder.getContext().getAuthentication().getName());
 			try {
 				avalDAO.adiciona(aval);
 				//Atualizar nivel do aluno!
 				aDAO.atualizarNivel(aluno);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erro ao avaliar alunos : " + e.getMessage());
 			}
 		}
 	}
 
 	int idEscola = (int) session.getAttribute("idEscola");
-	return "redirect:/PCLei/getAlunos?idEscola="+idEscola;
+	return PCLEI_GET_ALUNOS_ESCOLA+idEscola;
 }
 
 

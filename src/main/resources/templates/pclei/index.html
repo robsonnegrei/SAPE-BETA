@@ -1,0 +1,105 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+<head>	
+	<title>SAPE - PCLEI</title>
+</head>
+	<section layout:fragment="content">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    	<!-- Your content goes here -->
+	    	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroRmSchool}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Escola não foi removida
+				</div>
+        	</div>
+        	<!-- fim da mensagem de erro -->
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroAddSchool}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Escola não foi adicionada
+				</div>
+        	</div>
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroProfessorInvalido}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Professor sem autorização
+				</div>
+        	</div>
+        
+	    	<!-- Regional Selecionada -->
+	    	<div th:if="${session.regional} != null">
+        		 <div class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 						 <h3 th:text="${session.regional.nome}" ></h3>
+				</div>
+        	</div>
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${session.erroGetEscolas}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Nenhuma Escola Encontrada
+				</div>
+        	</div>
+   			<div class="col-md-2"></div>
+	    	<div class="col-md-6 SAPE_amdUsrTable">
+	    		<!-- Table Escolas -->
+	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
+				  <thead>
+				    <tr>
+				    	<th id="tt1"></th>
+				      <th id="tt1">Escolas</th>
+				      <th>Id Unico</th>
+				      <th id="tt2">Nome</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	 <tr th:each="escola : ${session.ArrayEscolas}">
+				  		 			      
+					  		 <td>
+						  		 <button th:id="'btnEditarUsr' + ${escola.idEscola}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
+									<i class="material-icons md-18 azul">edit</i>
+								</button>
+								<div class="mdl-tooltip" th:for="'btnEditarUsr' + ${escola.idEscola}">
+									Alterar escola
+							  	</div> - 
+						      	<button th:id="'btnExcluirUsr' + ${escola.idEscola}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirSchool(\'' + ${escola.idEscola} + '\');'" >
+				  					<i class="material-icons md-18 laranjabizarro">remove</i>
+								</button>
+								<div class="mdl-tooltip" th:for="'btnExcluirUsr' + ${escola.idEscola}">
+									Excluir escola
+								</div>
+						  	</td>
+						  	<td><a th:href="@{/pclei/getAlunos(idEscola=${escola.idEscola})}">view</a></td>
+					      	<td th:text="${escola.idEscola}"></td>
+					      	<td th:text="${escola.nome}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<!-- End table escolas -->
+			</div>
+			<!-- button add escola -->
+			<div class="col-md-2">
+				<a href="/pclei/newSchoolForm">
+					<button id="btnAddSchool" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab  SAPE_admAddButton">
+		  				<i class="material-icons md-18 verde">add</i>
+					</button>
+					<div class="mdl-tooltip" for="btnAddSchool">Nova Escola</div>
+	        	</a>
+        	</div>
+    			
+	    </div>
+	  </main>
+	</div>
+</section>
+</html>

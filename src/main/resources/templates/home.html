@@ -1,37 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8"/>
-	<title>Login do SAPE</title>
-   	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/sapecss.css" />
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+<head>	
+	<title>Inicio</title>
+	<link rel="stylesheet" th:href="@{http://www.w3schools.com/lib/w3.css}"></link>
 </head>
-<body>
+
+<section layout:fragment="content">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header">
-	    <div class="mdl-layout__header-row">
-	      <!-- Title -->
-	      <span class="mdl-layout-title"><img th:src="@{/img/Logo4.png}" class="SAPE_imgLogo"></img></span>
-	      <!-- Add spacer, to align navigation to the right -->
-	      <div class="mdl-layout-spacer"></div>
-	      <!-- Navigation. We hide it in small screens. -->
-	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        <a class="mdl-navigation__link" href="">About</a>
-	      </nav>
-	    </div>
-	  </header>
+	 
 	  <main class="mdl-layout__content container-fluid ">
+
 	    <div class="page-content">
 	    <!-- Your content goes here -->
-		   
+			<div th:if="${erro}">
+				<div class="alert alert-danger" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only" th:text="${erro}">Error:</span>
+					<div th:text="${erro}"></div>
+				</div>
+			</div>
+
+			<div class="w3-content w3-section" style="max-width:600px">
+
+			    <div class="w3-display-container mySlides">
+				  <img th:src="@{img/img1.jpg}" style="width:100%"></img>
+				  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+				    Bem vindo ao SAPE.
+				  </div>
+				</div>
+				
+				<div class="w3-display-container mySlides">
+				  <img th:src="@{img/img2.jpg}" style="width:100%"></img>
+				  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+				    Bem vindo ao SAPE.
+				  </div>
+				</div>
+				
+			</div>
 		</div>
+		
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			var myIndex = 0;
+			carousel();
+			
+			function carousel() {
+			    var i;
+			    var x = document.getElementsByClassName("mySlides");
+			    for (i = 0; i < x.length; i++) {
+			       x[i].style.display = "none";
+			    }
+			    myIndex++;
+			    if (myIndex > x.length) {myIndex = 1}
+			    x[myIndex-1].style.display = "block";
+			    setTimeout(carousel, 6000); // Change image every 2 seconds
+			}
+		/*]]>*/
+	    </script>
+		
 	  </main>
-	</div> 		
- <!-- Scripts -->		
- 	<script type="text/javascript" src="/js/sapejs.js"></script>
- 	<script src="/bootstrap/js/bootstrap.min.js"></script>
- 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-</body>
+	</div>
+	 		
+</section>
 </html>

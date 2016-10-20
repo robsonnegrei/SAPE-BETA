@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,14 @@ import com.quixada.sme.model.Usuario;
 
 @Controller
 public class PCLeiController {
+	
+	private static Logger logger = LoggerFactory.getLogger(PCLeiController.class);
+	
+	private final static String PAG_PCLEI_INDEX = "pclei/index";
+	private final static String PAG_ADMIN_INDEX = "admin/index";
+	private final static String PAG_PCLEI_NEWSCHOOL = "pclei/formSchool";
+	private final static String PAG_PCLEI_INDEX_RED = "redirect:/pclei/index";
+	
 	private static String USUARIO = "usuario";
 	private static String ESCOLA = "escola";
 	private static String PROFESSOR = "professor";
@@ -38,11 +48,15 @@ public class PCLeiController {
 	private PCleiDAO pDAO;
 
 	@RequestMapping(value = {"pclei/index","/pclei"})
-	public String pcleiIndex(HttpServletRequest request){
+	public String pcleiIndex(HttpServletRequest request, Model model){
 		HttpSession session = request.getSession();
 		Usuario usr = (Usuario)session.getAttribute("usuario");
 		try {
 				PClei pcLei = pDAO.buscaPorIdUsuario(usr.getIdUsuario());
+				if (pcLei == null) {
+					model.addAttribute("erro", "Sua conta não possui dados de professor. Adicione esses dados para poder acessar esse conteúdo.");
+					return PAG_ADMIN_INDEX;
+				}
 				ArrayList<Escola> escolas = esDAO.getEscolasRegional(pcLei.getIdRegional());
 				Regional regional = reDAO.buscar(pcLei.getIdRegional());
 				if(escolas.isEmpty())
@@ -51,79 +65,70 @@ public class PCLeiController {
 					session.setAttribute("erroGetEscolas", false);
 				}
 				session.setAttribute("ArrayEscolas", escolas);
-				System.err.println("nome Regional=" + regional.getNome());
-				System.err.println("id Regional=" + regional.getIdRegional());
+				logger.info("Regional : " + regional.getIdRegional() + " " + regional.getNome());
 
 				session.setAttribute(PROFESSOR, pcLei );
 				session.setAttribute(REGIONAL, regional );
 		
-		} catch (SQLException e) {
-				System.out.println(e.getMessage());
+		} catch (NullPointerException | SQLException e) {
+				logger.error("pclei : " + e.getMessage());
 				e.printStackTrace();
 				session.setAttribute("erroGetEscolas", true);
 		}
 		
-		return "PCLei/index";
+		return PAG_PCLEI_INDEX;
 	}
-	@RequestMapping(value = {"PCLei/newSchoolForm"})
-	public String newUserForm(Model model, HttpServletRequest request)
-	{
-		HttpSession session = request.getSession();
-		
-		//Sem sessão, manda pro login
-		if (session.getAttribute(USUARIO) == null) {
-			return "redirect:../login";
-		}
-		Usuario usr = (Usuario)session.getAttribute(USUARIO);
-		if (usr.getIsProfCoordenadorLei()==0) {
-			return "redirect:../login";
-		}
+	@RequestMapping(value = {"pclei/newSchoolForm"})
+	public String newSchoolForm(Model model, HttpServletRequest request)
+	{	
 		/*criando escola*/
 		Escola escola = new Escola();
 		model.addAttribute(ESCOLA, escola);
 		
-		return "PCLei/formSchool";
+		return PAG_PCLEI_NEWSCHOOL;
 	}
-	@RequestMapping(value = {"PCLei/addSchool"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"pclei/addSchool"}, method = RequestMethod.POST)
 	public String addUser(@ModelAttribute(value="escola") Escola escola, BindingResult bindingResult, HttpServletRequest request){
-		/*verificar se a escola*/
 		if (bindingResult.hasErrors()) {
 			System.out.println("ERROS\n" + bindingResult);
 		}
+		HttpSession session = request.getSession();
+		Usuario usr = (Usuario)session.getAttribute("usuario");
+		logger.info("Req nova escola : " + usr.getEmail());
 		if (escola==null) {
-			return "redirect:/pclei/index";
+			return PAG_PCLEI_INDEX_RED;
 		}
 		try {
-			HttpSession session = request.getSession();
+			
 			Regional Regional = (com.quixada.sme.model.Regional) session.getAttribute(REGIONAL);
 			escola.setIdRegional(Regional.getIdRegional());
 			esDAO.addEscola(escola);
 			session.setAttribute("erroAddSchool", "false");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Adicionar escola : " + e.getMessage());
 			request.getSession().setAttribute("erroAddSchool", "true");
-			return "redirect:/PCLei/index";
+			return PAG_PCLEI_INDEX_RED;
 		}
-		return "redirect:/pclei/index";
+		return PAG_PCLEI_INDEX_RED;
 	}
-	@RequestMapping(value={"PCLei/rmSchool","rmSchool"})
-	public String removerUser(HttpServletRequest request){
+	@RequestMapping(value={"pclei/rmSchool","rmSchool"})
+	public String removerEscola(HttpServletRequest request, HttpSession session){
 		if(request.getParameter("escola")!= null){
+			Usuario usr = (Usuario)session.getAttribute("usuario");
 			int id = Integer.parseInt( request.getParameter("escola"));
+			logger.info("Apagar escola : Solicitante - " + usr.getEmail() + " Alvo " + id);
 			//System.err.println(id);
-			
 			try {
 				esDAO.excluir(id);
 				request.getSession().setAttribute("erroRmSchool", "false");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Remover escola : " + e.getMessage());
 				request.getSession().setAttribute("erroRmSchool", "true");
 			}
 		}
 		
-		return "redirect:/pclei/index";
+		return PAG_PCLEI_INDEX_RED;
 	}
 
 }

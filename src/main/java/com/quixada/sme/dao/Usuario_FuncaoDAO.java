@@ -7,35 +7,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.quixada.sme.factory.ConnectionFactory;
 import com.quixada.sme.model.Usuario;
 
 @Component
 public class Usuario_FuncaoDAO {
 	
+	@Autowired
+	DataSource ds;
+
+	private Connection con;
+	
 	public void adicionaFuncao(int id, String funcao) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "INSERT INTO usuario_funcao "
-				+ "( idUsuario, funcao) "
-				+ "VALUES (?, ?)";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setInt(1, id);
-		stmt.setString(2, funcao);
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "INSERT INTO usuario_funcao "
+					+ "( idUsuario, funcao) "
+					+ "VALUES (?, ?)";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.setString(2, funcao);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public String getFuncao(int id) throws SQLException {
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		if(rs.next()){
-			return rs.getString(1);
+		try{
+			con = ds.getConnection();
+			String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				return rs.getString(1);
+			}
+			return null;
 		}
-		return null;
+		finally{
+			if (con != null) {
+				con.close();
+			}
+		}
 	}
 	/**
 	 * Preenche os atributos presentes na classe usuario de acordo com a funcao atribuida na base de dados
@@ -56,31 +75,46 @@ public class Usuario_FuncaoDAO {
 	}
 	
 	public void removeFuncao(int id, String funcao) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id +" AND funcao='"+funcao+"'";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM usuario_funcao WHERE idUsuario=" + id + " AND funcao='" + funcao + "'";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	/*
 	 * Remove as funcoes do usuario
 	 */
 	public void limparFuncoes(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "DELETE FROM usuario_funcao WHERE idUsuario="+ id;
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM usuario_funcao WHERE idUsuario=" + id;
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public List<String> funcoesAtribuidas(int id) throws SQLException {
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		List<String> usrList = new ArrayList<>();
-		while (rs.next()) {
-			usrList.add(rs.getString(1));
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT funcao FROM usuario_funcao WHERE idUsuario=" + id;
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			List<String> usrList = new ArrayList<>();
+			while (rs.next()) {
+				usrList.add(rs.getString(1));
+			}
+			return usrList;
 		}
-		return usrList;
+		finally {
+			if (con != null) con.close();
+		}
 	}
-};
+}

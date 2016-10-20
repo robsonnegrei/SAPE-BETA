@@ -1,53 +1,70 @@
 package com.quixada.sme.dao;
 
+import com.quixada.sme.model.Avaliacao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.stereotype.Component;
-
-import com.quixada.sme.factory.ConnectionFactory;
-import com.quixada.sme.model.Avaliacao;
-
+@ComponentScan(value={"com.quixada.sme"})
 @Component
 public class AvaliacaoDAO {
 
+	@Autowired
+	DataSource ds;
+
+	private Connection con;
+
 	public void adiciona(Avaliacao aval) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "INSERT INTO avaliacao "
-				+ "( ano, data, periodo, idAluno, nivel) "
-				+ "VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setInt(1, aval.getAno());
-		stmt.setTimestamp(2, aval.getData());
-		stmt.setInt(3, aval.getPeriodo());
-		stmt.setInt(4, aval.getIdAluno());
-		stmt.setString(5, aval.getNivel());
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "INSERT INTO avaliacao "
+					+ "( ano, data, periodo, idAluno, nivel) "
+					+ "VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, aval.getAno());
+			stmt.setTimestamp(2, aval.getData());
+			stmt.setInt(3, aval.getPeriodo());
+			stmt.setInt(4, aval.getIdAluno());
+			stmt.setString(5, aval.getNivel());
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
 	public Avaliacao buscar(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "SELECT * FROM avaliacao WHERE idAvaliacao="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
-		Avaliacao aval = null;
-		if (rs.next()) {
-			aval = new Avaliacao();
-			aval.setIdAvaliacao(rs.getInt(1));
-			aval.setAno(rs.getInt(2));
-			aval.setData(rs.getTimestamp(3));
-			aval.setPeriodo(rs.getInt(4));
-			aval.setIdAluno(rs.getInt(5));
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT * FROM avaliacao WHERE idAvaliacao=" + id;
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			Avaliacao aval = null;
+			if (rs.next()) {
+				aval = new Avaliacao();
+				aval.setIdAvaliacao(rs.getInt(1));
+				aval.setAno(rs.getInt(2));
+				aval.setData(rs.getTimestamp(3));
+				aval.setPeriodo(rs.getInt(4));
+				aval.setIdAluno(rs.getInt(5));
+			}
+			return aval;
 		}
-		return aval;
+		finally {
+			if (con != null) con.close();
+		}
 	}
 //Atualizar
 //
 //	public void editar(Avaliacao aval) throws SQLException{
-//		Connection con = ConnectionFactory.getMySqlConnection();
+//		Connection con = ds.getConnection();
 //		String sql = "UPDATE avaliacao "
 //				+ "SET ano=?, data=?, periodo=?, idAluno=? "
 //				+ "WHERE idAvaliacao=" + aval.getIdAvaliacao();
@@ -62,28 +79,37 @@ public class AvaliacaoDAO {
 //	}
 	
 	public void excluir(int id) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "DELETE FROM avaliacao WHERE idAvaliacao="+ id;
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.execute();
+		try {
+			con = ds.getConnection();
+			String sql = "DELETE FROM avaliacao WHERE idAvaliacao=" + id;
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.execute();
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 	
-	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, int nivel) throws SQLException{
-		Connection con = ConnectionFactory.getMySqlConnection();
-		String sql = "select COUNT(*) from aluno join avaliacao"
-				+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
-		
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setInt(1, idEscola);
-		stmt.setInt(2, nivel);
-		stmt.setInt(3, periodo);
-	
-		ResultSet rs = stmt.executeQuery();
-		int resultado = 0;
-		if(rs.next())
-			 resultado = rs.getInt(1);
-		
-		return resultado;
+	public int resultAvaliacaoPorPeriodo(int idEscola, int periodo, String nivel) throws SQLException{
+		try {
+			con = ds.getConnection();
+			//String sql = "select COUNT(*) from aluno join avaliacao"
+			//		+ " ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?";
+			String sql = "select COUNT(*) from aluno join avaliacao ON aluno.idAluno = avaliacao.idAluno where aluno.idEscola = ? and avaliacao.nivel = ? and avaliacao.periodo = ?;";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, idEscola);
+			stmt.setString(2, nivel);
+			stmt.setInt(3, periodo);
+
+			ResultSet rs = stmt.executeQuery();
+			int resultado = 0;
+			if (rs.next())
+				resultado = rs.getInt(1);
+			return resultado;
+		}
+		finally {
+			if (con != null) con.close();
+		}
 	}
 }

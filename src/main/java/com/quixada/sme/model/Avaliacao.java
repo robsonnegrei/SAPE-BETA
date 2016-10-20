@@ -2,6 +2,9 @@ package com.quixada.sme.model;
 
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Avaliacao {
 	private int idAvaliacao;
 	private int ano;

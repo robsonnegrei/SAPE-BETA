@@ -25,7 +25,7 @@ $(function () {
                 		//.append($('<td/>').text(file.fileType))
                 		//.append($('<td/>').html("<a href='controller/get/"+index+"'>Click</a>"))
                 		)//end $("#uploaded-files").append()
-            }); 
+            });;
         },
         fail: function (e, data) {
             $.each(data.messages, function (index, error) {

@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +29,9 @@ import com.quixada.sme.model.Usuario;
 @RequestMapping(value = {"/portfolio/controller"} )
 @ComponentScan(value={"com.quixada.sme.dao"})
 public class FileUploadController {
-
+	
+	private static Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+	
 	@Autowired
 	private ImagemDAO picDAO; 
 	
@@ -52,8 +56,9 @@ public class FileUploadController {
 			 
 			 //2.1 get next MultipartFile
 			 mpf = request.getFile(itr.next()); 
-			 System.out.println("Arquivo " + mpf.getOriginalFilename() +" enviado! "+files.size() + " usr: " + SecurityContextHolder.getContext().getAuthentication().getName());
-
+			 logger.info("Arquivo recebido : " + mpf.getOriginalFilename() +" - "+files.size() + " De : " + SecurityContextHolder.getContext().getAuthentication().getName());
+			 
+			 //System.out.println("Arquivo " + mpf.getOriginalFilename() +" enviado! "+files.size() + " usr: " + SecurityContextHolder.getContext().getAuthentication().getName());
 			 //2.2 if files > 10 remove the first from the list
 			 // if(files.size() >= 10)
 			 //	 files.pop();
@@ -72,9 +77,10 @@ public class FileUploadController {
 				//Salvar no banco de dados.
 				imagemMeta.setIdPost(Integer.parseInt(request.getParameter("idPost")));
 				picDAO.adiciona(imagemMeta);
+				logger.info("Arquivo : " + mpf.getOriginalFilename() + " foi salvo");
 			} catch (IOException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				logger.error("Erro ao salvar arquivo : " + e.getMessage());
 			}
 			 //2.4 add to files
 			 files.add(imagemMeta);
@@ -101,8 +107,7 @@ public class FileUploadController {
 			 	response.setHeader("Content-disposition", "attachment; filename=\""+getFile.getFileName()+"\"");
 		        FileCopyUtils.copy(getFile.getBytes(), response.getOutputStream());
 		 }catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			 logger.error("Erro ao obter imagens : " + e.getMessage());
 		 }
 	 }
  

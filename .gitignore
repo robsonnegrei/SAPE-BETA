@@ -1,3 +1,4 @@
 /target/
-src/main/java/com/quixada/sme/factory/ConnectionFactory.java
-src/main/java/com/quixada/sme/factory/ConnectionFactory.java
+/bin/
+.idea/*
+*.iml

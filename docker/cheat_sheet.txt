@@ -1,0 +1,31 @@
+###SAPE - Cheat Sheet
+#Author @ssisaias
+
+#Criar a imagem do SAPE
+#Deve estar no diretorio /docker
+docker build -t sape_imagem .
+
+
+#Criar uma rede
+docker network create sape_network
+
+
+#Rodar o My-SQL no Docker
+docker run --net=sape_network --name sape_sql -e MYSQL_ROOT_PASSWORD=12345 -d mysql:5.6
+
+#(Opcional) Linha de Comando do MySQL para a instancia rodando acima
+docker run -it --link sape_sql:mysql --net=sape_network --rm mysql:5.6 sh -c 'exec mysql -h sape_sql -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+
+#(Opcional) Rodar o Script sape.sql na primeira utilizacao, na linha de comando acima
+
+
+#Iniciar o SAPE o parametro <sape_imagem> é o nome da imagem do sape
+docker run --net=sape_network --name sape --link sape_sql:mysql -p 8080:8080 -t sape_imagem
+
+
+
+##EXTRAS##
+#Parar/Limpar todos os containerers parados:
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)

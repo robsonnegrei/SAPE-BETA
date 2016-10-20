@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.Authentication;
@@ -19,7 +21,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 
 import com.quixada.sme.dao.UsuarioDAO;
@@ -29,22 +30,24 @@ import com.quixada.sme.model.Usuario;
 @ComponentScan(value={"com.quixada.sme.dao","com.quixada.sme.model"})
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+	private static Logger logger = LoggerFactory.getLogger(CustomAuthenticationSuccessHandler.class);
+	
 	@Autowired
 	private UsuarioDAO uDao;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
-		
 			HttpSession session = request.getSession();
-			String email = (String) SecurityContextHolder.getContext().getAuthentication().getName();
-			
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+			session.setAttribute("versao", "1.1.4-BETA");
 			try {
 				Usuario usuarioAutenticado = uDao.buscar(email);
 				//Aqui seta o usuario com suas propriedades
 				session.setAttribute("usuario", usuarioAutenticado);
+				logger.info(usuarioAutenticado.getEmail() + " se conectou!");
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erro ao autenticar usuario" + e.getMessage() );
 			}
 			
 			RequestCache rc = new HttpSessionRequestCache();
@@ -63,6 +66,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				response.sendRedirect(savedRequest.getRedirectUrl());
 			}
 			catch(NullPointerException e){
+				logger.error("Erro ao redirecionar apos login : " + e.getMessage() + " - redirecionando para [/]");
 				response.sendRedirect("/");
 			}
 	}

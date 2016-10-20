@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+<head>	
+	<title>Avaliação</title>
+</head>
+	<section layout:fragment="content">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    	<!-- Your content goes here -->
+	    	<!-- mensagem de erro -->
+	    	<div th:if="${erroRmAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi removido
+				</div>
+        	</div>
+        	<!-- fim da mensagem de erro -->
+        	<!-- mensagem de erro -->
+	    	<div th:if="${erroAddAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi adicionado
+				</div>
+        	</div>
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroProfessorInvalido}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Professor sem autorização
+				</div>
+        	</div>
+        
+	    	<!-- Regional Selecionada -->
+	    	<div th:if="${session.regional} != null">
+        		 <div class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 						 <h3 th:text="${session.regional.nome}" ></h3>
+				</div>
+        	</div>
+        	<!-- Periodo de avaliacao -->
+	    	<div th:if="${session.regional} != null">
+        		 <div class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 						 <h3 th:text="'Período de Avaliação: '+ ${AvaliacaoHeader}">Periodo de Avaliação:</h3>
+				</div>
+        	</div>
+        	
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${erroGetAlunos}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Nenhum Aluno encontrado nesta escola
+				</div>
+        	</div>
+   			<div class="col-md-2"></div>
+	    	<div class="col-md-6 SAPE_amdUsrTable">
+	    		<!-- Table Escolas -->
+	    	<form th:action="@{/pclei/avaliar}" th:method="post">
+	    			<!-- Table Alunos -->
+		    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
+					  <thead>
+					    <tr>
+					      <th id="tt2">Nome Aluno</th>
+					      <th id="tt3">Nível</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	 <tr th:each="aluno,stat : ${wrapper.alunosList}">
+					      	<td th:name="|alunosList[${stat.index}].nome|" th:text="${aluno.getNome()}"></td>
+					      	<td>
+					      		<input type="hidden" th:name="|alunosList[${stat.index}].idAluno|" th:value="${aluno.getIdAluno()}" ></input>
+					      		<input type="hidden" th:name="|alunosList[${stat.index}].idEscola|" th:value="${aluno.getIdEscola()}" ></input>
+					      		<!-- <input th:name="|alunosList[${stat.index}].nivel|" th:value="${aluno.getNivel()}" ></input> -->
+					      		<select th:name="|alunosList[${stat.index}].nivel|" th:value="${aluno.getNivel()}">
+									<option th:value="${'Pré-Silábico'}" th:text="Pré-Silábico"></option>
+									<option th:value="${'Silábico'}" th:text="Silábico"></option>
+									<option th:value="${'Silábico-Alfabético'}" th:text="Silábico-Alfabético"></option>
+									<option th:value="${'Alfabético-Ortográfico'}" th:text="Alfabético-Ortográfico"></option>
+									<option th:value="${'Ortográfico'}" th:text="Ortográfico"></option> 
+					      		</select>
+					      	</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<input type="submit" id="processar" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Processar!"></input>
+	    		</form>
+				
+				<!-- End table Aluno -->
+			</div>
+        </div>		
+	  </main>
+	</div>
+</section>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+<head>	
+	<title>SAPE - Alunos</title>
+</head>
+	<section layout:fragment="content">
+	
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    	<!-- Your content goes here -->
+	    	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroRmAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi removido
+				</div>
+        	</div>
+        	<!-- fim da mensagem de erro -->
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroAddAluno}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Aluno não foi adicionado
+				</div>
+        	</div>
+        	<!-- mensagem de erro -->
+	    	<div th:if="${session.erroProfessorInvalido}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Professor sem autorização
+				</div>
+        	</div>
+        
+	    	<!-- Regional Selecionada -->
+        	<div th:if="${session.regional} != null" class="alert Alert-info SAPE_divRegionalNome" role="alert">
+ 				<h3 th:text="${session.regional.nome}" ></h3>
+			</div>
+	    	<!-- Nenhuma escola encontrada mostra mensagem -->
+	    	<div th:if="${session.erroGetAlunos}">
+           		<div class="alert alert-danger" role="alert">
+  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 					<span class="sr-only">Error:</span>
+ 					 Nenhum Aluno encontrado nesta escola
+				</div>
+        	</div>
+   			<div class="col-md-2"></div>
+	    	<div class="col-md-6 SAPE_amdUsrTable">
+	    		<!-- Table Alunos -->
+	    		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp ">
+				  <thead>
+				    <tr>
+				    	<th id="tt1"></th>
+				      <th id="tt1">id Único</th>
+				      <th id="tt2">Nome Aluno</th>
+				      <th id="tt3">Nível</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	 <tr th:each="aluno : ${ArrayAlunos}">
+				      <td>
+				      	<button th:id="'btnEditarAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" disabled="disabled" >
+							<i class="material-icons md-18 azul">edit</i>
+						</button>
+						<div class="mdl-tooltip" th:for="'btnEditarAluno' + ${aluno.idAluno}">
+							Alterar Aluno
+					  	</div> - 
+				      	<button th:id="'btnExcluirAluno' + ${aluno.idAluno}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" th:onclick="'javascript:excluirAluno(\'' + ${aluno.idAluno} + '\');'" >
+		  					<i class="material-icons md-18 laranjabizarro">remove</i>
+						</button>
+						<div class="mdl-tooltip" th:for="'btnExcluirAluno' + ${aluno.idAluno}">
+							Excluir Aluno
+						</div>
+					  	</td>
+					  	<td th:text="${aluno.idAluno}"></td>
+				      	<td th:text="${aluno.nome}"></td>
+				      	<td th:text="${#strings.defaultString(aluno.nivel,'Não avaliado!')}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<!-- End table Aluno -->
+				<div>
+				<!-- Avaliar Alunos Button -->
+  					
+  				<button id="btnAvaliacao" class="btn btn-primary" value="AVALIAR"> Avaliação!</button>	    	
+  					
+				<!-- end Avaliar Alunos Button -->
+				
+				<form  th:action="@{/pclei/gerarRelatorio}" method="post" >
+  						<!-- 
+  						<input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+  						 -->
+  						<input id="btRelatorio" name="RELATORIO" type="submit" class="btn btn-primary" value="RELATORIO"></input>	    	
+  				</form>
+				</div>
+			</div>
+			<!-- button add Aluno -->
+			<div class="col-md-4">
+			 	<div class="panel panel-primary">
+			 		 <div class="panel-heading">
+    					<h3 class="panel-title">Adicionar Aluno</h3>
+    				</div>
+    				<div class="panel-body">
+					 	<form th:action="@{/pclei/addAluno}" method="post" >
+						  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			    			<input class="mdl-textfield__input" type="text" id="nome" name="nome"></input>
+			    			<label class="mdl-textfield__label" for="nome">Nome:</label>
+			    		  </div>
+			    		   <input type="hidden" id="idEscola"  name="idEscola" th:value="${session.idEscola}"></input>
+			  			    <input id="bttAddAluno" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" title="Adicionar"></input>	    	
+						</form>
+					</div> 	
+				</div>		    		 
+        	</div>
+    			
+	    </div>
+	  </main>
+	</div>
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/sapePCLei.js}"></script>	
+</section>
+</html>

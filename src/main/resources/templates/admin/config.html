@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layout/layoutBase">
+
+<head>	
+	<title>SAPE - PCLEI</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/sapeconfig.css}"/>
+</head>
+	<section layout:fragment="content">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+	    	<!-- Your content goes here -->
+
+			<div th:if="${!#objects.nullSafe(obj,false)}">
+				<div class="alert alert-success" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only"></span>Atenção: aqui estão as configurações que garantem o bom funcionamento do sistema. Altere com cuidado.
+				</div>
+			</div>
+			<div th:if="${erro}">
+				<div class="alert alert-danger" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only" th:text="${erro}">Error:</span>
+					<div th:text="${erro}"></div>
+				</div>
+			</div>
+
+			<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+				<div class="mdl-card__title">
+					<!-- <h2 class="mdl-card__title-text"></h2> -->
+				</div>
+				<form th:action="@{/admin/cfg/save}" method="post" onsubmit="return confirm('Deseja realmente alterar essas configurações?');">
+					<div class="mdl-card__supporting-text">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="anoAval" th:value="${anoAval}"></input>
+							<label class="mdl-textfield__label" th:for="anoAval">Ano da avaliação:</label>
+						</div>
+
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="periodo" th:value="${periodo}"></input>
+							<label class="mdl-textfield__label" th:for="anoAval">Periodo atual:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:value="${periodosAno}"></input>
+							<label class="mdl-textfield__label" th:for="anoAval">Periodos por ano:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="number" th:id="anoAval" th:name="limiteDiasReval" th:value="${limiteDiasReaval}"></input>
+							<label class="mdl-textfield__label" th:for="anoAval">Limite de dias para reavaliação:</label>
+						</div>
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<input th:type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:value="Salvar">
+						</input>
+					</div>
+				</form>
+			</div>
+
+	    </div>
+	  </main>
+	</div>
+</section>
+</html>
